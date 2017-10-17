@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,6 +19,8 @@ namespace NPS
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
         HashSet<string> regions = new HashSet<string>();
+        int currentOrderColumn = 0;
+        bool currentOrderInverted = false;
 
         List<DownloadWorker> downloads = new List<DownloadWorker>();
 
@@ -218,6 +221,7 @@ namespace NPS
         {
             if (listView1.SelectedItems.Count == 0) return;
             Item itm = (listView1.SelectedItems[0].Tag as Item);
+            lbl_query_size.Text = "0 MB";
 
             Helpers.Renascene r = new Helpers.Renascene(itm.TitleId);
 
@@ -314,6 +318,65 @@ namespace NPS
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             textBox1_TextChanged(null, null);
+        }
+
+        private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (currentOrderColumn == e.Column) { currentOrderInverted = !currentOrderInverted; }
+            else
+            {
+                currentOrderColumn = e.Column; currentOrderInverted = false;
+            }
+
+            this.listView1.ListViewItemSorter = new ListViewItemComparer(currentOrderColumn, currentOrderInverted);
+            // Call the sort method to manually sort.
+            listView1.Sort();
+        }
+
+        private void btn_query_size_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 0) return;
+            var a = (listView1.SelectedItems[0].Tag as Item);
+
+            var webRequest = HttpWebRequest.Create(a.pkg);
+            webRequest.Method = "HEAD";
+
+            using (var webResponse = webRequest.GetResponse())
+            {
+                var fileSize = webResponse.Headers.Get("Content-Length");
+                var fileSizeInMegaByte = Math.Round(Convert.ToDouble(fileSize) / 1024.0 / 1024.0, 2);
+                lbl_query_size.Text = fileSizeInMegaByte + " MB";
+            }
+
+        }
+    }
+
+    class ListViewItemComparer : IComparer
+    {
+        private int col;
+        private bool invertOrder = false;
+        public ListViewItemComparer()
+        {
+            col = 0;
+        }
+        public ListViewItemComparer(int column, bool invertedOrder)
+        {
+            col = column;
+            invertOrder = invertedOrder;
+
+        }
+        public int Compare(object x, object y)
+        {
+            int returnVal = -1;
+            if (!invertOrder)
+            {
+                returnVal = String.Compare(((ListViewItem)x).SubItems[col].Text, ((ListViewItem)y).SubItems[col].Text);
+            }
+            else
+            {
+                returnVal = String.Compare(((ListViewItem)y).SubItems[col].Text, ((ListViewItem)x).SubItems[col].Text);
+            }
+            return returnVal;
         }
     }
 
