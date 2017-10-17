@@ -9,13 +9,13 @@ namespace NPS.Helpers
 
     public class Renascene
     {
-        public string imgUrl, genre, language, publish, developer;
+        public string imgUrl, genre, language, publish, developer, size;
 
-        public Renascene(string titleId)
+        public Renascene(Item itm)
         {
             try
             {
-                titleId = SafeTitle(titleId);
+                string titleId = SafeTitle(itm.TitleId);
 
                 WebClient wc = new WebClient();
                 string content = wc.DownloadString(@"http://renascene.com/psv/?target=search&srch=" + titleId + "&srchser=1");
@@ -37,10 +37,21 @@ namespace NPS.Helpers
 
                 developer = ExtractString(content, "<td class=\"infLeftTd\">Developer</td>", "</tr>");
                 developer = ExtractString(developer, "<td class=\"infRightTd\">", "</td>");
+
+
+                var webRequest = HttpWebRequest.Create(itm.pkg);
+                webRequest.Method = "HEAD";
+
+                using (var webResponse = webRequest.GetResponse())
+                {
+                    var fileSize = webResponse.Headers.Get("Content-Length");
+                    var fileSizeInMegaByte = Math.Round(Convert.ToDouble(fileSize) / 1024.0 / 1024.0, 2);
+                    this.size = fileSizeInMegaByte + " MB";
+                }
             }
             catch (Exception err)
             {
-                imgUrl = genre = language = publish = developer = null;
+                imgUrl = genre = language = publish = developer = size = null;
             }
         }
 
@@ -48,16 +59,17 @@ namespace NPS.Helpers
 
         public override string ToString()
         {
-            return string.Format(@"Genre: {0}
+            return string.Format(@"Size: {4}
+Genre: {0}
 Language: {1}
 Published: {2}
-Developer: {3}", this.genre, this.language, this.publish, this.developer);
+Developer: {3}", this.genre, this.language, this.publish, this.developer, this.size);
         }
 
 
         string SafeTitle(string title)
         {
-            return title.Replace(" (DLC)", "");
+            return title.Replace("(DLC)", "").Replace(" ", "");
         }
 
         string ExtractString(string s, string start, string end)

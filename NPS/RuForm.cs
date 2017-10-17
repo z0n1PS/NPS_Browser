@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NPS
@@ -217,27 +219,57 @@ namespace NPS
             }
         }
 
+        CancellationTokenSource tokenSource = new CancellationTokenSource();
+
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count == 0) return;
-            Item itm = (listView1.SelectedItems[0].Tag as Item);
-            lbl_query_size.Text = "0 MB";
 
-            Helpers.Renascene r = new Helpers.Renascene(itm.TitleId);
 
-            if (r.imgUrl != null)
-            {
-                pictureBox1.LoadAsync(r.imgUrl);
-                label5.Text = r.ToString();
-            }
-            else
-            {
-                pictureBox1.Image = null;
-                label5.Text = "";
-            }
 
 
         }
+
+        Item previousSelectedItem = null;
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            //update view
+
+            if (listView1.SelectedItems.Count == 0) return;
+            Item itm = (listView1.SelectedItems[0].Tag as Item);
+
+            if (itm != previousSelectedItem)
+            {
+                previousSelectedItem = itm;
+
+                tokenSource.Cancel();
+                tokenSource = new CancellationTokenSource();
+
+                Task.Run(() =>
+                {
+                    Helpers.Renascene r = new Helpers.Renascene(itm);
+
+                    if (r.imgUrl != null)
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            pictureBox1.LoadAsync(r.imgUrl);
+                            label5.Text = r.ToString();
+                        }));
+
+                    }
+                    else
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            pictureBox1.Image = null;
+                            label5.Text = "";
+                        }));
+
+                    }
+                }, tokenSource.Token);
+            }
+        }
+
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -333,22 +365,6 @@ namespace NPS
             listView1.Sort();
         }
 
-        private void btn_query_size_Click(object sender, EventArgs e)
-        {
-            if (listView1.SelectedItems.Count == 0) return;
-            var a = (listView1.SelectedItems[0].Tag as Item);
-
-            var webRequest = HttpWebRequest.Create(a.pkg);
-            webRequest.Method = "HEAD";
-
-            using (var webResponse = webRequest.GetResponse())
-            {
-                var fileSize = webResponse.Headers.Get("Content-Length");
-                var fileSizeInMegaByte = Math.Round(Convert.ToDouble(fileSize) / 1024.0 / 1024.0, 2);
-                lbl_query_size.Text = fileSizeInMegaByte + " MB";
-            }
-
-        }
     }
 
     class ListViewItemComparer : IComparer
