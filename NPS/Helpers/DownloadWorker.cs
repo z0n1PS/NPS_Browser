@@ -74,6 +74,9 @@ namespace NPS
         public void Unpack()
         {
             if (!this.isCompleted) return;
+
+            lvi.SubItems[2].Text = "Unpacking";
+
             System.Diagnostics.ProcessStartInfo a = new System.Diagnostics.ProcessStartInfo();
             a.WorkingDirectory = Settings.instance.downloadDir + "\\";
             a.FileName = string.Format("\"{0}\"", Settings.instance.pkgPath);
@@ -82,6 +85,16 @@ namespace NPS
             proc.StartInfo = a;
             proc.Start();
             proc.WaitForExit();
+
+            if (proc.ExitCode == 0)
+            {
+                lvi.SubItems[2].Text = "Completed";
+                if (Settings.instance.deleteAfterUnpack)
+                    DeletePkg();
+            }
+            else
+                lvi.SubItems[2].Text = "Something's wrong!";
+
             Console.WriteLine(proc.ExitCode);
         }
 
@@ -162,10 +175,10 @@ namespace NPS
             if (!e.Cancelled)
             {
                 this.isCompleted = true;
+                lvi.SubItems[1].Text = "";
                 Unpack();
 
-                lvi.SubItems[1].Text = "";
-                lvi.SubItems[2].Text = "Completed";
+
                 progress.Value = 100;
             }
             else

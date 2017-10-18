@@ -28,6 +28,7 @@ namespace NPS
             textParams.Text = Settings.instance.pkgParams;
             textBox1.Text = Settings.instance.GamesUri;
             textBox2.Text = Settings.instance.DLCUri;
+            checkBox1.Checked = Settings.instance.deleteAfterUnpack;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -96,6 +97,11 @@ namespace NPS
                     textBox2.Text = fbd.FileName;
                 }
             }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.instance.deleteAfterUnpack = checkBox1.Checked;
         }
     }
 }

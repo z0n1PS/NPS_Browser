@@ -74,15 +74,31 @@ namespace NPS
         private void NoPayStationBrowser_Load(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(Settings.instance.GamesUri))
+            {
                 gamesDbs = LoadDatabase(Settings.instance.GamesUri);
-            else radioButton1.Enabled = false;
+                radioButton1.Enabled = true;
+            }
+            else
+            {
+                gamesDbs = new List<Item>();
+                radioButton1.Enabled = false;
+            }
 
             if (!string.IsNullOrEmpty(Settings.instance.DLCUri))
+            {
                 dlcsDbs = LoadDatabase(Settings.instance.DLCUri);
-            else radioButton2.Enabled = false;
+                radioButton2.Enabled = true;
+            }
+            else
+            {
+                radioButton2.Enabled = false;
+                dlcsDbs = new List<Item>();
+            }
 
-
+            //radioButton1.Checked = true;
             currentDatabase = gamesDbs;
+
+            comboBox1.Items.Clear();
 
             comboBox1.Items.Add("ALL");
             comboBox1.Text = "ALL";

@@ -16,6 +16,7 @@ public class Settings
     public string pkgPath;
     public string pkgParams;
     public string GamesUri, DLCUri;
+    public bool deleteAfterUnpack = false;
 
     public int records
     {
@@ -38,6 +39,7 @@ public class Settings
         GamesUri = Registry.GetValue(keyName, "GamesUri", "")?.ToString();
         DLCUri = Registry.GetValue(keyName, "DLCUri", "")?.ToString();
         pkgParams = Registry.GetValue(keyName, "pkgParams", null)?.ToString();
+        bool.TryParse(Registry.GetValue(keyName, "deleteAfterUnpack", false).ToString(), out deleteAfterUnpack);
         var rec = Registry.GetValue(keyName, "records", null)?.ToString();
         if (rec != null) int.TryParse(rec, out _records);
 
@@ -59,6 +61,8 @@ public class Settings
             Registry.SetValue(keyName, "GamesUri", GamesUri);
         if (DLCUri != null)
             Registry.SetValue(keyName, "DLCUri", DLCUri);
+
+        Registry.SetValue(keyName, "deleteAfterUnpack", deleteAfterUnpack);
     }
 
 
