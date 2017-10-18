@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace NPS
@@ -24,7 +25,9 @@ namespace NPS
         public bool isCanceled { get; private set; }
         Timer timer = new Timer();
 
-        public DownloadWorker(Item itm)
+        Form formCaller;
+
+        public DownloadWorker(Item itm, Form f)
         {
             currentDownload = itm;
             lvi = new ListViewItem(itm.TitleName);
@@ -38,6 +41,7 @@ namespace NPS
 
             timer.Interval = 1000;
             timer.Tick += Timer_Tick;
+            formCaller = f;
 
         }
 
@@ -68,34 +72,53 @@ namespace NPS
             if (currentDownload != null)
                 if (File.Exists(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
                     File.Delete(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg");
-            progress.Value = 0;
+            //progress.Value = 0;
         }
 
         public void Unpack()
         {
+
             if (!this.isCompleted) return;
 
+
             lvi.SubItems[2].Text = "Unpacking";
+
 
             System.Diagnostics.ProcessStartInfo a = new System.Diagnostics.ProcessStartInfo();
             a.WorkingDirectory = Settings.instance.downloadDir + "\\";
             a.FileName = string.Format("\"{0}\"", Settings.instance.pkgPath);
+            a.WindowStyle = System.Diagnostics.ProcessWindowStyle.Minimized;
+
             a.Arguments = Settings.instance.pkgParams.ToLower().Replace("{pkgfile}", "\"" + Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg\"").Replace("{zrifkey}", currentDownload.zRfi);
             System.Diagnostics.Process proc = new System.Diagnostics.Process();
             proc.StartInfo = a;
             proc.Start();
-            proc.WaitForExit();
 
+            proc.EnableRaisingEvents = true;
+            proc.Exited += Proc_Exited;
+
+
+
+        }
+
+        private void Proc_Exited(object sender, EventArgs e)
+        {
+            var proc = (sender as System.Diagnostics.Process);
             if (proc.ExitCode == 0)
             {
-                lvi.SubItems[2].Text = "Completed";
-                if (Settings.instance.deleteAfterUnpack)
-                    DeletePkg();
+                formCaller.Invoke(new Action(() =>
+                {
+                    lvi.SubItems[2].Text = "Completed";
+                    if (Settings.instance.deleteAfterUnpack)
+                        DeletePkg();
+                }));
+
+
             }
             else
-                lvi.SubItems[2].Text = "Something's wrong!";
+                formCaller.Invoke(new Action(() => { lvi.SubItems[2].Text = "Something's wrong!"; }));
 
-            Console.WriteLine(proc.ExitCode);
+            //Console.WriteLine(proc.ExitCode);
         }
 
         private void DownloadFile(/*Item item*/)

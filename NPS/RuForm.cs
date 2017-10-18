@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,7 +15,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.54";
+        public const string version = "0.55";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -73,16 +72,7 @@ namespace NPS
 
         private void NoPayStationBrowser_Load(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(Settings.instance.GamesUri))
-            {
-                gamesDbs = LoadDatabase(Settings.instance.GamesUri);
-                radioButton1.Enabled = true;
-            }
-            else
-            {
-                gamesDbs = new List<Item>();
-                radioButton1.Enabled = false;
-            }
+
 
             if (!string.IsNullOrEmpty(Settings.instance.DLCUri))
             {
@@ -95,7 +85,18 @@ namespace NPS
                 dlcsDbs = new List<Item>();
             }
 
-            //radioButton1.Checked = true;
+            if (!string.IsNullOrEmpty(Settings.instance.GamesUri))
+            {
+                gamesDbs = LoadDatabase(Settings.instance.GamesUri);
+                radioButton1.Enabled = true;
+            }
+            else
+            {
+                gamesDbs = new List<Item>();
+                radioButton1.Enabled = false;
+            }
+
+            radioButton1.Checked = true;
             currentDatabase = gamesDbs;
 
             comboBox1.Items.Clear();
@@ -136,6 +137,7 @@ namespace NPS
                     var itm = new Item(a[0], a[1], a[2], a[3], a[4]);
                     if (!itm.zRfi.ToLower().Contains("missing") && itm.pkg.ToLower().Contains("http://"))
                     {
+                        itm.CalculateDlCs(dlcsDbs.ToArray());
                         dbs.Add(itm);
                         regions.Add(itm.Region.Replace(" ", ""));
                     }
@@ -143,7 +145,7 @@ namespace NPS
 
                 dbs = dbs.OrderBy(i => i.TitleName).ToList();
             }
-            catch (Exception err)
+            catch
             {
 
             }
@@ -160,6 +162,9 @@ namespace NPS
                 var a = new ListViewItem(item.TitleId);
                 a.SubItems.Add(item.Region);
                 a.SubItems.Add(item.TitleName);
+                if (item.DLCs > 0)
+                    a.SubItems.Add(item.DLCs.ToString());
+                else a.SubItems.Add("");
                 a.Tag = item;
 
                 listView1.Items.Add(a);
@@ -179,6 +184,20 @@ namespace NPS
             RefreshList(itms);
         }
 
+
+
+
+        private void showTitleDlcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 0) return;
+
+            Item t = (listView1.SelectedItems[0].Tag as Item);
+            if (t.DLCs > 0)
+            {
+                radioButton2.Checked = true;
+                textBox1.Text = t.TitleId;
+            }
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -201,18 +220,23 @@ namespace NPS
             }
 
             if (listView1.SelectedItems.Count == 0) return;
-            var a = (listView1.SelectedItems[0].Tag as Item);
+
+            foreach (ListViewItem itm in listView1.SelectedItems)
+            {
+
+                var a = (itm.Tag as Item);
 
 
-            foreach (var d in downloads)
-                if (d.currentDownload == a)
-                    return; //already downloading
+                foreach (var d in downloads)
+                    if (d.currentDownload == a)
+                        return; //already downloading
 
 
-            DownloadWorker dw = new DownloadWorker(a);
-            listViewEx1.Items.Add(dw.lvi);
-            listViewEx1.AddEmbeddedControl(dw.progress, 3, listViewEx1.Items.Count - 1);
-            downloads.Add(dw);
+                DownloadWorker dw = new DownloadWorker(a, this);
+                listViewEx1.Items.Add(dw.lvi);
+                listViewEx1.AddEmbeddedControl(dw.progress, 3, listViewEx1.Items.Count - 1);
+                downloads.Add(dw);
+            }
 
         }
 
@@ -292,6 +316,7 @@ namespace NPS
         }
 
 
+
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (listViewEx1.SelectedItems.Count == 0) return;
@@ -323,7 +348,7 @@ namespace NPS
                     workingThreads++;
             }
 
-            if (workingThreads < 2)
+            if (workingThreads < Settings.instance.simultaneousDl)
             {
                 foreach (var dw in downloads)
                 {
@@ -386,6 +411,7 @@ namespace NPS
             listView1.Sort();
         }
 
+        Release[] releases = null;
 
         void NewVersionCheck()
         {
@@ -396,19 +422,18 @@ namespace NPS
 
                 WebClient wc = new WebClient();
                 wc.Credentials = CredentialCache.DefaultCredentials;
-                wc.Headers.Add("user-agent", "Only a test!");
+                wc.Headers.Add("user-agent", "MyPersonalApp :)");
                 string content = wc.DownloadString("https://api.github.com/repos/jhonhenry10/NPS_Browser/releases");
                 wc.Dispose();
 
                 //dynamic test = JsonConvert.DeserializeObject<dynamic>(content);
-                Release[] test = SimpleJson.SimpleJson.DeserializeObject<Release[]>(content);
+                releases = SimpleJson.SimpleJson.DeserializeObject<Release[]>(content);
 
-                string newVer = test[0].tag_name;
+                string newVer = releases[0].tag_name;
                 if (version != newVer)
                 {
-                    //   MessageBox.Show("There is new version available.");
-
-                    this.Text += string.Format("  (!! new version {0} available !!)", newVer);
+                    downloadUpdateToolStripMenuItem.Visible = true;
+                    this.Text += string.Format("         (!! new version {0} available !!)", newVer);
                 }
 
             }
@@ -416,41 +441,24 @@ namespace NPS
 
         }
 
+        private void downloadUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string url = releases?[0]?.assets?[0]?.browser_download_url;
+            if (!string.IsNullOrEmpty(url))
+                System.Diagnostics.Process.Start(url);
+        }
+
     }
 
 
     class Release
     {
-        public string tag_name;
+        public string tag_name = "";
+        public Asset[] assets = null;
     }
-
-    class ListViewItemComparer : IComparer
+    class Asset
     {
-        private int col;
-        private bool invertOrder = false;
-        public ListViewItemComparer()
-        {
-            col = 0;
-        }
-        public ListViewItemComparer(int column, bool invertedOrder)
-        {
-            col = column;
-            invertOrder = invertedOrder;
-
-        }
-        public int Compare(object x, object y)
-        {
-            int returnVal = -1;
-            if (!invertOrder)
-            {
-                returnVal = String.Compare(((ListViewItem)x).SubItems[col].Text, ((ListViewItem)y).SubItems[col].Text);
-            }
-            else
-            {
-                returnVal = String.Compare(((ListViewItem)y).SubItems[col].Text, ((ListViewItem)x).SubItems[col].Text);
-            }
-            return returnVal;
-        }
+        public string browser_download_url = "";
     }
 
 

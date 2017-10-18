@@ -17,6 +17,7 @@ public class Settings
     public string pkgParams;
     public string GamesUri, DLCUri;
     public bool deleteAfterUnpack = false;
+    public int simultaneousDl = 2;
 
     public int records
     {
@@ -39,6 +40,9 @@ public class Settings
         GamesUri = Registry.GetValue(keyName, "GamesUri", "")?.ToString();
         DLCUri = Registry.GetValue(keyName, "DLCUri", "")?.ToString();
         pkgParams = Registry.GetValue(keyName, "pkgParams", null)?.ToString();
+        int.TryParse(Registry.GetValue(keyName, "simultaneousDl", 2)?.ToString(), out simultaneousDl);
+
+
         bool.TryParse(Registry.GetValue(keyName, "deleteAfterUnpack", false).ToString(), out deleteAfterUnpack);
         var rec = Registry.GetValue(keyName, "records", null)?.ToString();
         if (rec != null) int.TryParse(rec, out _records);
@@ -63,6 +67,8 @@ public class Settings
             Registry.SetValue(keyName, "DLCUri", DLCUri);
 
         Registry.SetValue(keyName, "deleteAfterUnpack", deleteAfterUnpack);
+
+        Registry.SetValue(keyName, "simultaneousDl", simultaneousDl);
     }
 
 

@@ -29,6 +29,7 @@ namespace NPS
             textBox1.Text = Settings.instance.GamesUri;
             textBox2.Text = Settings.instance.DLCUri;
             checkBox1.Checked = Settings.instance.deleteAfterUnpack;
+            numericUpDown1.Value = Settings.instance.simultaneousDl;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -102,6 +103,11 @@ namespace NPS
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             Settings.instance.deleteAfterUnpack = checkBox1.Checked;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            Settings.instance.simultaneousDl = (int)numericUpDown1.Value;
         }
     }
 }
