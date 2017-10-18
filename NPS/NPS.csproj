@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\SimpleJson.cs" />
     <Compile Include="Helpers\DownloadWorker.cs" />
     <Compile Include="Helpers\Renascene.cs" />
     <Compile Include="Helpers\Settings.cs" />

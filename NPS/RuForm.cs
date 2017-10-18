@@ -16,7 +16,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-
+        public const string version = "0.53";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -28,7 +28,9 @@ namespace NPS
 
         public NPSBrowser()
         {
+
             InitializeComponent();
+            this.Text += " " + version;
             new Settings();
 
             if (string.IsNullOrEmpty(Settings.instance.GamesUri) && string.IsNullOrEmpty(Settings.instance.DLCUri))
@@ -43,6 +45,9 @@ namespace NPS
                 Options o = new Options();
                 o.ShowDialog();
             }
+
+
+            NewVersionCheck();
 
         }
 
@@ -365,6 +370,42 @@ namespace NPS
             listView1.Sort();
         }
 
+
+        void NewVersionCheck()
+        {
+
+            try
+            {
+
+
+                WebClient wc = new WebClient();
+                wc.Credentials = CredentialCache.DefaultCredentials;
+                wc.Headers.Add("user-agent", "Only a test!");
+                string content = wc.DownloadString("https://api.github.com/repos/jhonhenry10/NPS_Browser/releases");
+                wc.Dispose();
+
+                //dynamic test = JsonConvert.DeserializeObject<dynamic>(content);
+                Release[] test = SimpleJson.SimpleJson.DeserializeObject<Release[]>(content);
+
+                string newVer = test[0].tag_name;
+                if (version != newVer)
+                {
+                    //   MessageBox.Show("There is new version available.");
+
+                    this.Text += string.Format("  (!! new version {0} available !!)", newVer);
+                }
+
+            }
+            catch { }
+
+        }
+
+    }
+
+
+    class Release
+    {
+        public string tag_name;
     }
 
     class ListViewItemComparer : IComparer

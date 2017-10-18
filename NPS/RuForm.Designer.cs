@@ -322,7 +322,7 @@ namespace NPS
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NPSBrowser";
-            this.Text = "NPS Browser v0.52";
+            this.Text = "NPS Browser";
             this.Load += new System.EventHandler(this.NoPayStationBrowser_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
