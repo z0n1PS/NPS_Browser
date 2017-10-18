@@ -81,6 +81,8 @@ namespace NPS
             System.Diagnostics.Process proc = new System.Diagnostics.Process();
             proc.StartInfo = a;
             proc.Start();
+            proc.WaitForExit();
+            Console.WriteLine(proc.ExitCode);
         }
 
         private void DownloadFile(/*Item item*/)
