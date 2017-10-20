@@ -27,15 +27,25 @@ namespace NPS
 
             if (col == 3)
             {
-                float fx = 0;
-                float.TryParse(sx, out fx);
+                float.TryParse(sx, out float fx);
 
-                float fy = 0;
-                float.TryParse(sy, out fy);
+                float.TryParse(sy, out float fy);
 
                 if (!invertOrder)
                     returnVal = fx.CompareTo(fy);
                 else returnVal = fy.CompareTo(fx);
+            }
+            else if (col == 4)
+            {
+                DateTime dtx = DateTime.MinValue;
+                DateTime.TryParse(sx, out dtx);
+                DateTime dty = DateTime.MinValue;
+                DateTime.TryParse(sy, out dty);
+
+                if (!invertOrder)
+                    returnVal = dtx.CompareTo(dty);
+                else returnVal = dty.CompareTo(dtx);
+
             }
             else
             {

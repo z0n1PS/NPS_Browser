@@ -15,7 +15,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.55a";
+        public const string version = "0.56";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -135,6 +135,10 @@ namespace NPS
                 {
                     var a = lines[i].Split('\t');
                     var itm = new Item(a[0], a[1], a[2], a[3], a[4]);
+                    if (a.Length >= 7)
+                    {
+                        DateTime.TryParse(a[6], out itm.lastModifyDate);
+                    }
                     if (!itm.zRfi.ToLower().Contains("missing") && itm.pkg.ToLower().Contains("http://"))
                     {
                         itm.CalculateDlCs(dlcsDbs.ToArray());
@@ -164,6 +168,9 @@ namespace NPS
                 a.SubItems.Add(item.TitleName);
                 if (item.DLCs > 0)
                     a.SubItems.Add(item.DLCs.ToString());
+                else a.SubItems.Add("");
+                if (item.lastModifyDate != DateTime.MinValue)
+                    a.SubItems.Add(item.lastModifyDate.ToString());
                 else a.SubItems.Add("");
                 a.Tag = item;
 

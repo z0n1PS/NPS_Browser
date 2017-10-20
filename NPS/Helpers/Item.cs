@@ -5,6 +5,7 @@ namespace NPS
     public class Item
     {
         public string TitleId, Region, TitleName, zRfi, pkg;
+        public System.DateTime lastModifyDate = System.DateTime.MinValue;
         public int DLCs = 0;
 
         public Item(string TitleId, string Region, string TitleName, string pkg, string zrif)

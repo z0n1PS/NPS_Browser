@@ -41,6 +41,7 @@ namespace NPS
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DLCs = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.modDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showTitleDlcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -77,7 +78,7 @@ namespace NPS
             this.downloadUpdateToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(761, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(905, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip";
             // 
@@ -127,12 +128,13 @@ namespace NPS
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
-            this.DLCs});
+            this.DLCs,
+            this.modDate});
             this.listView1.ContextMenuStrip = this.contextMenuStrip2;
             this.listView1.FullRowSelect = true;
-            this.listView1.Location = new System.Drawing.Point(14, 73);
+            this.listView1.Location = new System.Drawing.Point(15, 73);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(487, 316);
+            this.listView1.Size = new System.Drawing.Size(629, 316);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -153,11 +155,16 @@ namespace NPS
             // columnHeader3
             // 
             this.columnHeader3.Text = "Title";
-            this.columnHeader3.Width = 250;
+            this.columnHeader3.Width = 286;
             // 
             // DLCs
             // 
             this.DLCs.Text = "DLCs";
+            // 
+            // modDate
+            // 
+            this.modDate.Text = "Last modify";
+            this.modDate.Width = 119;
             // 
             // contextMenuStrip2
             // 
@@ -177,13 +184,13 @@ namespace NPS
             // 
             this.textBox1.Location = new System.Drawing.Point(12, 29);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(409, 20);
+            this.textBox1.Size = new System.Drawing.Size(551, 20);
             this.textBox1.TabIndex = 2;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(510, 73);
+            this.button1.Location = new System.Drawing.Point(649, 73);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(247, 23);
             this.button1.TabIndex = 3;
@@ -236,7 +243,7 @@ namespace NPS
             // pictureBox1
             // 
             this.pictureBox1.ImageLocation = "";
-            this.pictureBox1.Location = new System.Drawing.Point(510, 102);
+            this.pictureBox1.Location = new System.Drawing.Point(649, 102);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(244, 212);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -245,7 +252,7 @@ namespace NPS
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(510, 317);
+            this.label5.Location = new System.Drawing.Point(649, 317);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(244, 72);
             this.label5.TabIndex = 12;
@@ -297,7 +304,7 @@ namespace NPS
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(427, 29);
+            this.comboBox1.Location = new System.Drawing.Point(569, 29);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(74, 21);
             this.comboBox1.TabIndex = 15;
@@ -318,9 +325,9 @@ namespace NPS
             this.columnHeader11});
             this.listViewEx1.ContextMenuStrip = this.contextMenuStrip1;
             this.listViewEx1.FullRowSelect = true;
-            this.listViewEx1.Location = new System.Drawing.Point(12, 418);
+            this.listViewEx1.Location = new System.Drawing.Point(12, 408);
             this.listViewEx1.Name = "listViewEx1";
-            this.listViewEx1.Size = new System.Drawing.Size(737, 94);
+            this.listViewEx1.Size = new System.Drawing.Size(881, 135);
             this.listViewEx1.TabIndex = 14;
             this.listViewEx1.UseCompatibleStateImageBehavior = false;
             this.listViewEx1.View = System.Windows.Forms.View.Details;
@@ -349,7 +356,7 @@ namespace NPS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(761, 524);
+            this.ClientSize = new System.Drawing.Size(905, 555);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.listViewEx1);
             this.Controls.Add(this.label5);
@@ -418,6 +425,7 @@ namespace NPS
         private System.Windows.Forms.ToolStripMenuItem downloadUpdateToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.ToolStripMenuItem showTitleDlcToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader modDate;
     }
 }
 
