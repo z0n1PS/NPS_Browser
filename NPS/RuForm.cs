@@ -327,23 +327,35 @@ namespace NPS
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (listViewEx1.SelectedItems.Count == 0) return;
-            (listViewEx1.SelectedItems[0].Tag as DownloadWorker).Cancel();
-            (listViewEx1.SelectedItems[0].Tag as DownloadWorker).DeletePkg();
+            foreach (ListViewItem a in listViewEx1.SelectedItems)
+            {
+                DownloadWorker itm = (a.Tag as DownloadWorker);
+                itm.Cancel();
+                itm.DeletePkg();
+            }
+
 
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             if (listViewEx1.SelectedItems.Count == 0) return;
-            (listViewEx1.SelectedItems[0].Tag as DownloadWorker).DeletePkg();
+            foreach (ListViewItem a in listViewEx1.SelectedItems)
+            {
+                DownloadWorker itm = (a.Tag as DownloadWorker);
+                itm.DeletePkg();
+            }
 
         }
 
         private void retryUnpackToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listViewEx1.SelectedItems.Count == 0) return;
-
-            (listViewEx1.SelectedItems[0].Tag as DownloadWorker).Unpack();
+            foreach (ListViewItem a in listViewEx1.SelectedItems)
+            {
+                DownloadWorker itm = (a.Tag as DownloadWorker);
+                itm.Unpack();
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -461,6 +473,18 @@ namespace NPS
             {
                 //listView1.MultiSelect = true;
                 foreach (ListViewItem item in listView1.Items)
+                {
+                    item.Selected = true;
+                }
+            }
+        }
+
+        private void listViewEx1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.A && e.Control)
+            {
+                //listView1.MultiSelect = true;
+                foreach (ListViewItem item in listViewEx1.Items)
                 {
                     item.Selected = true;
                 }

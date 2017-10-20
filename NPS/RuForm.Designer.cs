@@ -331,6 +331,7 @@ namespace NPS
             this.listViewEx1.TabIndex = 14;
             this.listViewEx1.UseCompatibleStateImageBehavior = false;
             this.listViewEx1.View = System.Windows.Forms.View.Details;
+            this.listViewEx1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listViewEx1_KeyDown);
             // 
             // columnHeader8
             // 
