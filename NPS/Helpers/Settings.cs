@@ -40,10 +40,20 @@ public class Settings
         GamesUri = Registry.GetValue(keyName, "GamesUri", "")?.ToString();
         DLCUri = Registry.GetValue(keyName, "DLCUri", "")?.ToString();
         pkgParams = Registry.GetValue(keyName, "pkgParams", null)?.ToString();
-        int.TryParse(Registry.GetValue(keyName, "simultaneousDl", 2)?.ToString(), out simultaneousDl);
 
 
-        bool.TryParse(Registry.GetValue(keyName, "deleteAfterUnpack", false).ToString(), out deleteAfterUnpack);
+
+        string simultanesulString = Registry.GetValue(keyName, "simultaneousDl", 2)?.ToString();
+
+        if (!string.IsNullOrEmpty(simultanesulString))
+            int.TryParse(simultanesulString, out simultaneousDl);
+        else simultaneousDl = 2;
+
+        string deleteAfterUnpackString = Registry.GetValue(keyName, "deleteAfterUnpack", false)?.ToString();
+        if (!string.IsNullOrEmpty(deleteAfterUnpackString))
+            bool.TryParse(deleteAfterUnpackString, out deleteAfterUnpack);
+        else deleteAfterUnpack = true;
+
         var rec = Registry.GetValue(keyName, "records", null)?.ToString();
         if (rec != null) int.TryParse(rec, out _records);
 
