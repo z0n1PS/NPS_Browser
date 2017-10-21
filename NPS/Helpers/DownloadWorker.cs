@@ -63,11 +63,13 @@ namespace NPS
         public void Cancel()
         {
             timer.Stop();
+            if (status == WorkerStatus.Completed) return;
+
             status = WorkerStatus.Canceled;
 
             if (webClient != null)
                 webClient.CancelAsync();
-            if (unpackProcess != null) unpackProcess.Kill();
+            if (unpackProcess != null && !unpackProcess.HasExited) unpackProcess.Kill();
 
             lvi.SubItems[1].Text = "";
             lvi.SubItems[2].Text = "Canceled";
