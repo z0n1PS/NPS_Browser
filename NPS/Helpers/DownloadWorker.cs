@@ -20,9 +20,11 @@ namespace NPS
         public ProgressBar progress = new ProgressBar();
         public ListViewItem lvi;
 
-        public bool isRunning { get; private set; }
-        public bool isCompleted { get; private set; }
-        public bool isCanceled { get; private set; }
+        //public bool isRunning { get; private set; }
+        //public bool isCompleted { get; private set; }
+        //public bool isCanceled { get; private set; }
+
+        public WorkerStatus status { get; private set; }
         Timer timer = new Timer();
 
         Form formCaller;
@@ -35,13 +37,14 @@ namespace NPS
             lvi.SubItems.Add("");
             lvi.SubItems.Add("");
             lvi.Tag = this;
-            isRunning = false;
-            isCanceled = false;
-            isCompleted = false;
+            //isRunning = false;
+            //isCanceled = false;
+            //isCompleted = false;
 
             timer.Interval = 1000;
             timer.Tick += Timer_Tick;
             formCaller = f;
+            status = WorkerStatus.Queued;
 
         }
 
@@ -51,17 +54,20 @@ namespace NPS
         {
             Console.WriteLine("start process " + currentDownload.TitleName);
             timer.Start();
-            isRunning = true;
+            //isRunning = true;
+            status = WorkerStatus.Running;
             DownloadFile(/*currentDownload*/);
         }
 
         public void Cancel()
         {
             timer.Stop();
-            this.isCanceled = true;
+            status = WorkerStatus.Canceled;
 
             if (webClient != null)
                 webClient.CancelAsync();
+            if (unpackProcess != null) unpackProcess.Kill();
+
             lvi.SubItems[1].Text = "";
             lvi.SubItems[2].Text = "Canceled";
             progress.Value = 0;
@@ -72,17 +78,14 @@ namespace NPS
             if (currentDownload != null)
                 if (File.Exists(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
                     File.Delete(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg");
-            //progress.Value = 0;
         }
 
+        System.Diagnostics.Process unpackProcess = null;
         public void Unpack()
         {
-
-            if (!this.isCompleted) return;
-
+            if (this.status != WorkerStatus.Downloaded) return;
 
             lvi.SubItems[2].Text = "Unpacking";
-
 
             System.Diagnostics.ProcessStartInfo a = new System.Diagnostics.ProcessStartInfo();
             a.WorkingDirectory = Settings.instance.downloadDir + "\\";
@@ -90,19 +93,20 @@ namespace NPS
             a.WindowStyle = System.Diagnostics.ProcessWindowStyle.Minimized;
 
             a.Arguments = Settings.instance.pkgParams.ToLower().Replace("{pkgfile}", "\"" + Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg\"").Replace("{zrifkey}", currentDownload.zRfi);
-            System.Diagnostics.Process proc = new System.Diagnostics.Process();
-            proc.StartInfo = a;
-            proc.Start();
+            unpackProcess = new System.Diagnostics.Process();
 
-            proc.EnableRaisingEvents = true;
-            proc.Exited += Proc_Exited;
+            unpackProcess.StartInfo = a;
+            unpackProcess.Start();
 
-
+            unpackProcess.EnableRaisingEvents = true;
+            unpackProcess.Exited += Proc_Exited;
 
         }
 
         private void Proc_Exited(object sender, EventArgs e)
         {
+            this.status = WorkerStatus.Completed;
+
             var proc = (sender as System.Diagnostics.Process);
             if (proc.ExitCode == 0)
             {
@@ -112,13 +116,10 @@ namespace NPS
                     if (Settings.instance.deleteAfterUnpack)
                         DeletePkg();
                 }));
-
-
             }
             else
                 formCaller.Invoke(new Action(() => { lvi.SubItems[2].Text = "Something's wrong!"; }));
 
-            //Console.WriteLine(proc.ExitCode);
         }
 
         private void DownloadFile(/*Item item*/)
@@ -126,7 +127,6 @@ namespace NPS
             try
             {
                 FetchFileName();
-                //currentDownload = item;
                 webClient = new WebClient();
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadCompleted);
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
@@ -193,11 +193,13 @@ namespace NPS
         {
             timer.Stop();
 
-            isRunning = false;
+            //isRunning = false;
 
             if (!e.Cancelled)
             {
-                this.isCompleted = true;
+
+                this.status = WorkerStatus.Downloaded;
+
                 lvi.SubItems[1].Text = "";
                 Unpack();
 
@@ -208,6 +210,7 @@ namespace NPS
             {
                 lvi.SubItems[1].Text = "";
                 lvi.SubItems[2].Text = "Canceled";
+                this.status = WorkerStatus.Canceled;
 
             }
 
@@ -222,6 +225,8 @@ namespace NPS
         }
 
     }
+
+    public enum WorkerStatus { Queued, Running, Completed, Downloaded, Canceled }
 
 
 }

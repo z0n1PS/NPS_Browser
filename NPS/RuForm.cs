@@ -15,7 +15,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.60";
+        public const string version = "0.61";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -73,6 +73,7 @@ namespace NPS
 
         private void NoPayStationBrowser_Load(object sender, EventArgs e)
         {
+            System.Net.ServicePointManager.DefaultConnectionLimit = 30;
 
             LoadDatabase(Settings.instance.DLCUri, (db) =>
             {
@@ -404,7 +405,7 @@ namespace NPS
             int workingThreads = 0;
             foreach (var dw in downloads)
             {
-                if (!dw.isCompleted && dw.isRunning)
+                if (dw.status == WorkerStatus.Running)
                     workingThreads++;
             }
 
@@ -412,7 +413,7 @@ namespace NPS
             {
                 foreach (var dw in downloads)
                 {
-                    if (!dw.isCompleted && !dw.isRunning && !dw.isCanceled)
+                    if (dw.status == WorkerStatus.Queued)
                     {
                         dw.Start();
                         break;
@@ -428,7 +429,7 @@ namespace NPS
 
             foreach (var i in downloads)
             {
-                if (i.isCompleted || i.isCanceled)
+                if (i.status == WorkerStatus.Canceled || i.status == WorkerStatus.Completed)
                 {
                     toDel.Add(i);
                 }

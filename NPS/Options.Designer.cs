@@ -198,7 +198,7 @@ namespace NPS
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(155, 197);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            2,
+            15,
             0,
             0,
             0});
