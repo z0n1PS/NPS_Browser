@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -83,25 +84,46 @@ namespace NPS
         System.Diagnostics.Process unpackProcess = null;
         public void Unpack()
         {
-            if (this.status != WorkerStatus.Downloaded) return;
+            if (this.status == WorkerStatus.Queued || this.status == WorkerStatus.Running || this.status == WorkerStatus.Canceled) return;
 
             lvi.SubItems[2].Text = "Unpacking";
 
             System.Diagnostics.ProcessStartInfo a = new System.Diagnostics.ProcessStartInfo();
             a.WorkingDirectory = Settings.instance.downloadDir + "\\";
             a.FileName = string.Format("\"{0}\"", Settings.instance.pkgPath);
-            a.WindowStyle = System.Diagnostics.ProcessWindowStyle.Minimized;
-
+            a.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            a.CreateNoWindow = true;
             a.Arguments = Settings.instance.pkgParams.ToLower().Replace("{pkgfile}", "\"" + Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg\"").Replace("{zrifkey}", currentDownload.zRfi);
             unpackProcess = new System.Diagnostics.Process();
 
             unpackProcess.StartInfo = a;
-            unpackProcess.Start();
+
+            a.UseShellExecute = false;
+            //a.RedirectStandardOutput = true;
+            a.RedirectStandardError = true;
+
 
             unpackProcess.EnableRaisingEvents = true;
             unpackProcess.Exited += Proc_Exited;
-
+            //unpackProcess.OutputDataReceived += new DataReceivedEventHandler(partialOutputHandler);
+            unpackProcess.ErrorDataReceived += new DataReceivedEventHandler(UnpackProcess_ErrorDataReceived);
+            errors = new List<string>();
+            unpackProcess.Start();
+            //unpackProcess.BeginOutputReadLine();
+            unpackProcess.BeginErrorReadLine();
         }
+
+        List<string> errors = new List<string>();
+
+        private void UnpackProcess_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            errors.Add(e.Data);
+        }
+
+        //private void partialOutputHandler(object sender, DataReceivedEventArgs e)
+        //{
+        //    //Console.WriteLine(e.Data);
+        //}
 
         private void Proc_Exited(object sender, EventArgs e)
         {
@@ -112,13 +134,30 @@ namespace NPS
             {
                 formCaller.Invoke(new Action(() =>
                 {
+                    lvi.SubItems[1].Text = "";
                     lvi.SubItems[2].Text = "Completed";
                     if (Settings.instance.deleteAfterUnpack)
                         DeletePkg();
                 }));
             }
             else
-                formCaller.Invoke(new Action(() => { lvi.SubItems[2].Text = "Something's wrong!"; }));
+            {
+                formCaller.Invoke(new Action(() =>
+                {
+                    lvi.SubItems[1].Text = "PKG decrypt err!";
+                    lvi.SubItems[2].Text = "";
+
+                    errors.Remove(null);
+                    if (errors.Count > 0)
+                    {
+                        if (errors[0].Contains("pkg_dec - PS Vita PKG decryptor/unpacker")) errors.Remove(errors[0]);
+                        if (errors.Count > 0)
+                            lvi.SubItems[2].Text = errors[0];
+                    }
+
+                }
+                ));
+            }
 
         }
 

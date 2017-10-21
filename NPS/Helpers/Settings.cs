@@ -58,7 +58,7 @@ public class Settings
         var rec = Registry.GetValue(keyName, "records", null)?.ToString();
         if (rec != null) int.TryParse(rec, out _records);
 
-        if (pkgParams == null) pkgParams = "{pkgFile} --make-dirs=ux --license=\"{zRifKey}\"";
+        if (pkgParams == null) pkgParams = "{pkgFile} --make-dirs=ux --license=\"{zRifKey}\" --queue-length=500";
 
 
     }
