@@ -30,6 +30,7 @@ namespace NPS
             textBox2.Text = Settings.instance.DLCUri;
             checkBox1.Checked = Settings.instance.deleteAfterUnpack;
             numericUpDown1.Value = Settings.instance.simultaneousDl;
+            textBox3.Text = Settings.instance.PSMUri;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -67,6 +68,7 @@ namespace NPS
             Settings.instance.pkgParams = textParams.Text;
             Settings.instance.GamesUri = textBox1.Text;
             Settings.instance.DLCUri = textBox2.Text;
+            Settings.instance.PSMUri = textBox3.Text;
             Settings.instance.Store();
         }
 
@@ -108,6 +110,21 @@ namespace NPS
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             Settings.instance.simultaneousDl = (int)numericUpDown1.Value;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new OpenFileDialog())
+            {
+                fbd.Filter = "|*.tsv";
+
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.FileName))
+                {
+                    textBox3.Text = fbd.FileName;
+                }
+            }
         }
     }
 }

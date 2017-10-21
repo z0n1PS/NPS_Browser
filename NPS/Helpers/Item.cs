@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace NPS
 {
@@ -6,7 +7,8 @@ namespace NPS
     {
         public string TitleId, Region, TitleName, zRfi, pkg;
         public System.DateTime lastModifyDate = System.DateTime.MinValue;
-        public int DLCs = 0;
+        public int DLCs { get { return DlcItm.Count; } }
+        public List<Item> DlcItm = new List<Item>();
 
         public Item(string TitleId, string Region, string TitleName, string pkg, string zrif)
         {
@@ -19,12 +21,14 @@ namespace NPS
 
         public void CalculateDlCs(Item[] dlcDbs)
         {
-            this.DLCs = 0;
+            //this.DLCs = 0;
+
             foreach (Item i in dlcDbs)
             {
                 if (i.Region == this.Region && i.TitleId.Contains(this.TitleId))
                 {
-                    this.DLCs++;
+                    this.DlcItm.Add(i);
+                    //this.DLCs++;
                 }
             }
         }

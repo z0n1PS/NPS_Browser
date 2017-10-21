@@ -15,7 +15,7 @@ public class Settings
     public string downloadDir;
     public string pkgPath;
     public string pkgParams;
-    public string GamesUri, DLCUri;
+    public string GamesUri, DLCUri, PSMUri;
     public bool deleteAfterUnpack = false;
     public int simultaneousDl = 2;
 
@@ -39,6 +39,7 @@ public class Settings
         pkgPath = Registry.GetValue(keyName, "pkgPath", "")?.ToString();
         GamesUri = Registry.GetValue(keyName, "GamesUri", "")?.ToString();
         DLCUri = Registry.GetValue(keyName, "DLCUri", "")?.ToString();
+        PSMUri = Registry.GetValue(keyName, "PSMUri", "")?.ToString();
         pkgParams = Registry.GetValue(keyName, "pkgParams", null)?.ToString();
 
 
@@ -75,6 +76,9 @@ public class Settings
             Registry.SetValue(keyName, "GamesUri", GamesUri);
         if (DLCUri != null)
             Registry.SetValue(keyName, "DLCUri", DLCUri);
+
+        if (PSMUri != null)
+            Registry.SetValue(keyName, "PSMUri", PSMUri);
 
         Registry.SetValue(keyName, "deleteAfterUnpack", deleteAfterUnpack);
 

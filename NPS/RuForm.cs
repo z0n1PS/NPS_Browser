@@ -15,10 +15,11 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.56";
+        public const string version = "0.60";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
+        List<Item> psmDbs = new List<Item>();
         HashSet<string> regions = new HashSet<string>();
         int currentOrderColumn = 0;
         bool currentOrderInverted = false;
@@ -73,94 +74,123 @@ namespace NPS
         private void NoPayStationBrowser_Load(object sender, EventArgs e)
         {
 
-
-            if (!string.IsNullOrEmpty(Settings.instance.DLCUri))
+            LoadDatabase(Settings.instance.DLCUri, (db) =>
             {
-                dlcsDbs = LoadDatabase(Settings.instance.DLCUri);
-                radioButton2.Enabled = true;
-            }
-            else
+                dlcsDbs = db;
+                Invoke(new Action(() =>
+                {
+                    if (dlcsDbs.Count > 0)
+                        radioButton2.Enabled = true;
+                    else radioButton2.Enabled = false;
+                }));
+
+                LoadDatabase(Settings.instance.GamesUri, (db2) =>
+                {
+                    gamesDbs = db2;
+
+                    Invoke(new Action(() =>
+                    {
+
+                        if (gamesDbs.Count > 0)
+                            radioButton1.Enabled = true;
+                        else radioButton1.Enabled = false;
+
+                        radioButton1.Checked = true;
+                        currentDatabase = gamesDbs;
+
+                        comboBox1.Items.Clear();
+
+                        comboBox1.Items.Add("ALL");
+                        comboBox1.Text = "ALL";
+
+                        if (Settings.instance.records != 0)
+                        {
+                            var _new = gamesDbs.Count - Settings.instance.records;
+                            if (_new > 0)
+                                label1.Text += " (" + _new.ToString() + " new since last launch)";
+                        }
+
+                        Settings.instance.records = gamesDbs.Count;
+
+                        foreach (string s in regions)
+                            comboBox1.Items.Add(s);
+                    }));
+
+                }, true);
+            });
+
+
+
+
+
+            LoadDatabase(Settings.instance.PSMUri, (db) =>
             {
-                radioButton2.Enabled = false;
-                dlcsDbs = new List<Item>();
-            }
+                psmDbs = db;
+                Invoke(new Action(() =>
+                {
+                    if (psmDbs.Count > 0)
+                        radioButton3.Enabled = true;
+                    else radioButton3.Enabled = false;
+                }));
+            });
 
-            if (!string.IsNullOrEmpty(Settings.instance.GamesUri))
-            {
-                gamesDbs = LoadDatabase(Settings.instance.GamesUri);
-                radioButton1.Enabled = true;
-            }
-            else
-            {
-                gamesDbs = new List<Item>();
-                radioButton1.Enabled = false;
-            }
-
-            radioButton1.Checked = true;
-            currentDatabase = gamesDbs;
-
-            comboBox1.Items.Clear();
-
-            comboBox1.Items.Add("ALL");
-            comboBox1.Text = "ALL";
-
-            //RefreshList(currentDatabase);
-            if (Settings.instance.records != 0)
-            {
-                var _new = gamesDbs.Count - Settings.instance.records;
-                if (_new > 0)
-                    label1.Text += " (" + _new.ToString() + " new since last launch)";
-            }
-
-            Settings.instance.records = gamesDbs.Count;
-
-            foreach (string s in regions)
-                comboBox1.Items.Add(s);
         }
 
-        List<Item> LoadDatabase(string path)
+
+        void LoadDatabase(string path, Action<List<Item>> result, bool addDlc = false)
         {
-            path = new Uri(path).ToString();
             List<Item> dbs = new List<Item>();
-            try
+            if (string.IsNullOrEmpty(path)) result.Invoke(dbs);
+            else
             {
-                WebClient wc = new WebClient();
-                string content = wc.DownloadString(new Uri(path));
-                wc.Dispose();
-                content = Encoding.UTF8.GetString(Encoding.Default.GetBytes(content));
-
-                string[] lines = content.Split(new string[] { "\r\n", "\n\r", "\n", "\r" }, StringSplitOptions.None);
-
-                for (int i = 1; i < lines.Length; i++)
+                Task.Run(() =>
                 {
-                    var a = lines[i].Split('\t');
-                    var itm = new Item(a[0], a[1], a[2], a[3], a[4]);
-                    if (a.Length >= 7)
-                    {
-                        DateTime.TryParse(a[6], out itm.lastModifyDate);
-                    }
-                    if (!itm.zRfi.ToLower().Contains("missing") && itm.pkg.ToLower().Contains("http://"))
-                    {
-                        itm.CalculateDlCs(dlcsDbs.ToArray());
-                        dbs.Add(itm);
-                        regions.Add(itm.Region.Replace(" ", ""));
-                    }
-                }
+                    path = new Uri(path).ToString();
 
-                dbs = dbs.OrderBy(i => i.TitleName).ToList();
-            }
-            catch
-            {
+                    try
+                    {
+                        WebClient wc = new WebClient();
+                        string content = wc.DownloadString(new Uri(path));
+                        wc.Dispose();
+                        content = Encoding.UTF8.GetString(Encoding.Default.GetBytes(content));
 
+                        string[] lines = content.Split(new string[] { "\r\n", "\n\r", "\n", "\r" }, StringSplitOptions.None);
+
+                        for (int i = 1; i < lines.Length; i++)
+                        {
+                            var a = lines[i].Split('\t');
+                            var itm = new Item(a[0], a[1], a[2], a[3], a[4]);
+                            if (a.Length >= 7)
+                            {
+                                DateTime.TryParse(a[6], out itm.lastModifyDate);
+                            }
+                            if (!itm.zRfi.ToLower().Contains("missing") && itm.pkg.ToLower().Contains("http://"))
+                            {
+                                if (addDlc)
+                                    itm.CalculateDlCs(dlcsDbs.ToArray());
+                                dbs.Add(itm);
+                                regions.Add(itm.Region.Replace(" ", ""));
+                            }
+                        }
+
+                        dbs = dbs.OrderBy(i => i.TitleName).ToList();
+                    }
+                    catch
+                    {
+
+                    }
+                    result.Invoke(dbs);
+                });
             }
-            return dbs;
         }
 
 
         void RefreshList(List<Item> items)
         {
             label1.Text = items.Count + " items";
-            listView1.Items.Clear();
+
+            List<ListViewItem> list = new List<ListViewItem>();
+
             foreach (var item in items)
             {
                 var a = new ListViewItem(item.TitleId);
@@ -173,9 +203,14 @@ namespace NPS
                     a.SubItems.Add(item.lastModifyDate.ToString());
                 else a.SubItems.Add("");
                 a.Tag = item;
-
-                listView1.Items.Add(a);
+                list.Add(a);
             }
+
+            listView1.BeginUpdate();
+            listView1.Items.Clear();
+            listView1.Items.AddRange(list.ToArray());
+            listView1.EndUpdate();
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -233,17 +268,23 @@ namespace NPS
 
                 var a = (itm.Tag as Item);
 
-
+                bool contains = false;
                 foreach (var d in downloads)
                     if (d.currentDownload == a)
-                        return; //already downloading
+                    {
+                        contains = true;
+                        break; //already downloading
+                    }
 
-
-                DownloadWorker dw = new DownloadWorker(a, this);
-                listViewEx1.Items.Add(dw.lvi);
-                listViewEx1.AddEmbeddedControl(dw.progress, 3, listViewEx1.Items.Count - 1);
-                downloads.Add(dw);
+                if (!contains)
+                {
+                    DownloadWorker dw = new DownloadWorker(a, this);
+                    listViewEx1.Items.Add(dw.lvi);
+                    listViewEx1.AddEmbeddedControl(dw.progress, 3, listViewEx1.Items.Count - 1);
+                    downloads.Add(dw);
+                }
             }
+
 
         }
 
@@ -434,29 +475,34 @@ namespace NPS
 
         void NewVersionCheck()
         {
-
-            try
+            Task.Run(() =>
             {
-
-
-                WebClient wc = new WebClient();
-                wc.Credentials = CredentialCache.DefaultCredentials;
-                wc.Headers.Add("user-agent", "MyPersonalApp :)");
-                string content = wc.DownloadString("https://api.github.com/repos/jhonhenry10/NPS_Browser/releases");
-                wc.Dispose();
-
-                //dynamic test = JsonConvert.DeserializeObject<dynamic>(content);
-                releases = SimpleJson.SimpleJson.DeserializeObject<Release[]>(content);
-
-                string newVer = releases[0].tag_name;
-                if (version != newVer)
+                try
                 {
-                    downloadUpdateToolStripMenuItem.Visible = true;
-                    this.Text += string.Format("         (!! new version {0} available !!)", newVer);
-                }
 
-            }
-            catch { }
+
+                    WebClient wc = new WebClient();
+                    wc.Credentials = CredentialCache.DefaultCredentials;
+                    wc.Headers.Add("user-agent", "MyPersonalApp :)");
+                    string content = wc.DownloadString("https://api.github.com/repos/jhonhenry10/NPS_Browser/releases");
+                    wc.Dispose();
+
+                    //dynamic test = JsonConvert.DeserializeObject<dynamic>(content);
+                    releases = SimpleJson.SimpleJson.DeserializeObject<Release[]>(content);
+
+                    string newVer = releases[0].tag_name;
+                    if (version != newVer)
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            downloadUpdateToolStripMenuItem.Visible = true;
+                            this.Text += string.Format("         (!! new version {0} available !!)", newVer);
+                        }));
+                    }
+
+                }
+                catch { }
+            });
 
         }
 
@@ -487,6 +533,43 @@ namespace NPS
                 foreach (ListViewItem item in listViewEx1.Items)
                 {
                     item.Selected = true;
+                }
+            }
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton3.Checked == true)
+            {
+                currentDatabase = psmDbs;
+                textBox1_TextChanged(null, null);
+            }
+        }
+
+        private void downloadAllDlcsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem itm in listView1.SelectedItems)
+            {
+
+                var parrent = (itm.Tag as Item);
+
+                foreach (var a in parrent.DlcItm)
+                {
+                    bool contains = false;
+                    foreach (var d in downloads)
+                        if (d.currentDownload == a)
+                        {
+                            contains = true;
+                            break; //already downloading
+                        }
+
+                    if (!contains)
+                    {
+                        DownloadWorker dw = new DownloadWorker(a, this);
+                        listViewEx1.Items.Add(dw.lvi);
+                        listViewEx1.AddEmbeddedControl(dw.progress, 3, listViewEx1.Items.Count - 1);
+                        downloads.Add(dw);
+                    }
                 }
             }
         }
