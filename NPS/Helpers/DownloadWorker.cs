@@ -69,7 +69,10 @@ namespace NPS
 
             if (webClient != null)
                 webClient.CancelAsync();
-            if (unpackProcess != null && !unpackProcess.HasExited) unpackProcess.Kill();
+            if (unpackProcess != null && !unpackProcess.HasExited)
+            {
+                unpackProcess.Kill();
+            }
 
             lvi.SubItems[1].Text = "";
             lvi.SubItems[2].Text = "Canceled";
@@ -79,8 +82,20 @@ namespace NPS
         public void DeletePkg()
         {
             if (currentDownload != null)
-                if (File.Exists(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
-                    File.Delete(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg");
+            {
+                for (int i = 0; i < 1; i++)
+                {
+                    try
+                    {
+                        if (File.Exists(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
+                        {
+                            System.Threading.Thread.Sleep(400);
+                            File.Delete(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg");
+                        }
+                    }
+                    catch { i = 5; }
+                }
+            }
         }
 
         System.Diagnostics.Process unpackProcess = null;
