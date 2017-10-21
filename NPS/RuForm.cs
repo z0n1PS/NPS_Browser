@@ -348,6 +348,8 @@ namespace NPS
                         {
                             pictureBox1.LoadAsync(r.imgUrl);
                             label5.Text = r.ToString();
+                            linkLabel1.Tag = r.url;
+                            linkLabel1.Visible = true;
                         }));
 
                     }
@@ -357,6 +359,7 @@ namespace NPS
                         {
                             pictureBox1.Image = null;
                             label5.Text = "";
+                            linkLabel1.Visible = false;
                         }));
 
                     }
@@ -573,6 +576,12 @@ namespace NPS
                     }
                 }
             }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            //var u = new Uri("https://www.youtube.com/results?search_query=dead or alive");
+            System.Diagnostics.Process.Start(linkLabel1.Tag.ToString());
         }
     }
 

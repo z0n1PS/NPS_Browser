@@ -9,7 +9,7 @@ namespace NPS.Helpers
 
     public class Renascene
     {
-        public string imgUrl, genre, language, publish, developer, size;
+        public string imgUrl, genre, language, publish, developer, size, url;
 
         public Renascene(Item itm)
         {
@@ -19,7 +19,7 @@ namespace NPS.Helpers
 
                 WebClient wc = new WebClient();
                 string content = wc.DownloadString(@"http://renascene.com/psv/?target=search&srch=" + titleId + "&srchser=1");
-                string url = ExtractString(content, "<td class=\"l\"><a href=\"", "\">");
+                url = ExtractString(content, "<td class=\"l\"><a href=\"", "\">");
                 content = wc.DownloadString(url);
 
                 this.imgUrl = ExtractString(content, "<td width=\"300pt\" style=\"vertical-align: top; padding: 0 0 0 5px;\">", "</td>");

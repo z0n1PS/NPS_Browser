@@ -43,6 +43,7 @@ namespace NPS
             this.DLCs = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.modDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.downloadAndUnpackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showTitleDlcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadAllDlcsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -61,13 +62,13 @@ namespace NPS
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.listViewEx1 = new ListViewEmbeddedControls.ListViewEx();
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.downloadAndUnpackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -81,7 +82,7 @@ namespace NPS
             this.downloadUpdateToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(905, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(898, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip";
             // 
@@ -137,7 +138,7 @@ namespace NPS
             this.listView1.FullRowSelect = true;
             this.listView1.Location = new System.Drawing.Point(15, 73);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(629, 316);
+            this.listView1.Size = new System.Drawing.Size(629, 332);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -178,6 +179,13 @@ namespace NPS
             this.contextMenuStrip2.Name = "contextMenuStrip2";
             this.contextMenuStrip2.Size = new System.Drawing.Size(194, 70);
             // 
+            // downloadAndUnpackToolStripMenuItem
+            // 
+            this.downloadAndUnpackToolStripMenuItem.Name = "downloadAndUnpackToolStripMenuItem";
+            this.downloadAndUnpackToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.downloadAndUnpackToolStripMenuItem.Text = "Download and unpack";
+            this.downloadAndUnpackToolStripMenuItem.Click += new System.EventHandler(this.button1_Click);
+            // 
             // showTitleDlcToolStripMenuItem
             // 
             this.showTitleDlcToolStripMenuItem.Name = "showTitleDlcToolStripMenuItem";
@@ -194,7 +202,7 @@ namespace NPS
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 29);
+            this.textBox1.Location = new System.Drawing.Point(15, 29);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(551, 20);
             this.textBox1.TabIndex = 2;
@@ -213,7 +221,7 @@ namespace NPS
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 392);
+            this.label1.Location = new System.Drawing.Point(12, 408);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 5;
@@ -258,16 +266,16 @@ namespace NPS
             this.pictureBox1.ImageLocation = "";
             this.pictureBox1.Location = new System.Drawing.Point(649, 102);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(244, 212);
+            this.pictureBox1.Size = new System.Drawing.Size(244, 211);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 11;
             this.pictureBox1.TabStop = false;
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(649, 317);
+            this.label5.Location = new System.Drawing.Point(649, 326);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(244, 72);
+            this.label5.Size = new System.Drawing.Size(244, 66);
             this.label5.TabIndex = 12;
             // 
             // contextMenuStrip1
@@ -329,6 +337,18 @@ namespace NPS
             this.timer2.Interval = 500;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Enabled = false;
+            this.radioButton3.Location = new System.Drawing.Point(219, 55);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(48, 17);
+            this.radioButton3.TabIndex = 16;
+            this.radioButton3.Text = "PSM";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            // 
             // listViewEx1
             // 
             this.listViewEx1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -338,9 +358,9 @@ namespace NPS
             this.columnHeader11});
             this.listViewEx1.ContextMenuStrip = this.contextMenuStrip1;
             this.listViewEx1.FullRowSelect = true;
-            this.listViewEx1.Location = new System.Drawing.Point(12, 408);
+            this.listViewEx1.Location = new System.Drawing.Point(15, 424);
             this.listViewEx1.Name = "listViewEx1";
-            this.listViewEx1.Size = new System.Drawing.Size(881, 135);
+            this.listViewEx1.Size = new System.Drawing.Size(881, 139);
             this.listViewEx1.TabIndex = 14;
             this.listViewEx1.UseCompatibleStateImageBehavior = false;
             this.listViewEx1.View = System.Windows.Forms.View.Details;
@@ -366,30 +386,24 @@ namespace NPS
             this.columnHeader11.Text = "";
             this.columnHeader11.Width = 224;
             // 
-            // radioButton3
+            // linkLabel1
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Enabled = false;
-            this.radioButton3.Location = new System.Drawing.Point(219, 55);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(48, 17);
-            this.radioButton3.TabIndex = 16;
-            this.radioButton3.Text = "PSM";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
-            // 
-            // downloadAndUnpackToolStripMenuItem
-            // 
-            this.downloadAndUnpackToolStripMenuItem.Name = "downloadAndUnpackToolStripMenuItem";
-            this.downloadAndUnpackToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.downloadAndUnpackToolStripMenuItem.Text = "Download and unpack";
-            this.downloadAndUnpackToolStripMenuItem.Click += new System.EventHandler(this.button1_Click);
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(649, 392);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(187, 13);
+            this.linkLabel1.TabIndex = 17;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Open renascene.com (screens, video)";
+            this.linkLabel1.Visible = false;
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // NPSBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(905, 555);
+            this.ClientSize = new System.Drawing.Size(898, 566);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.radioButton3);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.listViewEx1);
@@ -464,6 +478,7 @@ namespace NPS
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.ToolStripMenuItem downloadAllDlcsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem downloadAndUnpackToolStripMenuItem;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 
