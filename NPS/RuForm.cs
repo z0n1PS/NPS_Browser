@@ -165,7 +165,7 @@ namespace NPS
                             {
                                 DateTime.TryParse(a[6], out itm.lastModifyDate);
                             }
-                            if (!itm.zRfi.ToLower().Contains("missing") && itm.pkg.ToLower().Contains("http://"))
+                            if (!itm.zRif.ToLower().Contains("missing") && itm.pkg.ToLower().Contains("http://"))
                             {
                                 if (addDlc)
                                     itm.CalculateDlCs(dlcsDbs.ToArray());
@@ -280,7 +280,7 @@ namespace NPS
         {
             if (string.IsNullOrEmpty(Settings.Instance.downloadDir) || string.IsNullOrEmpty(Settings.Instance.pkgPath))
             {
-                MessageBox.Show("You don't have proper config", "Whops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You don't have a proper configuration.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Options o = new Options();
                 o.ShowDialog();
                 return;
@@ -288,7 +288,7 @@ namespace NPS
 
             if (!File.Exists(Settings.Instance.pkgPath))
             {
-                MessageBox.Show("You missing your pkg dec", "Whops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You are missing your pkg dec.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Options o = new Options();
                 o.ShowDialog();
                 return;
@@ -298,7 +298,6 @@ namespace NPS
 
             foreach (ListViewItem itm in lstTitles.SelectedItems)
             {
-
                 var a = (itm.Tag as Item);
 
                 bool contains = false;

@@ -5,7 +5,7 @@ namespace NPS
 {
     public class Item
     {
-        public string TitleId, Region, TitleName, zRfi, pkg;
+        public string TitleId, Region, TitleName, zRif, pkg;
         public System.DateTime lastModifyDate = System.DateTime.MinValue;
         public int DLCs { get { return DlcItm.Count; } }
         public List<Item> DlcItm = new List<Item>();
@@ -16,7 +16,7 @@ namespace NPS
             this.Region = Region;
             this.TitleName = TitleName;
             this.pkg = pkg;
-            this.zRfi = zrif;
+            this.zRif = zrif;
         }
 
         public void CalculateDlCs(Item[] dlcDbs)
