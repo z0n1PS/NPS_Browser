@@ -311,6 +311,10 @@ namespace NPS
 
                 if (!contains)
                 {
+                    if (Settings.Instance.downloadToGameDir)
+                        a.setDownloadDir(Settings.Instance.downloadDir + System.IO.Path.DirectorySeparatorChar + String.Join("", a.TitleName.Split(Path.GetInvalidFileNameChars())));
+                    else
+                        a.setDownloadDir(Settings.Instance.downloadDir);
                     DownloadWorker dw = new DownloadWorker(a, this);
                     lstDownloadStatus.Items.Add(dw.lvi);
                     lstDownloadStatus.AddEmbeddedControl(dw.progress, 3, lstDownloadStatus.Items.Count - 1);
