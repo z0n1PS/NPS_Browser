@@ -13,7 +13,6 @@ public class Settings
     public string pkgParams;
     public string GamesUri, DLCUri, PSMUri;
     public bool deleteAfterUnpack = false;
-    public bool downloadToGameDir = false;
     public int simultaneousDl = 2;
 
     public int records
@@ -51,11 +50,6 @@ public class Settings
             bool.TryParse(deleteAfterUnpackString, out deleteAfterUnpack);
         else deleteAfterUnpack = true;
 
-        string downloadToGameDirString = Registry.GetValue(keyName, "downloadToGameDir", false)?.ToString();
-        if (!string.IsNullOrEmpty(downloadToGameDirString))
-            bool.TryParse(downloadToGameDirString, out downloadToGameDir);
-        else downloadToGameDir = true;
-
         var rec = Registry.GetValue(keyName, "records", null)?.ToString();
         if (rec != null) int.TryParse(rec, out _records);
 
@@ -82,7 +76,5 @@ public class Settings
         Registry.SetValue(keyName, "deleteAfterUnpack", deleteAfterUnpack);
 
         Registry.SetValue(keyName, "simultaneousDl", simultaneousDl);
-
-        Registry.SetValue(keyName, "downloadToGameDir", downloadToGameDir);
     }
 }

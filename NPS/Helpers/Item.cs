@@ -5,7 +5,7 @@ namespace NPS
 {
     public class Item
     {
-        public string TitleId, Region, TitleName, zRfi, pkg, DownloadDir;
+        public string TitleId, Region, TitleName, zRfi, pkg;
         public System.DateTime lastModifyDate = System.DateTime.MinValue;
         public int DLCs { get { return DlcItm.Count; } }
         public List<Item> DlcItm = new List<Item>();
@@ -40,11 +40,6 @@ namespace NPS
             if (this.TitleId.ToLower().Contains(name)) return true;
             if (this.TitleName.ToLower().Contains(name)) return true;
             return false;
-        }
-
-        public void setDownloadDir(string downloadDir)
-        {
-            this.DownloadDir = downloadDir;
         }
     }
 
