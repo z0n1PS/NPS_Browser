@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 //-----------------------------------------------------------------------
 // <copyright file="SimpleJson.cs" company="The Outercurve Foundation">
@@ -56,10 +54,8 @@ using System.Threading.Tasks;
 #define SIMPLE_JSON_TYPEINFO
 #endif
 
-using System;
 using System.CodeDom.Compiler;
 using System.Collections;
-using System.Collections.Generic;
 #if !SIMPLE_JSON_NO_LINQ_EXPRESSION
 using System.Linq.Expressions;
 #endif
@@ -71,7 +67,6 @@ using System.Dynamic;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
 using SimpleJson.Reflection;
 
 // ReSharper disable LoopCanBeConvertedToQuery

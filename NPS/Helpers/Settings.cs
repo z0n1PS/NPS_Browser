@@ -1,8 +1,4 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 public class Settings
 {
@@ -10,7 +6,7 @@ public class Settings
     const string subkey = "NoPayStationBrowser";
     const string keyName = userRoot + "\\" + subkey;
 
-    public static Settings instance;
+    public static Settings Instance;
 
     public string downloadDir;
     public string pkgPath;
@@ -33,7 +29,8 @@ public class Settings
 
     public Settings()
     {
-        instance = this;
+        Instance = this;
+
         //defaultRegion = Registry.GetValue(keyName, "region", "ALL")?.ToString();
         downloadDir = Registry.GetValue(keyName, "downloadDir", "")?.ToString();
         pkgPath = Registry.GetValue(keyName, "pkgPath", "")?.ToString();
@@ -41,8 +38,6 @@ public class Settings
         DLCUri = Registry.GetValue(keyName, "DLCUri", "")?.ToString();
         PSMUri = Registry.GetValue(keyName, "PSMUri", "")?.ToString();
         pkgParams = Registry.GetValue(keyName, "pkgParams", null)?.ToString();
-
-
 
         string simultanesulString = Registry.GetValue(keyName, "simultaneousDl", 2)?.ToString();
 
@@ -59,8 +54,6 @@ public class Settings
         if (rec != null) int.TryParse(rec, out _records);
 
         if (pkgParams == null) pkgParams = "{pkgFile} --make-dirs=ux --license=\"{zRifKey}\" --queue-length=500";
-
-
     }
 
     public void Store()
@@ -84,9 +77,4 @@ public class Settings
 
         Registry.SetValue(keyName, "simultaneousDl", simultaneousDl);
     }
-
-
-
-
-
 }

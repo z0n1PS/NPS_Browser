@@ -87,10 +87,10 @@ namespace NPS
                 {
                     try
                     {
-                        if (File.Exists(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
+                        if (File.Exists(Settings.Instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
                         {
                             System.Threading.Thread.Sleep(400);
-                            File.Delete(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg");
+                            File.Delete(Settings.Instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg");
                         }
                     }
                     catch { i = 5; }
@@ -106,11 +106,11 @@ namespace NPS
             lvi.SubItems[2].Text = "Unpacking";
 
             System.Diagnostics.ProcessStartInfo a = new System.Diagnostics.ProcessStartInfo();
-            a.WorkingDirectory = Settings.instance.downloadDir + "\\";
-            a.FileName = string.Format("\"{0}\"", Settings.instance.pkgPath);
+            a.WorkingDirectory = Settings.Instance.downloadDir + "\\";
+            a.FileName = string.Format("\"{0}\"", Settings.Instance.pkgPath);
             a.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             a.CreateNoWindow = true;
-            a.Arguments = Settings.instance.pkgParams.ToLower().Replace("{pkgfile}", "\"" + Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg\"").Replace("{zrifkey}", currentDownload.zRfi);
+            a.Arguments = Settings.Instance.pkgParams.ToLower().Replace("{pkgfile}", "\"" + Settings.Instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg\"").Replace("{zrifkey}", currentDownload.zRfi);
             unpackProcess = new System.Diagnostics.Process();
 
             unpackProcess.StartInfo = a;
@@ -153,7 +153,7 @@ namespace NPS
                 {
                     lvi.SubItems[1].Text = "";
                     lvi.SubItems[2].Text = "Completed";
-                    if (Settings.instance.deleteAfterUnpack)
+                    if (Settings.Instance.deleteAfterUnpack)
                         DeletePkg();
                 }));
             }
@@ -187,7 +187,7 @@ namespace NPS
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadCompleted);
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
                 webClient.DownloadProgressChanged += (sender, e) => progressChangeForSpeed(e.BytesReceived);
-                webClient.DownloadFileAsync(new Uri(currentDownload.pkg), Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg");
+                webClient.DownloadFileAsync(new Uri(currentDownload.pkg), Settings.Instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg");
             }
             catch (Exception err)
             {
@@ -200,7 +200,7 @@ namespace NPS
             int count = 1;
             string orgTitle = currentDownload.TitleId;
 
-            while (File.Exists(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
+            while (File.Exists(Settings.Instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
             {
                 currentDownload.TitleId = orgTitle + "_" + count;
                 count++;

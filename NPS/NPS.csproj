@@ -53,6 +53,14 @@
   <PropertyGroup>
     <ApplicationIcon>8-512.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -124,7 +132,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="8-512.ico" />
+    <None Include="images\menu-retry.png" />
+    <None Include="images\menu-download-dlc.png" />
+    <None Include="images\menu-delete.png" />
+    <None Include="images\menu-clear.png" />
+    <None Include="images\menu-cancel.png" />
+    <None Include="images\menu-show-dlc.png" />
+    <None Include="images\menu-reload.png" />
+    <None Include="images\menu-options.png" />
+    <None Include="images\menu-exit.png" />
+    <None Include="images\menu-download.png" />
+    <None Include="images\menu-unpack.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

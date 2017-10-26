@@ -23,14 +23,14 @@ namespace NPS
 
         private void Options_Load(object sender, EventArgs e)
         {
-            textDownload.Text = Settings.instance.downloadDir;
-            textPKGPath.Text = Settings.instance.pkgPath;
-            textParams.Text = Settings.instance.pkgParams;
-            textBox1.Text = Settings.instance.GamesUri;
-            textBox2.Text = Settings.instance.DLCUri;
-            checkBox1.Checked = Settings.instance.deleteAfterUnpack;
-            numericUpDown1.Value = Settings.instance.simultaneousDl;
-            textBox3.Text = Settings.instance.PSMUri;
+            textDownload.Text = Settings.Instance.downloadDir;
+            textPKGPath.Text = Settings.Instance.pkgPath;
+            textParams.Text = Settings.Instance.pkgParams;
+            textBox1.Text = Settings.Instance.GamesUri;
+            textBox2.Text = Settings.Instance.DLCUri;
+            checkBox1.Checked = Settings.Instance.deleteAfterUnpack;
+            numericUpDown1.Value = Settings.Instance.simultaneousDl;
+            textBox3.Text = Settings.Instance.PSMUri;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -42,7 +42,7 @@ namespace NPS
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     textDownload.Text = fbd.SelectedPath;
-                    Settings.instance.downloadDir = textDownload.Text;
+                    Settings.Instance.downloadDir = textDownload.Text;
                 }
             }
         }
@@ -58,18 +58,18 @@ namespace NPS
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.FileName))
                 {
                     textPKGPath.Text = fbd.FileName;
-                    Settings.instance.pkgPath = textPKGPath.Text;
+                    Settings.Instance.pkgPath = textPKGPath.Text;
                 }
             }
         }
 
         private void Options_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Settings.instance.pkgParams = textParams.Text;
-            Settings.instance.GamesUri = textBox1.Text;
-            Settings.instance.DLCUri = textBox2.Text;
-            Settings.instance.PSMUri = textBox3.Text;
-            Settings.instance.Store();
+            Settings.Instance.pkgParams = textParams.Text;
+            Settings.Instance.GamesUri = textBox1.Text;
+            Settings.Instance.DLCUri = textBox2.Text;
+            Settings.Instance.PSMUri = textBox3.Text;
+            Settings.Instance.Store();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -104,12 +104,12 @@ namespace NPS
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.instance.deleteAfterUnpack = checkBox1.Checked;
+            Settings.Instance.deleteAfterUnpack = checkBox1.Checked;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            Settings.instance.simultaneousDl = (int)numericUpDown1.Value;
+            Settings.Instance.simultaneousDl = (int)numericUpDown1.Value;
         }
 
         private void button5_Click(object sender, EventArgs e)

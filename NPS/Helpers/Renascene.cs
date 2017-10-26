@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 
 namespace NPS.Helpers
 {
-
     public class Renascene
     {
         public string imgUrl, genre, language, publish, developer, size, url;
@@ -49,7 +45,7 @@ namespace NPS.Helpers
                     this.size = fileSizeInMegaByte + " MB";
                 }
             }
-            catch (Exception err)
+            catch
             {
                 imgUrl = genre = language = publish = developer = size = null;
             }
