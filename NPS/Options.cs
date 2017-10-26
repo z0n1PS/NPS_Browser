@@ -31,6 +31,7 @@ namespace NPS
             checkBox1.Checked = Settings.Instance.deleteAfterUnpack;
             numericUpDown1.Value = Settings.Instance.simultaneousDl;
             textBox3.Text = Settings.Instance.PSMUri;
+            checkBox3.Checked = Settings.Instance.downloadToGameDir;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -126,5 +127,11 @@ namespace NPS
                 }
             }
         }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Instance.downloadToGameDir = checkBox3.Checked;
+        }
+
     }
 }
