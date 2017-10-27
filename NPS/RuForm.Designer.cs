@@ -55,8 +55,9 @@ namespace NPS
             this.ptbCover = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.lstDownloadStatusMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deletePKGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.retryUnpackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearCompletedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -321,12 +322,30 @@ namespace NPS
             // lstDownloadStatusMenuStrip
             // 
             this.lstDownloadStatusMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pauseToolStripMenuItem,
+            this.resumeToolStripMenuItem,
             this.cancelToolStripMenuItem,
-            this.deletePKGToolStripMenuItem,
             this.retryUnpackToolStripMenuItem,
             this.clearCompletedToolStripMenuItem});
             this.lstDownloadStatusMenuStrip.Name = "contextMenuStrip1";
-            this.lstDownloadStatusMenuStrip.Size = new System.Drawing.Size(164, 92);
+            this.lstDownloadStatusMenuStrip.Size = new System.Drawing.Size(164, 138);
+            // 
+            // pauseToolStripMenuItem
+            // 
+            this.pauseToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_pause;
+            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.pauseToolStripMenuItem.Text = "Pause";
+            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
+            // 
+            // resumeToolStripMenuItem
+            // 
+            this.resumeToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_unpause;
+            this.resumeToolStripMenuItem.Margin = new System.Windows.Forms.Padding(1);
+            this.resumeToolStripMenuItem.Name = "resumeToolStripMenuItem";
+            this.resumeToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.resumeToolStripMenuItem.Text = "Resume";
+            this.resumeToolStripMenuItem.Click += new System.EventHandler(this.resumeToolStripMenuItem_Click);
             // 
             // cancelToolStripMenuItem
             // 
@@ -335,14 +354,6 @@ namespace NPS
             this.cancelToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.cancelToolStripMenuItem.Text = "Cancel";
             this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
-            // 
-            // deletePKGToolStripMenuItem
-            // 
-            this.deletePKGToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_delete;
-            this.deletePKGToolStripMenuItem.Name = "deletePKGToolStripMenuItem";
-            this.deletePKGToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
-            this.deletePKGToolStripMenuItem.Text = "Delete pkg File";
-            this.deletePKGToolStripMenuItem.Click += new System.EventHandler(this.deletePKGToolStripMenuItem_Click);
             // 
             // retryUnpackToolStripMenuItem
             // 
@@ -625,7 +636,6 @@ namespace NPS
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ContextMenuStrip lstDownloadStatusMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem cancelToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deletePKGToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem retryUnpackToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
         private ListViewEmbeddedControls.ListViewEx lstDownloadStatus;
@@ -656,6 +666,8 @@ namespace NPS
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Label lblCount;
+        private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resumeToolStripMenuItem;
     }
 }
 

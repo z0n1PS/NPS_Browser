@@ -11,14 +11,24 @@ namespace NPS
         public List<Item> DlcItm = new List<Item>();
         public bool IsDLC = false;
         public string ParentGameTitle = string.Empty;
+        public string ContentId = null;
+        public string DownloadFileName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(ContentId)) return TitleId;
+                else return ContentId;
+            }
+        }
 
-        public Item(string TitleId, string Region, string TitleName, string pkg, string zRif)
+        public Item(string TitleId, string Region, string TitleName, string pkg, string zRif, string ContentId)
         {
             this.TitleId = TitleId;
             this.Region = Region;
             this.TitleName = TitleName;
             this.pkg = pkg;
             this.zRif = zRif;
+            this.ContentId = ContentId;
         }
 
         public void CalculateDlCs(Item[] dlcDbs)

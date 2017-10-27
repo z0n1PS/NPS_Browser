@@ -12,7 +12,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.70";
+        public const string version = "0.71";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -102,7 +102,7 @@ namespace NPS
                         rbnPSM.Enabled = true;
                     else rbnPSM.Enabled = false;
                 }));
-            });
+            }, false, true);
         }
 
         private void NewVersionCheck()
@@ -134,7 +134,7 @@ namespace NPS
             });
         }
 
-        private void LoadDatabase(string path, Action<List<Item>> result, bool addDlc = false, bool isDLC = false)
+        private void LoadDatabase(string path, Action<List<Item>> result, bool addDlc = false, bool isDLC = false, bool isPsm = false)
         {
             List<Item> dbs = new List<Item>();
             if (string.IsNullOrEmpty(path))
@@ -157,7 +157,8 @@ namespace NPS
                         for (int i = 1; i < lines.Length; i++)
                         {
                             var a = lines[i].Split('\t');
-                            var itm = new Item(a[0], a[1], a[2], a[3], a[4]);
+                            if (isPsm) a[5] = null;
+                            var itm = new Item(a[0], a[1], a[2], a[3], a[4], a[5]);
                             if (a.Length >= 7)
                             {
                                 DateTime.TryParse(a[6], out itm.lastModifyDate);
@@ -413,6 +414,26 @@ namespace NPS
             }
         }
 
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstDownloadStatus.SelectedItems.Count == 0) return;
+            foreach (ListViewItem a in lstDownloadStatus.SelectedItems)
+            {
+                DownloadWorker itm = (a.Tag as DownloadWorker);
+                itm.Pause();
+            }
+        }
+
+        private void resumeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstDownloadStatus.SelectedItems.Count == 0) return;
+            foreach (ListViewItem a in lstDownloadStatus.SelectedItems)
+            {
+                DownloadWorker itm = (a.Tag as DownloadWorker);
+                itm.Resume();
+            }
+        }
+
         // lstDownloadStatus Menu Strip
         private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -421,19 +442,11 @@ namespace NPS
             {
                 DownloadWorker itm = (a.Tag as DownloadWorker);
                 itm.Cancel();
-                itm.DeletePkg();
+                //itm.DeletePkg();
             }
         }
 
-        private void deletePKGToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (lstDownloadStatus.SelectedItems.Count == 0) return;
-            foreach (ListViewItem a in lstDownloadStatus.SelectedItems)
-            {
-                DownloadWorker itm = (a.Tag as DownloadWorker);
-                itm.DeletePkg();
-            }
-        }
+
 
         private void retryUnpackToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -539,6 +552,8 @@ namespace NPS
                 }, tokenSource.Token);
             }
         }
+
+
     }
 
     class Release
