@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -67,7 +66,6 @@ namespace NPS
 
                     Invoke(new Action(() =>
                     {
-
                         if (gamesDbs.Count > 0)
                             rbnGames.Enabled = true;
                         else rbnGames.Enabled = false;
@@ -91,10 +89,16 @@ namespace NPS
 
                         foreach (string s in regions)
                             cmbRegion.Items.Add(s);
-                    }));
 
+                        // Populate DLC Parent Titles
+                        foreach (var item in dlcsDbs)
+                        {
+                            var result = gamesDbs.FirstOrDefault(i => i.TitleId.StartsWith(item.TitleId.Substring(0, 9)))?.TitleName;
+                            item.ParentGameTitle = result ?? string.Empty;
+                        }
+                    }));
                 }, true);
-            });
+            }, false, true);
 
             LoadDatabase(Settings.Instance.PSMUri, (db) =>
             {
@@ -137,7 +141,7 @@ namespace NPS
             });
         }
 
-        private void LoadDatabase(string path, Action<List<Item>> result, bool addDlc = false)
+        private void LoadDatabase(string path, Action<List<Item>> result, bool addDlc = false, bool isDLC = false)
         {
             List<Item> dbs = new List<Item>();
             if (string.IsNullOrEmpty(path))
@@ -165,6 +169,7 @@ namespace NPS
                             {
                                 DateTime.TryParse(a[6], out itm.lastModifyDate);
                             }
+                            itm.IsDLC = isDLC;
                             if (!itm.zRif.ToLower().Contains("missing") && itm.pkg.ToLower().Contains("http://"))
                             {
                                 if (addDlc)

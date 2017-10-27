@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace NPS
@@ -103,6 +104,8 @@ namespace NPS
             {
                 ["{pkgfile}"] = $"\"{Settings.Instance.downloadDir}\\{currentDownload.TitleId}.pkg\"",
                 ["{titleid}"] = currentDownload.TitleId.Substring(0, 9),
+                ["{gametitle}"] = Regex.Replace(currentDownload.IsDLC ? currentDownload.ParentGameTitle : currentDownload.TitleName, "[/:\" *?<>|\\r\\n]+", string.Empty),
+                ["{region}"] = currentDownload.Region,
                 ["{zrifkey}"] = currentDownload.zRif
             };
 

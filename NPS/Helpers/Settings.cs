@@ -53,7 +53,7 @@ public class Settings
         var rec = Registry.GetValue(keyName, "records", null)?.ToString();
         if (rec != null) int.TryParse(rec, out _records);
 
-        if (pkgParams == null) pkgParams = "--make-dirs=ux --license=\"{zRifKey}\" {pkgFile} {titleID}";
+        if (pkgParams == null) pkgParams = "--make-dirs=ux --license=\"{zRifKey}\" {pkgFile} \"{gameTitle} ({region}) [{titleID}]\"";
     }
 
     public void Store()
