@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace NPS
@@ -46,10 +44,7 @@ namespace NPS
             timer.Tick += Timer_Tick;
             formCaller = f;
             status = WorkerStatus.Queued;
-
         }
-
-
 
         public void Start()
         {
@@ -87,10 +82,10 @@ namespace NPS
                 {
                     try
                     {
-                        if (File.Exists(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
+                        if (File.Exists(Settings.Instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
                         {
                             System.Threading.Thread.Sleep(400);
-                            File.Delete(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg");
+                            File.Delete(Settings.Instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg");
                         }
                     }
                     catch { i = 5; }
@@ -98,27 +93,35 @@ namespace NPS
             }
         }
 
-        System.Diagnostics.Process unpackProcess = null;
+        Process unpackProcess = null;
         public void Unpack()
         {
             if (this.status == WorkerStatus.Queued || this.status == WorkerStatus.Running || this.status == WorkerStatus.Canceled) return;
 
             lvi.SubItems[2].Text = "Unpacking";
 
-            System.Diagnostics.ProcessStartInfo a = new System.Diagnostics.ProcessStartInfo();
-            a.WorkingDirectory = Settings.instance.downloadDir + "\\";
-            a.FileName = string.Format("\"{0}\"", Settings.instance.pkgPath);
-            a.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            a.CreateNoWindow = true;
-            a.Arguments = Settings.instance.pkgParams.ToLower().Replace("{pkgfile}", "\"" + Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg\"").Replace("{zrifkey}", currentDownload.zRfi);
-            unpackProcess = new System.Diagnostics.Process();
+            var replacements = new Dictionary<string, string>
+            {
+                ["{pkgfile}"] = $"\"{Settings.Instance.downloadDir}\\{currentDownload.TitleId}.pkg\"",
+                ["{titleid}"] = currentDownload.TitleId.Substring(0, 9),
+                ["{gametitle}"] = Regex.Replace(currentDownload.IsDLC ? currentDownload.ParentGameTitle : currentDownload.TitleName, "[/:\" *?<>|\\r\\n]+", string.Empty),
+                ["{region}"] = currentDownload.Region,
+                ["{zrifkey}"] = currentDownload.zRif
+            };
 
+            ProcessStartInfo a = new ProcessStartInfo();
+            a.WorkingDirectory = Settings.Instance.downloadDir + "\\";
+            a.FileName = string.Format("\"{0}\"", Settings.Instance.pkgPath);
+            a.WindowStyle = ProcessWindowStyle.Hidden;
+            a.CreateNoWindow = true;
+            a.Arguments = replacements.Aggregate(Settings.Instance.pkgParams.ToLower(), (str, rep) => str.Replace(rep.Key, rep.Value));
+
+            unpackProcess = new Process();
             unpackProcess.StartInfo = a;
 
             a.UseShellExecute = false;
             //a.RedirectStandardOutput = true;
             a.RedirectStandardError = true;
-
 
             unpackProcess.EnableRaisingEvents = true;
             unpackProcess.Exited += Proc_Exited;
@@ -146,14 +149,14 @@ namespace NPS
         {
             this.status = WorkerStatus.Completed;
 
-            var proc = (sender as System.Diagnostics.Process);
+            var proc = (sender as Process);
             if (proc.ExitCode == 0)
             {
                 formCaller.Invoke(new Action(() =>
                 {
                     lvi.SubItems[1].Text = "";
                     lvi.SubItems[2].Text = "Completed";
-                    if (Settings.instance.deleteAfterUnpack)
+                    if (Settings.Instance.deleteAfterUnpack)
                         DeletePkg();
                 }));
             }
@@ -171,11 +174,9 @@ namespace NPS
                         if (errors.Count > 0)
                             lvi.SubItems[2].Text = errors[0];
                     }
-
                 }
                 ));
             }
-
         }
 
         private void DownloadFile(/*Item item*/)
@@ -187,7 +188,7 @@ namespace NPS
                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(DownloadCompleted);
                 webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
                 webClient.DownloadProgressChanged += (sender, e) => progressChangeForSpeed(e.BytesReceived);
-                webClient.DownloadFileAsync(new Uri(currentDownload.pkg), Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg");
+                webClient.DownloadFileAsync(new Uri(currentDownload.pkg), Settings.Instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg");
             }
             catch (Exception err)
             {
@@ -200,13 +201,11 @@ namespace NPS
             int count = 1;
             string orgTitle = currentDownload.TitleId;
 
-            while (File.Exists(Settings.instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
+            while (File.Exists(Settings.Instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
             {
                 currentDownload.TitleId = orgTitle + "_" + count;
                 count++;
             }
-
-
         }
 
         private string currentSpeed = "Queued", progressString = "Queued";
@@ -235,9 +234,8 @@ namespace NPS
             {
                 currentSpeed = ((float)((float)bytesPerSecond / 1024)).ToString("0.00") + " MB/s";
             }
-
         }
-        //  
+
         private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             progressString = ((float)((float)e.BytesReceived / (1024 * 1024))).ToString("0.00") + " MB / " + ((float)((float)e.TotalBytesToReceive / (1024 * 1024))).ToString("0.00") + " MB";
@@ -253,12 +251,10 @@ namespace NPS
 
             if (!e.Cancelled)
             {
-
                 this.status = WorkerStatus.Downloaded;
 
                 lvi.SubItems[1].Text = "";
                 Unpack();
-
 
                 progress.Value = 100;
             }
@@ -267,9 +263,7 @@ namespace NPS
                 lvi.SubItems[1].Text = "";
                 lvi.SubItems[2].Text = "Canceled";
                 this.status = WorkerStatus.Canceled;
-
             }
-
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -277,12 +271,8 @@ namespace NPS
             lvi.SubItems[1].Text = currentSpeed;
             lvi.SubItems[2].Text = progressString;
             progress.Value = percent;
-
         }
-
     }
 
     public enum WorkerStatus { Queued, Running, Completed, Downloaded, Canceled }
-
-
 }

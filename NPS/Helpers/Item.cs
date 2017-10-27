@@ -5,18 +5,20 @@ namespace NPS
 {
     public class Item
     {
-        public string TitleId, Region, TitleName, zRfi, pkg;
+        public string TitleId, Region, TitleName, zRif, pkg;
         public System.DateTime lastModifyDate = System.DateTime.MinValue;
         public int DLCs { get { return DlcItm.Count; } }
         public List<Item> DlcItm = new List<Item>();
+        public bool IsDLC = false;
+        public string ParentGameTitle = string.Empty;
 
-        public Item(string TitleId, string Region, string TitleName, string pkg, string zrif)
+        public Item(string TitleId, string Region, string TitleName, string pkg, string zRif)
         {
             this.TitleId = TitleId;
             this.Region = Region;
             this.TitleName = TitleName;
             this.pkg = pkg;
-            this.zRfi = zrif;
+            this.zRif = zRif;
         }
 
         public void CalculateDlCs(Item[] dlcDbs)

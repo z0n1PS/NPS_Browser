@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -25,123 +22,130 @@ namespace NPS
         bool currentOrderInverted = false;
 
         List<DownloadWorker> downloads = new List<DownloadWorker>();
+        Release[] releases = null;
 
         public NPSBrowser()
         {
-
             InitializeComponent();
             this.Text += " " + version;
             new Settings();
 
-            if (string.IsNullOrEmpty(Settings.instance.GamesUri) && string.IsNullOrEmpty(Settings.instance.DLCUri))
+            if (string.IsNullOrEmpty(Settings.Instance.GamesUri) && string.IsNullOrEmpty(Settings.Instance.DLCUri))
             {
                 MessageBox.Show("Application did not provide any links to external files or decrypt mechanism.\r\nYou need to specify tsv (tab splitted text) file with your personal links to pkg files on your own.\r\n\r\nFormat: TitleId Region Name Pkg Key", "Disclaimer!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Options o = new Options();
                 o.ShowDialog();
             }
-            else if (!File.Exists(Settings.instance.pkgPath))
+            else if (!File.Exists(Settings.Instance.pkgPath))
             {
                 MessageBox.Show("You are missing your pkg_dec.exe", "Whops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Options o = new Options();
                 o.ShowDialog();
             }
 
-
             NewVersionCheck();
-
         }
-
-
-
-        /// <summary>
-        /// Exit Application
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        /// <summary>
-        /// Aboutbox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
-
 
         private void NoPayStationBrowser_Load(object sender, EventArgs e)
         {
-            System.Net.ServicePointManager.DefaultConnectionLimit = 30;
+            ServicePointManager.DefaultConnectionLimit = 30;
 
-            LoadDatabase(Settings.instance.DLCUri, (db) =>
+            LoadDatabase(Settings.Instance.DLCUri, (db) =>
             {
                 dlcsDbs = db;
                 Invoke(new Action(() =>
                 {
                     if (dlcsDbs.Count > 0)
-                        radioButton2.Enabled = true;
-                    else radioButton2.Enabled = false;
+                        rbnDLC.Enabled = true;
+                    else rbnDLC.Enabled = false;
                 }));
 
-                LoadDatabase(Settings.instance.GamesUri, (db2) =>
+                LoadDatabase(Settings.Instance.GamesUri, (db2) =>
                 {
                     gamesDbs = db2;
 
                     Invoke(new Action(() =>
                     {
-
                         if (gamesDbs.Count > 0)
-                            radioButton1.Enabled = true;
-                        else radioButton1.Enabled = false;
+                            rbnGames.Enabled = true;
+                        else rbnGames.Enabled = false;
 
-                        radioButton1.Checked = true;
+                        rbnGames.Checked = true;
                         currentDatabase = gamesDbs;
 
-                        comboBox1.Items.Clear();
+                        cmbRegion.Items.Clear();
 
-                        comboBox1.Items.Add("ALL");
-                        comboBox1.Text = "ALL";
+                        cmbRegion.Items.Add("ALL");
+                        cmbRegion.Text = "ALL";
 
-                        if (Settings.instance.records != 0)
+                        if (Settings.Instance.records != 0)
                         {
-                            var _new = gamesDbs.Count - Settings.instance.records;
+                            var _new = gamesDbs.Count - Settings.Instance.records;
                             if (_new > 0)
                                 label1.Text += " (" + _new.ToString() + " new since last launch)";
                         }
 
-                        Settings.instance.records = gamesDbs.Count;
+                        Settings.Instance.records = gamesDbs.Count;
 
                         foreach (string s in regions)
-                            comboBox1.Items.Add(s);
+                            cmbRegion.Items.Add(s);
+
+                        // Populate DLC Parent Titles
+                        foreach (var item in dlcsDbs)
+                        {
+                            var result = gamesDbs.FirstOrDefault(i => i.TitleId.StartsWith(item.TitleId.Substring(0, 9)))?.TitleName;
+                            item.ParentGameTitle = result ?? string.Empty;
+                        }
                     }));
-
                 }, true);
-            });
+            }, false, true);
 
-
-
-
-
-            LoadDatabase(Settings.instance.PSMUri, (db) =>
+            LoadDatabase(Settings.Instance.PSMUri, (db) =>
             {
                 psmDbs = db;
                 Invoke(new Action(() =>
                 {
                     if (psmDbs.Count > 0)
-                        radioButton3.Enabled = true;
-                    else radioButton3.Enabled = false;
+                        rbnPSM.Enabled = true;
+                    else rbnPSM.Enabled = false;
                 }));
             });
-
         }
 
+        private void NewVersionCheck()
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    WebClient wc = new WebClient();
+                    wc.Credentials = CredentialCache.DefaultCredentials;
+                    wc.Headers.Add("user-agent", "MyPersonalApp :)");
+                    string content = wc.DownloadString("https://api.github.com/repos/jhonhenry10/NPS_Browser/releases");
+                    wc.Dispose();
 
-        void LoadDatabase(string path, Action<List<Item>> result, bool addDlc = false)
+                    //dynamic test = JsonConvert.DeserializeObject<dynamic>(content);
+                    releases = SimpleJson.SimpleJson.DeserializeObject<Release[]>(content);
+
+                    string newVer = releases[0].tag_name;
+                    if (version != newVer)
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            downloadUpdateToolStripMenuItem.Visible = true;
+                            this.Text += string.Format("         (!! new version {0} available !!)", newVer);
+                        }));
+                    }
+                }
+                catch { }
+            });
+        }
+
+        private void LoadDatabase(string path, Action<List<Item>> result, bool addDlc = false, bool isDLC = false)
         {
             List<Item> dbs = new List<Item>();
-            if (string.IsNullOrEmpty(path)) result.Invoke(dbs);
+            if (string.IsNullOrEmpty(path))
+                result.Invoke(dbs);
             else
             {
                 Task.Run(() =>
@@ -165,7 +169,8 @@ namespace NPS
                             {
                                 DateTime.TryParse(a[6], out itm.lastModifyDate);
                             }
-                            if (!itm.zRfi.ToLower().Contains("missing") && itm.pkg.ToLower().Contains("http://"))
+                            itm.IsDLC = isDLC;
+                            if (!itm.zRif.ToLower().Contains("missing") && itm.pkg.ToLower().Contains("http://"))
                             {
                                 if (addDlc)
                                     itm.CalculateDlCs(dlcsDbs.ToArray());
@@ -176,17 +181,13 @@ namespace NPS
 
                         dbs = dbs.OrderBy(i => i.TitleName).ToList();
                     }
-                    catch
-                    {
-
-                    }
+                    catch { }
                     result.Invoke(dbs);
                 });
             }
         }
 
-
-        void RefreshList(List<Item> items)
+        private void RefreshList(List<Item> items)
         {
             label1.Text = items.Count + " items";
 
@@ -207,66 +208,103 @@ namespace NPS
                 list.Add(a);
             }
 
-            listView1.BeginUpdate();
-            listView1.Items.Clear();
-            listView1.Items.AddRange(list.ToArray());
-            listView1.EndUpdate();
+            lstTitles.BeginUpdate();
+            lstTitles.Items.Clear();
+            lstTitles.Items.AddRange(list.ToArray());
+            lstTitles.EndUpdate();
 
+            lblCount.Text = currentDatabase.Count + (rbnGames.Checked ? " Games" : rbnDLC.Checked ? " DLCs" : "PSM Games");
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        // Menu
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Options o = new Options();
+            o.ShowDialog();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void downloadUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string url = releases?[0]?.assets?[0]?.browser_download_url;
+            if (!string.IsNullOrEmpty(url))
+                System.Diagnostics.Process.Start(url);
+        }
+
+        // Search
+        private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             List<Item> itms = new List<Item>();
 
             foreach (var item in currentDatabase)
             {
-                if (item.CompareName(textBox1.Text) && (comboBox1.Text == "ALL" || item.Region.Contains(comboBox1.Text)))
+                if (item.CompareName(txtSearch.Text) && (cmbRegion.Text == "ALL" || item.Region.Contains(cmbRegion.Text)))
                     itms.Add(item);
             }
 
             RefreshList(itms);
         }
 
-
-
-
-        private void showTitleDlcToolStripMenuItem_Click(object sender, EventArgs e)
+        private void cmbRegion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count == 0) return;
+            txtSearch_TextChanged(null, null);
+        }
 
-            Item t = (listView1.SelectedItems[0].Tag as Item);
-            if (t.DLCs > 0)
+        // Browse
+        private void rbnGames_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbnGames.Checked)
             {
-                radioButton2.Checked = true;
-                textBox1.Text = t.TitleId;
+                currentDatabase = gamesDbs;
+                txtSearch_TextChanged(null, null);
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void rbnDLC_CheckedChanged(object sender, EventArgs e)
         {
-
-
-            if (string.IsNullOrEmpty(Settings.instance.downloadDir) || string.IsNullOrEmpty(Settings.instance.pkgPath))
+            if (rbnDLC.Checked)
             {
-                MessageBox.Show("You don't have proper config", "Whops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                currentDatabase = dlcsDbs;
+                txtSearch_TextChanged(null, null);
+            }
+        }
+
+        private void rbnPSM_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbnPSM.Checked)
+            {
+                currentDatabase = psmDbs;
+                txtSearch_TextChanged(null, null);
+            }
+        }
+
+        // Download
+        private void btnDownload_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(Settings.Instance.downloadDir) || string.IsNullOrEmpty(Settings.Instance.pkgPath))
+            {
+                MessageBox.Show("You don't have a proper configuration.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Options o = new Options();
                 o.ShowDialog();
                 return;
             }
 
-            if (!File.Exists(Settings.instance.pkgPath))
+            if (!File.Exists(Settings.Instance.pkgPath))
             {
-                MessageBox.Show("You missing your pkg dec", "Whops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You are missing your pkg dec.", "Whoops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Options o = new Options();
                 o.ShowDialog();
                 return;
             }
 
-            if (listView1.SelectedItems.Count == 0) return;
+            if (lstTitles.SelectedItems.Count == 0) return;
 
-            foreach (ListViewItem itm in listView1.SelectedItems)
+            foreach (ListViewItem itm in lstTitles.SelectedItems)
             {
-
                 var a = (itm.Tag as Item);
 
                 bool contains = false;
@@ -280,279 +318,65 @@ namespace NPS
                 if (!contains)
                 {
                     DownloadWorker dw = new DownloadWorker(a, this);
-                    listViewEx1.Items.Add(dw.lvi);
-                    listViewEx1.AddEmbeddedControl(dw.progress, 3, listViewEx1.Items.Count - 1);
+                    lstDownloadStatus.Items.Add(dw.lvi);
+                    lstDownloadStatus.AddEmbeddedControl(dw.progress, 3, lstDownloadStatus.Items.Count - 1);
                     downloads.Add(dw);
                 }
             }
+        }
 
+        private void lnkOpenRenaScene_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            //var u = new Uri("https://www.youtube.com/results?search_query=dead or alive");
+            System.Diagnostics.Process.Start(lnkOpenRenaScene.Tag.ToString());
+        }
+
+        // lstTitles
+        private void lstTitles_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
 
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void lstTitles_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            Options o = new Options();
-            o.ShowDialog();
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton2.Checked == true)
-            {
-                currentDatabase = dlcsDbs;
-                textBox1_TextChanged(null, null);
-            }
-        }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton1.Checked == true)
-            {
-                currentDatabase = gamesDbs;
-                textBox1_TextChanged(null, null);
-            }
-        }
-
-        CancellationTokenSource tokenSource = new CancellationTokenSource();
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-
-
-
-        }
-
-        Item previousSelectedItem = null;
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-            //update view
-
-            if (listView1.SelectedItems.Count == 0) return;
-            Item itm = (listView1.SelectedItems[0].Tag as Item);
-
-            if (itm != previousSelectedItem)
-            {
-                previousSelectedItem = itm;
-
-                tokenSource.Cancel();
-                tokenSource = new CancellationTokenSource();
-
-                Task.Run(() =>
-                {
-                    Helpers.Renascene r = new Helpers.Renascene(itm);
-
-                    if (r.imgUrl != null)
-                    {
-                        Invoke(new Action(() =>
-                        {
-                            pictureBox1.LoadAsync(r.imgUrl);
-                            label5.Text = r.ToString();
-                            linkLabel1.Tag = r.url;
-                            linkLabel1.Visible = true;
-                        }));
-
-                    }
-                    else
-                    {
-                        Invoke(new Action(() =>
-                        {
-                            pictureBox1.Image = null;
-                            label5.Text = "";
-                            linkLabel1.Visible = false;
-                        }));
-
-                    }
-                }, tokenSource.Token);
-            }
-        }
-
-
-
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            if (listViewEx1.SelectedItems.Count == 0) return;
-            foreach (ListViewItem a in listViewEx1.SelectedItems)
-            {
-                DownloadWorker itm = (a.Tag as DownloadWorker);
-                itm.Cancel();
-                itm.DeletePkg();
-            }
-
-
-        }
-
-        private void toolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            if (listViewEx1.SelectedItems.Count == 0) return;
-            foreach (ListViewItem a in listViewEx1.SelectedItems)
-            {
-                DownloadWorker itm = (a.Tag as DownloadWorker);
-                itm.DeletePkg();
-            }
-
-        }
-
-        private void retryUnpackToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (listViewEx1.SelectedItems.Count == 0) return;
-            foreach (ListViewItem a in listViewEx1.SelectedItems)
-            {
-                DownloadWorker itm = (a.Tag as DownloadWorker);
-                itm.Unpack();
-            }
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            int workingThreads = 0;
-            foreach (var dw in downloads)
-            {
-                if (dw.status == WorkerStatus.Running)
-                    workingThreads++;
-            }
-
-            if (workingThreads < Settings.instance.simultaneousDl)
-            {
-                foreach (var dw in downloads)
-                {
-                    if (dw.status == WorkerStatus.Queued)
-                    {
-                        dw.Start();
-                        break;
-                    }
-                }
-            }
-        }
-
-        private void clearCompletedToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            List<DownloadWorker> toDel = new List<DownloadWorker>();
-            List<ListViewItem> toDelLVI = new List<ListViewItem>();
-
-            foreach (var i in downloads)
-            {
-                if (i.status == WorkerStatus.Canceled || i.status == WorkerStatus.Completed)
-                {
-                    toDel.Add(i);
-                }
-            }
-
-
-            foreach (ListViewItem i in listViewEx1.Items)
-            {
-                if (toDel.Contains(i.Tag as DownloadWorker))
-                    toDelLVI.Add(i);
-
-            }
-
-            foreach (var i in toDel)
-                downloads.Remove(i);
-            toDel.Clear();
-
-            foreach (var i in toDelLVI)
-                listViewEx1.Items.Remove(i);
-            toDelLVI.Clear();
-
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            textBox1_TextChanged(null, null);
-        }
-
-        private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
-            if (currentOrderColumn == e.Column) { currentOrderInverted = !currentOrderInverted; }
+            if (currentOrderColumn == e.Column)
+                currentOrderInverted = !currentOrderInverted;
             else
-            {
                 currentOrderColumn = e.Column; currentOrderInverted = false;
-            }
 
-            this.listView1.ListViewItemSorter = new ListViewItemComparer(currentOrderColumn, currentOrderInverted);
+            this.lstTitles.ListViewItemSorter = new ListViewItemComparer(currentOrderColumn, currentOrderInverted);
             // Call the sort method to manually sort.
-            listView1.Sort();
+            lstTitles.Sort();
         }
 
-        Release[] releases = null;
-
-        void NewVersionCheck()
-        {
-            Task.Run(() =>
-            {
-                try
-                {
-
-
-                    WebClient wc = new WebClient();
-                    wc.Credentials = CredentialCache.DefaultCredentials;
-                    wc.Headers.Add("user-agent", "MyPersonalApp :)");
-                    string content = wc.DownloadString("https://api.github.com/repos/jhonhenry10/NPS_Browser/releases");
-                    wc.Dispose();
-
-                    //dynamic test = JsonConvert.DeserializeObject<dynamic>(content);
-                    releases = SimpleJson.SimpleJson.DeserializeObject<Release[]>(content);
-
-                    string newVer = releases[0].tag_name;
-                    if (version != newVer)
-                    {
-                        Invoke(new Action(() =>
-                        {
-                            downloadUpdateToolStripMenuItem.Visible = true;
-                            this.Text += string.Format("         (!! new version {0} available !!)", newVer);
-                        }));
-                    }
-
-                }
-                catch { }
-            });
-
-        }
-
-        private void downloadUpdateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string url = releases?[0]?.assets?[0]?.browser_download_url;
-            if (!string.IsNullOrEmpty(url))
-                System.Diagnostics.Process.Start(url);
-        }
-
-        private void listView1_KeyDown(object sender, KeyEventArgs e)
+        private void lstTitles_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A && e.Control)
             {
                 //listView1.MultiSelect = true;
-                foreach (ListViewItem item in listView1.Items)
+                foreach (ListViewItem item in lstTitles.Items)
                 {
                     item.Selected = true;
                 }
             }
         }
 
-        private void listViewEx1_KeyDown(object sender, KeyEventArgs e)
+        // lstTitles Menu Strip
+        private void showTitleDlcToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.A && e.Control)
-            {
-                //listView1.MultiSelect = true;
-                foreach (ListViewItem item in listViewEx1.Items)
-                {
-                    item.Selected = true;
-                }
-            }
-        }
+            if (lstTitles.SelectedItems.Count == 0) return;
 
-        private void radioButton3_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton3.Checked == true)
+            Item t = (lstTitles.SelectedItems[0].Tag as Item);
+            if (t.DLCs > 0)
             {
-                currentDatabase = psmDbs;
-                textBox1_TextChanged(null, null);
+                rbnDLC.Checked = true;
+                txtSearch.Text = t.TitleId;
             }
         }
 
         private void downloadAllDlcsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem itm in listView1.SelectedItems)
+            foreach (ListViewItem itm in lstTitles.SelectedItems)
             {
 
                 var parrent = (itm.Tag as Item);
@@ -570,31 +394,163 @@ namespace NPS
                     if (!contains)
                     {
                         DownloadWorker dw = new DownloadWorker(a, this);
-                        listViewEx1.Items.Add(dw.lvi);
-                        listViewEx1.AddEmbeddedControl(dw.progress, 3, listViewEx1.Items.Count - 1);
+                        lstDownloadStatus.Items.Add(dw.lvi);
+                        lstDownloadStatus.AddEmbeddedControl(dw.progress, 3, lstDownloadStatus.Items.Count - 1);
                         downloads.Add(dw);
                     }
                 }
             }
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        // lstDownloadStatus
+        private void lstDownloadStatus_KeyDown(object sender, KeyEventArgs e)
         {
-            //var u = new Uri("https://www.youtube.com/results?search_query=dead or alive");
-            System.Diagnostics.Process.Start(linkLabel1.Tag.ToString());
+            if (e.KeyCode == Keys.A && e.Control)
+            {
+                //listView1.MultiSelect = true;
+                foreach (ListViewItem item in lstDownloadStatus.Items)
+                {
+                    item.Selected = true;
+                }
+            }
+        }
+
+        // lstDownloadStatus Menu Strip
+        private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstDownloadStatus.SelectedItems.Count == 0) return;
+            foreach (ListViewItem a in lstDownloadStatus.SelectedItems)
+            {
+                DownloadWorker itm = (a.Tag as DownloadWorker);
+                itm.Cancel();
+                itm.DeletePkg();
+            }
+        }
+
+        private void deletePKGToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstDownloadStatus.SelectedItems.Count == 0) return;
+            foreach (ListViewItem a in lstDownloadStatus.SelectedItems)
+            {
+                DownloadWorker itm = (a.Tag as DownloadWorker);
+                itm.DeletePkg();
+            }
+        }
+
+        private void retryUnpackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lstDownloadStatus.SelectedItems.Count == 0) return;
+            foreach (ListViewItem a in lstDownloadStatus.SelectedItems)
+            {
+                DownloadWorker itm = (a.Tag as DownloadWorker);
+                itm.Unpack();
+            }
+        }
+
+        private void clearCompletedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<DownloadWorker> toDel = new List<DownloadWorker>();
+            List<ListViewItem> toDelLVI = new List<ListViewItem>();
+
+            foreach (var i in downloads)
+            {
+                if (i.status == WorkerStatus.Canceled || i.status == WorkerStatus.Completed)
+                    toDel.Add(i);
+            }
+
+            foreach (ListViewItem i in lstDownloadStatus.Items)
+            {
+                if (toDel.Contains(i.Tag as DownloadWorker))
+                    toDelLVI.Add(i);
+            }
+
+            foreach (var i in toDel)
+                downloads.Remove(i);
+            toDel.Clear();
+
+            foreach (var i in toDelLVI)
+                lstDownloadStatus.Items.Remove(i);
+            toDelLVI.Clear();
+        }
+
+        // Timers
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            int workingThreads = 0;
+            foreach (var dw in downloads)
+            {
+                if (dw.status == WorkerStatus.Running)
+                    workingThreads++;
+            }
+
+            if (workingThreads < Settings.Instance.simultaneousDl)
+            {
+                foreach (var dw in downloads)
+                {
+                    if (dw.status == WorkerStatus.Queued)
+                    {
+                        dw.Start();
+                        break;
+                    }
+                }
+            }
+        }
+
+        CancellationTokenSource tokenSource = new CancellationTokenSource();
+        Item previousSelectedItem = null;
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            // Update view
+
+            if (lstTitles.SelectedItems.Count == 0) return;
+            Item itm = (lstTitles.SelectedItems[0].Tag as Item);
+
+            if (itm != previousSelectedItem)
+            {
+                previousSelectedItem = itm;
+
+                tokenSource.Cancel();
+                tokenSource = new CancellationTokenSource();
+
+                Task.Run(() =>
+                {
+                    Helpers.Renascene r = new Helpers.Renascene(itm);
+
+                    if (r.imgUrl != null)
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            ptbCover.LoadAsync(r.imgUrl);
+                            label5.Text = r.ToString();
+                            lnkOpenRenaScene.Tag = r.url;
+                            lnkOpenRenaScene.Visible = true;
+                        }));
+
+                    }
+                    else
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            ptbCover.Image = null;
+                            label5.Text = "";
+                            lnkOpenRenaScene.Visible = false;
+                        }));
+
+                    }
+                }, tokenSource.Token);
+            }
         }
     }
-
 
     class Release
     {
         public string tag_name = "";
         public Asset[] assets = null;
     }
+
     class Asset
     {
         public string browser_download_url = "";
     }
-
-
 }
