@@ -12,7 +12,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.63a";
+        public const string version = "0.70";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -78,14 +78,7 @@ namespace NPS
                         cmbRegion.Items.Add("ALL");
                         cmbRegion.Text = "ALL";
 
-                        if (Settings.Instance.records != 0)
-                        {
-                            var _new = gamesDbs.Count - Settings.Instance.records;
-                            if (_new > 0)
-                                label1.Text += " (" + _new.ToString() + " new since last launch)";
-                        }
 
-                        Settings.Instance.records = gamesDbs.Count;
 
                         foreach (string s in regions)
                             cmbRegion.Items.Add(s);
@@ -189,7 +182,6 @@ namespace NPS
 
         private void RefreshList(List<Item> items)
         {
-            label1.Text = items.Count + " items";
 
             List<ListViewItem> list = new List<ListViewItem>();
 

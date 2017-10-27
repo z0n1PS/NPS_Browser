@@ -15,15 +15,7 @@ public class Settings
     public bool deleteAfterUnpack = false;
     public int simultaneousDl = 2;
 
-    public int records
-    {
-        get { return _records; }
-        set
-        {
-            _records = value;
-            Registry.SetValue(keyName, "records", value);
-        }
-    }
+
 
     int _records = 0;
 
@@ -50,9 +42,7 @@ public class Settings
             bool.TryParse(deleteAfterUnpackString, out deleteAfterUnpack);
         else deleteAfterUnpack = true;
 
-        var rec = Registry.GetValue(keyName, "records", null)?.ToString();
-        if (rec != null) int.TryParse(rec, out _records);
-
+       
         if (pkgParams == null) pkgParams = "--make-dirs=ux --license=\"{zRifKey}\" {pkgFile} \"{gameTitle} ({region}) [{titleID}]\"";
     }
 

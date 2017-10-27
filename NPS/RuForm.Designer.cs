@@ -49,7 +49,6 @@ namespace NPS
             this.downloadAllDlcsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnDownload = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.rbnGames = new System.Windows.Forms.RadioButton();
             this.rbnDLC = new System.Windows.Forms.RadioButton();
             this.label4 = new System.Windows.Forms.Label();
@@ -262,14 +261,6 @@ namespace NPS
             this.btnDownload.UseVisualStyleBackColor = true;
             this.btnDownload.Click += new System.EventHandler(this.btnDownload_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 388);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 13);
-            this.label1.TabIndex = 5;
-            // 
             // rbnGames
             // 
             this.rbnGames.AutoSize = true;
@@ -448,19 +439,16 @@ namespace NPS
             this.lnkOpenRenaScene.Location = new System.Drawing.Point(3, 315);
             this.lnkOpenRenaScene.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.lnkOpenRenaScene.Name = "lnkOpenRenaScene";
-            this.lnkOpenRenaScene.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.lnkOpenRenaScene.Size = new System.Drawing.Size(211, 21);
             this.lnkOpenRenaScene.TabIndex = 17;
             this.lnkOpenRenaScene.TabStop = true;
             this.lnkOpenRenaScene.Text = "Open renascene.com (screens, video)";
-            this.lnkOpenRenaScene.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lnkOpenRenaScene.Visible = false;
             this.lnkOpenRenaScene.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpenRenaScene_LinkClicked);
             // 
             // pnlMain
             // 
             this.pnlMain.Controls.Add(this.splMain);
-            this.pnlMain.Controls.Add(this.label1);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMain.Location = new System.Drawing.Point(0, 24);
             this.pnlMain.Name = "pnlMain";
@@ -594,7 +582,6 @@ namespace NPS
             ((System.ComponentModel.ISupportInitialize)(this.ptbCover)).EndInit();
             this.lstDownloadStatusMenuStrip.ResumeLayout(false);
             this.pnlMain.ResumeLayout(false);
-            this.pnlMain.PerformLayout();
             this.splMain.Panel1.ResumeLayout(false);
             this.splMain.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splMain)).EndInit();
@@ -631,7 +618,6 @@ namespace NPS
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Button btnDownload;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton rbnGames;
         private System.Windows.Forms.RadioButton rbnDLC;
         private System.Windows.Forms.Label label4;
