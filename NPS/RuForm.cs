@@ -172,7 +172,7 @@ namespace NPS
                             }
                         }
 
-                        dbs = dbs.OrderBy(i => i.TitleName).ToList();
+                        //dbs = dbs.OrderBy(i => i.TitleName).ToList();
                     }
                     catch { }
                     result.Invoke(dbs);
@@ -203,6 +203,10 @@ namespace NPS
             lstTitles.BeginUpdate();
             lstTitles.Items.Clear();
             lstTitles.Items.AddRange(list.ToArray());
+
+            lstTitles.ListViewItemSorter = new ListViewItemComparer(2, false);
+            lstTitles.Sort();
+
             lstTitles.EndUpdate();
 
             lblCount.Text = currentDatabase.Count + (rbnGames.Checked ? " Games" : rbnDLC.Checked ? " DLCs" : "PSM Games");
@@ -334,7 +338,9 @@ namespace NPS
             if (currentOrderColumn == e.Column)
                 currentOrderInverted = !currentOrderInverted;
             else
+            {
                 currentOrderColumn = e.Column; currentOrderInverted = false;
+            }
 
             this.lstTitles.ListViewItemSorter = new ListViewItemComparer(currentOrderColumn, currentOrderInverted);
             // Call the sort method to manually sort.
