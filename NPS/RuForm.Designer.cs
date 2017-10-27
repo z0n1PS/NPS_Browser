@@ -74,6 +74,8 @@ namespace NPS
             this.splMain = new System.Windows.Forms.SplitContainer();
             this.splList = new System.Windows.Forms.SplitContainer();
             this.pnlSearch = new System.Windows.Forms.Panel();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -91,6 +93,7 @@ namespace NPS
             this.splList.Panel2.SuspendLayout();
             this.splList.SuspendLayout();
             this.pnlSearch.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -121,7 +124,7 @@ namespace NPS
             // 
             this.reloadToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_reload;
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.NoPayStationBrowser_Load);
             // 
@@ -129,20 +132,20 @@ namespace NPS
             // 
             this.optionsToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_options;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_exit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.exitToolStripMenuItem.Tag = "Exit";
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
@@ -169,6 +172,7 @@ namespace NPS
             this.lstTitles.Location = new System.Drawing.Point(0, 52);
             this.lstTitles.Name = "lstTitles";
             this.lstTitles.Size = new System.Drawing.Size(816, 341);
+            this.lstTitles.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lstTitles.TabIndex = 1;
             this.lstTitles.UseCompatibleStateImageBehavior = false;
             this.lstTitles.View = System.Windows.Forms.View.Details;
@@ -507,6 +511,7 @@ namespace NPS
             // 
             // pnlSearch
             // 
+            this.pnlSearch.Controls.Add(this.flowLayoutPanel3);
             this.pnlSearch.Controls.Add(this.flowLayoutPanel1);
             this.pnlSearch.Controls.Add(this.txtSearch);
             this.pnlSearch.Controls.Add(this.cmbRegion);
@@ -515,6 +520,26 @@ namespace NPS
             this.pnlSearch.Name = "pnlSearch";
             this.pnlSearch.Size = new System.Drawing.Size(816, 52);
             this.pnlSearch.TabIndex = 17;
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel3.Controls.Add(this.lblCount);
+            this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(707, 26);
+            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(106, 23);
+            this.flowLayoutPanel3.TabIndex = 18;
+            // 
+            // lblCount
+            // 
+            this.lblCount.Location = new System.Drawing.Point(3, 3);
+            this.lblCount.Margin = new System.Windows.Forms.Padding(3);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new System.Drawing.Size(100, 17);
+            this.lblCount.TabIndex = 11;
+            this.lblCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // flowLayoutPanel1
             // 
@@ -527,7 +552,7 @@ namespace NPS
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 26);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(810, 23);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(698, 23);
             this.flowLayoutPanel1.TabIndex = 17;
             // 
             // flowLayoutPanel2
@@ -559,6 +584,7 @@ namespace NPS
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.mnuMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "NPSBrowser";
             this.Text = "NPS Browser";
             this.Load += new System.EventHandler(this.NoPayStationBrowser_Load);
@@ -579,6 +605,7 @@ namespace NPS
             this.splList.ResumeLayout(false);
             this.pnlSearch.ResumeLayout(false);
             this.pnlSearch.PerformLayout();
+            this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.flowLayoutPanel2.ResumeLayout(false);
@@ -641,6 +668,8 @@ namespace NPS
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.Label lblCount;
     }
 }
 
