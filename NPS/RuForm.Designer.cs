@@ -78,6 +78,9 @@ namespace NPS
             this.lblCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pauseResumeLayoutPnl = new System.Windows.Forms.TableLayoutPanel();
+            this.ResumeAll = new System.Windows.Forms.Button();
+            this.PauseAll = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.mnuMain.SuspendLayout();
             this.lstTitlesMenuStrip.SuspendLayout();
@@ -96,6 +99,7 @@ namespace NPS
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
+            this.pauseResumeLayoutPnl.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -105,7 +109,7 @@ namespace NPS
             this.downloadUpdateToolStripMenuItem});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
-            this.mnuMain.Size = new System.Drawing.Size(1049, 24);
+            this.mnuMain.Size = new System.Drawing.Size(867, 24);
             this.mnuMain.TabIndex = 0;
             this.mnuMain.Text = "menuStrip";
             // 
@@ -171,7 +175,7 @@ namespace NPS
             this.lstTitles.FullRowSelect = true;
             this.lstTitles.Location = new System.Drawing.Point(0, 52);
             this.lstTitles.Name = "lstTitles";
-            this.lstTitles.Size = new System.Drawing.Size(816, 341);
+            this.lstTitles.Size = new System.Drawing.Size(634, 341);
             this.lstTitles.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lstTitles.TabIndex = 1;
             this.lstTitles.UseCompatibleStateImageBehavior = false;
@@ -243,7 +247,7 @@ namespace NPS
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.Location = new System.Drawing.Point(3, 3);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(730, 20);
+            this.txtSearch.Size = new System.Drawing.Size(548, 20);
             this.txtSearch.TabIndex = 2;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
@@ -304,7 +308,7 @@ namespace NPS
             this.ptbCover.Location = new System.Drawing.Point(3, 32);
             this.ptbCover.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.ptbCover.Name = "ptbCover";
-            this.ptbCover.Size = new System.Drawing.Size(211, 211);
+            this.ptbCover.Size = new System.Drawing.Size(211, 198);
             this.ptbCover.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.ptbCover.TabIndex = 11;
             this.ptbCover.TabStop = false;
@@ -313,7 +317,7 @@ namespace NPS
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.Location = new System.Drawing.Point(3, 246);
+            this.label5.Location = new System.Drawing.Point(3, 233);
             this.label5.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(211, 66);
@@ -328,7 +332,7 @@ namespace NPS
             this.retryUnpackToolStripMenuItem,
             this.clearCompletedToolStripMenuItem});
             this.lstDownloadStatusMenuStrip.Name = "contextMenuStrip1";
-            this.lstDownloadStatusMenuStrip.Size = new System.Drawing.Size(164, 138);
+            this.lstDownloadStatusMenuStrip.Size = new System.Drawing.Size(164, 116);
             // 
             // pauseToolStripMenuItem
             // 
@@ -381,7 +385,7 @@ namespace NPS
             // 
             this.cmbRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbRegion.FormattingEnabled = true;
-            this.cmbRegion.Location = new System.Drawing.Point(739, 3);
+            this.cmbRegion.Location = new System.Drawing.Point(557, 3);
             this.cmbRegion.Name = "cmbRegion";
             this.cmbRegion.Size = new System.Drawing.Size(74, 21);
             this.cmbRegion.TabIndex = 15;
@@ -417,7 +421,7 @@ namespace NPS
             this.lstDownloadStatus.FullRowSelect = true;
             this.lstDownloadStatus.Location = new System.Drawing.Point(0, 0);
             this.lstDownloadStatus.Name = "lstDownloadStatus";
-            this.lstDownloadStatus.Size = new System.Drawing.Size(1037, 307);
+            this.lstDownloadStatus.Size = new System.Drawing.Size(855, 128);
             this.lstDownloadStatus.TabIndex = 14;
             this.lstDownloadStatus.UseCompatibleStateImageBehavior = false;
             this.lstDownloadStatus.View = System.Windows.Forms.View.Details;
@@ -426,31 +430,31 @@ namespace NPS
             // columnHeader8
             // 
             this.columnHeader8.Text = "Title";
-            this.columnHeader8.Width = 228;
+            this.columnHeader8.Width = 230;
             // 
             // columnHeader9
             // 
             this.columnHeader9.Text = "Speed";
-            this.columnHeader9.Width = 104;
+            this.columnHeader9.Width = 105;
             // 
             // columnHeader10
             // 
             this.columnHeader10.Text = "Progress";
-            this.columnHeader10.Width = 144;
+            this.columnHeader10.Width = 155;
             // 
             // columnHeader11
             // 
             this.columnHeader11.Text = "";
-            this.columnHeader11.Width = 224;
+            this.columnHeader11.Width = 255;
             // 
             // lnkOpenRenaScene
             // 
             this.lnkOpenRenaScene.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkOpenRenaScene.Location = new System.Drawing.Point(3, 315);
-            this.lnkOpenRenaScene.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.lnkOpenRenaScene.Location = new System.Drawing.Point(3, 299);
+            this.lnkOpenRenaScene.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.lnkOpenRenaScene.Name = "lnkOpenRenaScene";
-            this.lnkOpenRenaScene.Size = new System.Drawing.Size(211, 21);
+            this.lnkOpenRenaScene.Size = new System.Drawing.Size(214, 21);
             this.lnkOpenRenaScene.TabIndex = 17;
             this.lnkOpenRenaScene.TabStop = true;
             this.lnkOpenRenaScene.Text = "Open renascene.com (screens, video)";
@@ -464,7 +468,7 @@ namespace NPS
             this.pnlMain.Location = new System.Drawing.Point(0, 24);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Padding = new System.Windows.Forms.Padding(6);
-            this.pnlMain.Size = new System.Drawing.Size(1049, 716);
+            this.pnlMain.Size = new System.Drawing.Size(867, 537);
             this.pnlMain.TabIndex = 18;
             // 
             // splMain
@@ -483,7 +487,7 @@ namespace NPS
             // splMain.Panel2
             // 
             this.splMain.Panel2.Controls.Add(this.lstDownloadStatus);
-            this.splMain.Size = new System.Drawing.Size(1037, 704);
+            this.splMain.Size = new System.Drawing.Size(855, 525);
             this.splMain.SplitterDistance = 393;
             this.splMain.TabIndex = 18;
             // 
@@ -504,8 +508,8 @@ namespace NPS
             // 
             this.splList.Panel2.Controls.Add(this.flowLayoutPanel2);
             this.splList.Panel2.Controls.Add(this.panel1);
-            this.splList.Size = new System.Drawing.Size(1037, 393);
-            this.splList.SplitterDistance = 816;
+            this.splList.Size = new System.Drawing.Size(855, 393);
+            this.splList.SplitterDistance = 634;
             this.splList.TabIndex = 18;
             // 
             // pnlSearch
@@ -517,7 +521,7 @@ namespace NPS
             this.pnlSearch.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSearch.Location = new System.Drawing.Point(0, 0);
             this.pnlSearch.Name = "pnlSearch";
-            this.pnlSearch.Size = new System.Drawing.Size(816, 52);
+            this.pnlSearch.Size = new System.Drawing.Size(634, 52);
             this.pnlSearch.TabIndex = 17;
             // 
             // flowLayoutPanel3
@@ -525,7 +529,7 @@ namespace NPS
             this.flowLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel3.Controls.Add(this.lblCount);
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(707, 26);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(525, 26);
             this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(106, 23);
@@ -551,7 +555,7 @@ namespace NPS
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 26);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(698, 23);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(516, 23);
             this.flowLayoutPanel1.TabIndex = 17;
             // 
             // flowLayoutPanel2
@@ -560,12 +564,63 @@ namespace NPS
             this.flowLayoutPanel2.Controls.Add(this.ptbCover);
             this.flowLayoutPanel2.Controls.Add(this.label5);
             this.flowLayoutPanel2.Controls.Add(this.lnkOpenRenaScene);
+            this.flowLayoutPanel2.Controls.Add(this.pauseResumeLayoutPnl);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 52);
+            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(217, 341);
             this.flowLayoutPanel2.TabIndex = 19;
+            // 
+            // pauseResumeLayoutPnl
+            // 
+            this.pauseResumeLayoutPnl.ColumnCount = 2;
+            this.pauseResumeLayoutPnl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.pauseResumeLayoutPnl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.pauseResumeLayoutPnl.Controls.Add(this.ResumeAll, 1, 0);
+            this.pauseResumeLayoutPnl.Controls.Add(this.PauseAll, 0, 0);
+            this.pauseResumeLayoutPnl.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pauseResumeLayoutPnl.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
+            this.pauseResumeLayoutPnl.Location = new System.Drawing.Point(0, 320);
+            this.pauseResumeLayoutPnl.Margin = new System.Windows.Forms.Padding(0);
+            this.pauseResumeLayoutPnl.Name = "pauseResumeLayoutPnl";
+            this.pauseResumeLayoutPnl.RowCount = 1;
+            this.pauseResumeLayoutPnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.pauseResumeLayoutPnl.Size = new System.Drawing.Size(217, 21);
+            this.pauseResumeLayoutPnl.TabIndex = 18;
+            // 
+            // ResumeAll
+            // 
+            this.ResumeAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ResumeAll.Image = global::NPS.Properties.Resources.menu_unpause;
+            this.ResumeAll.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ResumeAll.Location = new System.Drawing.Point(108, 0);
+            this.ResumeAll.Margin = new System.Windows.Forms.Padding(0);
+            this.ResumeAll.Name = "ResumeAll";
+            this.ResumeAll.Size = new System.Drawing.Size(109, 21);
+            this.ResumeAll.TabIndex = 1;
+            this.ResumeAll.Text = "Resume All";
+            this.ResumeAll.UseVisualStyleBackColor = true;
+            this.ResumeAll.Click += new System.EventHandler(this.ResumeAllBtnClick);
+            // 
+            // PauseAll
+            // 
+            this.PauseAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PauseAll.Image = global::NPS.Properties.Resources.menu_pause;
+            this.PauseAll.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.PauseAll.Location = new System.Drawing.Point(0, 0);
+            this.PauseAll.Margin = new System.Windows.Forms.Padding(0);
+            this.PauseAll.Name = "PauseAll";
+            this.PauseAll.Size = new System.Drawing.Size(108, 21);
+            this.PauseAll.TabIndex = 0;
+            this.PauseAll.Text = "Pause All";
+            this.PauseAll.UseVisualStyleBackColor = true;
+            this.PauseAll.Click += new System.EventHandler(this.PauseAllBtnClick);
             // 
             // panel1
             // 
@@ -579,7 +634,7 @@ namespace NPS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1049, 740);
+            this.ClientSize = new System.Drawing.Size(867, 561);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.mnuMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -607,6 +662,7 @@ namespace NPS
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.flowLayoutPanel2.ResumeLayout(false);
+            this.pauseResumeLayoutPnl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -668,6 +724,9 @@ namespace NPS
         private System.Windows.Forms.Label lblCount;
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resumeToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel pauseResumeLayoutPnl;
+        private System.Windows.Forms.Button ResumeAll;
+        private System.Windows.Forms.Button PauseAll;
     }
 }
 

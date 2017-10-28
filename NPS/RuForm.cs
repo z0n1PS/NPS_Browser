@@ -12,7 +12,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.71";
+        public const string version = "0.72";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -553,7 +553,21 @@ namespace NPS
             }
         }
 
+        private void PauseAllBtnClick(object sender, EventArgs e)
+        {
+            foreach (ListViewItem itm in lstDownloadStatus.Items)
+            {
+                (itm.Tag as DownloadWorker).Pause();
+            }
+        }
 
+        private void ResumeAllBtnClick(object sender, EventArgs e)
+        {
+            foreach (ListViewItem itm in lstDownloadStatus.Items)
+            {
+                (itm.Tag as DownloadWorker).Resume();
+            }
+        }
     }
 
     class Release
