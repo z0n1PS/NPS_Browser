@@ -210,7 +210,7 @@ namespace NPS
 
             lstTitles.EndUpdate();
 
-            lblCount.Text = currentDatabase.Count + (rbnGames.Checked ? " Games" : rbnDLC.Checked ? " DLCs" : "PSM Games");
+            lblCount.Text = list.Count + (rbnGames.Checked ? " Games" : rbnDLC.Checked ? " DLCs" : " PSM Games");
         }
 
         // Menu
