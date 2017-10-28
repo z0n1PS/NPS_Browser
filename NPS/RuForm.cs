@@ -102,7 +102,7 @@ namespace NPS
                         rbnPSM.Enabled = true;
                     else rbnPSM.Enabled = false;
                 }));
-            }, false, true);
+            }, false, false, true);
         }
 
         private void NewVersionCheck()

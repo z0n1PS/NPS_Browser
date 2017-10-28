@@ -349,7 +349,8 @@ namespace NPS
             lvi.SubItems[1].Text = speed;
             var prgs = (float)completedSize / (float)totalSize;
 
-            progress.Value = Convert.ToInt32(prgs * 100);
+            if (prgs != float.NaN)
+                progress.Value = Convert.ToInt32(prgs * 100);
 
             lvi.SubItems[2].Text = completedSize / (1024 * 1024) + "MB/" + totalSize / (1024 * 1024) + "MB";
         }
