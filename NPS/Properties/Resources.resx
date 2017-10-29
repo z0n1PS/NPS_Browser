@@ -137,10 +137,13 @@
     <value>..\images\menu-options.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="menu_pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\images\menu-pause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="menu_reload" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\menu-reload.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="menu_resume" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\menu-resume.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="menu_retry" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\menu-retry.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -150,8 +153,5 @@
   </data>
   <data name="menu_unpack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\menu-unpack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="menu_unpause" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\menu_unpause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

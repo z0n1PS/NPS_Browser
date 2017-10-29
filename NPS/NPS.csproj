@@ -132,8 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="8-512.ico" />
-    <None Include="Resources\menu_unpause.png" />
-    <None Include="Resources\pause.png" />
+    <None Include="images\menu-resume.png" />
+    <None Include="images\menu-pause.png" />
     <None Include="images\menu-retry.png" />
     <None Include="images\menu-download-dlc.png" />
     <None Include="images\menu-clear.png" />
