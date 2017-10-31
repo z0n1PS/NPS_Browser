@@ -28,6 +28,7 @@ namespace NPS
         {
             InitializeComponent();
             this.Text += " " + version;
+            this.Icon = Properties.Resources._8_512;
             new Settings();
 
             if (string.IsNullOrEmpty(Settings.Instance.GamesUri) && string.IsNullOrEmpty(Settings.Instance.DLCUri))

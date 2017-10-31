@@ -51,7 +51,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>8-512.ico</ApplicationIcon>
+    <ApplicationIcon>images\8-512.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -131,7 +131,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="8-512.ico" />
+    <Content Include="images\8-512.ico" />
     <None Include="images\menu-resume.png" />
     <None Include="images\menu-pause.png" />
     <None Include="images\menu-retry.png" />
