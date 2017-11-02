@@ -12,7 +12,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.72";
+        public const string version = "0.73";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -183,6 +183,7 @@ namespace NPS
                             {
                                 itm.zRif = "";
                                 itm.ContentId = a[4];
+                                itm.ItsPsx = true;
                                 if (a.Length >= 6)
                                 {
                                     DateTime.TryParse(a[5], out itm.lastModifyDate);

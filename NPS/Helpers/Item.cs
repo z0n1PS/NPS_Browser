@@ -9,7 +9,7 @@ namespace NPS
         public System.DateTime lastModifyDate = System.DateTime.MinValue;
         public int DLCs { get { return DlcItm.Count; } }
         public List<Item> DlcItm = new List<Item>();
-        public bool IsDLC = false;
+        public bool IsDLC = false, ItsPsx = false;
         public string ParentGameTitle = string.Empty;
         public string ContentId = null;
         public string DownloadFileName
