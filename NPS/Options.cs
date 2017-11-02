@@ -31,6 +31,7 @@ namespace NPS
             checkBox1.Checked = Settings.Instance.deleteAfterUnpack;
             numericUpDown1.Value = Settings.Instance.simultaneousDl;
             textBox3.Text = Settings.Instance.PSMUri;
+            textBox4.Text = Settings.Instance.PSXUri;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -69,6 +70,7 @@ namespace NPS
             Settings.Instance.GamesUri = textBox1.Text;
             Settings.Instance.DLCUri = textBox2.Text;
             Settings.Instance.PSMUri = textBox3.Text;
+            Settings.Instance.PSXUri = textBox4.Text;
             Settings.Instance.Store();
         }
 
@@ -123,6 +125,31 @@ namespace NPS
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.FileName))
                 {
                     textBox3.Text = fbd.FileName;
+                }
+            }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show(@"Here you can give parameters to pass to your pkg dec tool. Available variables are: 
+- {zRifKey}
+- {pkgFile}
+- {gameTitle}
+- {region}
+- {titleID}");
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new OpenFileDialog())
+            {
+                fbd.Filter = "|*.tsv";
+
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.FileName))
+                {
+                    textBox4.Text = fbd.FileName;
                 }
             }
         }

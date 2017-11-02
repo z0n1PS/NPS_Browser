@@ -21,6 +21,8 @@ namespace NPS
             }
         }
 
+        public Item() { }
+
         public Item(string TitleId, string Region, string TitleName, string pkg, string zRif, string ContentId)
         {
             this.TitleId = TitleId;

@@ -49,12 +49,16 @@ namespace NPS
             this.label7 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.button5 = new System.Windows.Forms.Button();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.button6 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(575, 95);
+            this.button1.Location = new System.Drawing.Point(575, 121);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -64,7 +68,7 @@ namespace NPS
             // 
             // textDownload
             // 
-            this.textDownload.Location = new System.Drawing.Point(155, 95);
+            this.textDownload.Location = new System.Drawing.Point(155, 121);
             this.textDownload.Name = "textDownload";
             this.textDownload.Size = new System.Drawing.Size(414, 20);
             this.textDownload.TabIndex = 1;
@@ -72,7 +76,7 @@ namespace NPS
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 98);
+            this.label1.Location = new System.Drawing.Point(8, 124);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(129, 13);
             this.label1.TabIndex = 2;
@@ -81,7 +85,7 @@ namespace NPS
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 124);
+            this.label2.Location = new System.Drawing.Point(8, 150);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(87, 13);
             this.label2.TabIndex = 5;
@@ -89,14 +93,14 @@ namespace NPS
             // 
             // textPKGPath
             // 
-            this.textPKGPath.Location = new System.Drawing.Point(155, 121);
+            this.textPKGPath.Location = new System.Drawing.Point(155, 147);
             this.textPKGPath.Name = "textPKGPath";
             this.textPKGPath.Size = new System.Drawing.Size(414, 20);
             this.textPKGPath.TabIndex = 4;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(575, 121);
+            this.button2.Location = new System.Drawing.Point(575, 147);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
@@ -106,7 +110,7 @@ namespace NPS
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(8, 147);
+            this.label3.Location = new System.Drawing.Point(8, 173);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(141, 35);
             this.label3.TabIndex = 8;
@@ -114,7 +118,7 @@ namespace NPS
             // 
             // textParams
             // 
-            this.textParams.Location = new System.Drawing.Point(155, 147);
+            this.textParams.Location = new System.Drawing.Point(155, 173);
             this.textParams.Name = "textParams";
             this.textParams.Size = new System.Drawing.Size(414, 20);
             this.textParams.TabIndex = 7;
@@ -178,7 +182,7 @@ namespace NPS
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(156, 174);
+            this.checkBox1.Location = new System.Drawing.Point(156, 200);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(198, 17);
             this.checkBox1.TabIndex = 15;
@@ -188,7 +192,7 @@ namespace NPS
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(8, 199);
+            this.label6.Location = new System.Drawing.Point(8, 225);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(141, 20);
             this.label6.TabIndex = 16;
@@ -196,7 +200,7 @@ namespace NPS
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(155, 197);
+            this.numericUpDown1.Location = new System.Drawing.Point(155, 223);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             15,
             0,
@@ -243,9 +247,50 @@ namespace NPS
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(576, 177);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(13, 13);
+            this.linkLabel1.TabIndex = 21;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "?";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 98);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(95, 13);
+            this.label8.TabIndex = 24;
+            this.label8.Text = "PSX links tsv or url";
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(155, 95);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(414, 20);
+            this.textBox4.TabIndex = 23;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(575, 95);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 22;
+            this.button6.Text = "Browse";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // Options
             // 
-            this.ClientSize = new System.Drawing.Size(680, 246);
+            this.ClientSize = new System.Drawing.Size(680, 252);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.button5);
@@ -305,6 +350,10 @@ namespace NPS
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button button6;
     }
 }
 

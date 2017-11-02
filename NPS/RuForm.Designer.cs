@@ -67,6 +67,7 @@ namespace NPS
             this.colDownloadTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDownloadSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDownloadStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDownloadProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lnkOpenRenaScene = new System.Windows.Forms.LinkLabel();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.splMain = new System.Windows.Forms.SplitContainer();
@@ -80,7 +81,7 @@ namespace NPS
             this.pauseResumeLayoutPnl = new System.Windows.Forms.TableLayoutPanel();
             this.ResumeAll = new System.Windows.Forms.Button();
             this.PauseAll = new System.Windows.Forms.Button();
-            this.colDownloadProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.rbnPSX = new System.Windows.Forms.RadioButton();
             this.mnuMain.SuspendLayout();
             this.lstTitlesMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCover)).BeginInit();
@@ -273,10 +274,10 @@ namespace NPS
             this.rbnGames.Enabled = false;
             this.rbnGames.Location = new System.Drawing.Point(69, 3);
             this.rbnGames.Name = "rbnGames";
-            this.rbnGames.Size = new System.Drawing.Size(58, 17);
+            this.rbnGames.Size = new System.Drawing.Size(79, 17);
             this.rbnGames.TabIndex = 8;
             this.rbnGames.TabStop = true;
-            this.rbnGames.Text = "Games";
+            this.rbnGames.Text = "Vita Games";
             this.rbnGames.UseVisualStyleBackColor = true;
             this.rbnGames.CheckedChanged += new System.EventHandler(this.rbnGames_CheckedChanged);
             // 
@@ -284,11 +285,11 @@ namespace NPS
             // 
             this.rbnDLC.AutoSize = true;
             this.rbnDLC.Enabled = false;
-            this.rbnDLC.Location = new System.Drawing.Point(133, 3);
+            this.rbnDLC.Location = new System.Drawing.Point(154, 3);
             this.rbnDLC.Name = "rbnDLC";
-            this.rbnDLC.Size = new System.Drawing.Size(51, 17);
+            this.rbnDLC.Size = new System.Drawing.Size(72, 17);
             this.rbnDLC.TabIndex = 9;
-            this.rbnDLC.Text = "DLCs";
+            this.rbnDLC.Text = "Vita DLCs";
             this.rbnDLC.UseVisualStyleBackColor = true;
             this.rbnDLC.CheckedChanged += new System.EventHandler(this.rbnDLC_CheckedChanged);
             // 
@@ -401,11 +402,11 @@ namespace NPS
             // 
             this.rbnPSM.AutoSize = true;
             this.rbnPSM.Enabled = false;
-            this.rbnPSM.Location = new System.Drawing.Point(190, 3);
+            this.rbnPSM.Location = new System.Drawing.Point(232, 3);
             this.rbnPSM.Name = "rbnPSM";
-            this.rbnPSM.Size = new System.Drawing.Size(48, 17);
+            this.rbnPSM.Size = new System.Drawing.Size(84, 17);
             this.rbnPSM.TabIndex = 16;
-            this.rbnPSM.Text = "PSM";
+            this.rbnPSM.Text = "PSM Games";
             this.rbnPSM.UseVisualStyleBackColor = true;
             this.rbnPSM.CheckedChanged += new System.EventHandler(this.rbnPSM_CheckedChanged);
             // 
@@ -441,6 +442,11 @@ namespace NPS
             // 
             this.colDownloadStatus.Text = "Status";
             this.colDownloadStatus.Width = 100;
+            // 
+            // colDownloadProgress
+            // 
+            this.colDownloadProgress.Text = "Progress";
+            this.colDownloadProgress.Width = 366;
             // 
             // lnkOpenRenaScene
             // 
@@ -548,6 +554,7 @@ namespace NPS
             this.flowLayoutPanel1.Controls.Add(this.rbnGames);
             this.flowLayoutPanel1.Controls.Add(this.rbnDLC);
             this.flowLayoutPanel1.Controls.Add(this.rbnPSM);
+            this.flowLayoutPanel1.Controls.Add(this.rbnPSX);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 26);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -627,10 +634,17 @@ namespace NPS
             this.PauseAll.UseVisualStyleBackColor = true;
             this.PauseAll.Click += new System.EventHandler(this.PauseAllBtnClick);
             // 
-            // colDownloadProgress
+            // rbnPSX
             // 
-            this.colDownloadProgress.Text = "Progress";
-            this.colDownloadProgress.Width = 366;
+            this.rbnPSX.AutoSize = true;
+            this.rbnPSX.Enabled = false;
+            this.rbnPSX.Location = new System.Drawing.Point(322, 3);
+            this.rbnPSX.Name = "rbnPSX";
+            this.rbnPSX.Size = new System.Drawing.Size(82, 17);
+            this.rbnPSX.TabIndex = 17;
+            this.rbnPSX.Text = "PSX Games";
+            this.rbnPSX.UseVisualStyleBackColor = true;
+            this.rbnPSX.CheckedChanged += new System.EventHandler(this.rbnPSX_CheckedChanged);
             // 
             // NPSBrowser
             // 
@@ -728,6 +742,7 @@ namespace NPS
         private System.Windows.Forms.Button ResumeAll;
         private System.Windows.Forms.Button PauseAll;
         private System.Windows.Forms.ColumnHeader colDownloadProgress;
+        private System.Windows.Forms.RadioButton rbnPSX;
     }
 }
 

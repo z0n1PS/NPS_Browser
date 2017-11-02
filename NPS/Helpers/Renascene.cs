@@ -35,6 +35,15 @@ namespace NPS.Helpers
                 developer = ExtractString(developer, "<td class=\"infRightTd\">", "</td>");
 
 
+
+            }
+            catch
+            {
+                imgUrl = genre = language = publish = developer = size = null;
+            }
+
+            try
+            {
                 var webRequest = HttpWebRequest.Create(itm.pkg);
                 webRequest.Method = "HEAD";
 
@@ -45,10 +54,9 @@ namespace NPS.Helpers
                     this.size = fileSizeInMegaByte + " MB";
                 }
             }
-            catch
-            {
-                imgUrl = genre = language = publish = developer = size = null;
-            }
+            catch { }
+
+
         }
 
 

@@ -11,7 +11,7 @@ public class Settings
     public string downloadDir;
     public string pkgPath;
     public string pkgParams;
-    public string GamesUri, DLCUri, PSMUri;
+    public string GamesUri, DLCUri, PSMUri, PSXUri;
     public bool deleteAfterUnpack = false;
     public int simultaneousDl = 2;
 
@@ -28,6 +28,7 @@ public class Settings
         pkgPath = Registry.GetValue(keyName, "pkgPath", "")?.ToString();
         GamesUri = Registry.GetValue(keyName, "GamesUri", "")?.ToString();
         DLCUri = Registry.GetValue(keyName, "DLCUri", "")?.ToString();
+        PSXUri = Registry.GetValue(keyName, "PSXUri", "")?.ToString();
         PSMUri = Registry.GetValue(keyName, "PSMUri", "")?.ToString();
         pkgParams = Registry.GetValue(keyName, "pkgParams", null)?.ToString();
 
@@ -42,7 +43,7 @@ public class Settings
             bool.TryParse(deleteAfterUnpackString, out deleteAfterUnpack);
         else deleteAfterUnpack = true;
 
-       
+
         if (pkgParams == null) pkgParams = "--make-dirs=ux --license=\"{zRifKey}\" {pkgFile} \"{gameTitle} ({region}) [{titleID}]\"";
     }
 
@@ -59,6 +60,8 @@ public class Settings
             Registry.SetValue(keyName, "GamesUri", GamesUri);
         if (DLCUri != null)
             Registry.SetValue(keyName, "DLCUri", DLCUri);
+        if (PSXUri != null)
+            Registry.SetValue(keyName, "PSXUri", PSXUri);
 
         if (PSMUri != null)
             Registry.SetValue(keyName, "PSMUri", PSMUri);

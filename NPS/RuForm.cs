@@ -17,6 +17,7 @@ namespace NPS
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
         List<Item> psmDbs = new List<Item>();
+        List<Item> psxDbs = new List<Item>();
         HashSet<string> regions = new HashSet<string>();
         int currentOrderColumn = 0;
         bool currentOrderInverted = false;
@@ -91,8 +92,8 @@ namespace NPS
                             item.ParentGameTitle = result ?? string.Empty;
                         }
                     }));
-                }, true);
-            }, false, true);
+                }, DatabaseType.AddDlc);
+            }, DatabaseType.ItsDlc);
 
             LoadDatabase(Settings.Instance.PSMUri, (db) =>
             {
@@ -103,7 +104,19 @@ namespace NPS
                         rbnPSM.Enabled = true;
                     else rbnPSM.Enabled = false;
                 }));
-            }, false, false, true);
+            }, DatabaseType.ItsPsn);
+
+
+            LoadDatabase(Settings.Instance.PSXUri, (db) =>
+            {
+                psxDbs = db;
+                Invoke(new Action(() =>
+                {
+                    if (psxDbs.Count > 0)
+                        rbnPSX.Enabled = true;
+                    else rbnPSX.Enabled = false;
+                }));
+            }, DatabaseType.ItsPSX);
         }
 
         private void NewVersionCheck()
@@ -135,7 +148,7 @@ namespace NPS
             });
         }
 
-        private void LoadDatabase(string path, Action<List<Item>> result, bool addDlc = false, bool isDLC = false, bool isPsm = false)
+        private void LoadDatabase(string path, Action<List<Item>> result, DatabaseType dbType)// bool addDlc = false, bool isDLC = false, bool isPsm = false)
         {
             List<Item> dbs = new List<Item>();
             if (string.IsNullOrEmpty(path))
@@ -158,16 +171,37 @@ namespace NPS
                         for (int i = 1; i < lines.Length; i++)
                         {
                             var a = lines[i].Split('\t');
-                            if (isPsm) a[5] = null;
-                            var itm = new Item(a[0], a[1], a[2], a[3], a[4], a[5]);
-                            if (a.Length >= 7)
+                            if (dbType == DatabaseType.ItsPsn) a[5] = null;
+
+                            var itm = new Item();
+                            itm.TitleId = a[0];
+                            itm.Region = a[1];
+                            itm.TitleName = a[2];
+                            itm.pkg = a[3];
+
+                            if (dbType == DatabaseType.ItsPSX)
                             {
-                                DateTime.TryParse(a[6], out itm.lastModifyDate);
+                                itm.zRif = "";
+                                itm.ContentId = a[4];
+                                if (a.Length >= 6)
+                                {
+                                    DateTime.TryParse(a[5], out itm.lastModifyDate);
+                                }
                             }
-                            itm.IsDLC = isDLC;
+                            else
+                            {
+                                itm.zRif = a[4];
+                                itm.ContentId = a[5];
+                                if (a.Length >= 7)
+                                {
+                                    DateTime.TryParse(a[6], out itm.lastModifyDate);
+                                }
+                            }
+
+                            itm.IsDLC = dbType == DatabaseType.ItsDlc;
                             if (!itm.zRif.ToLower().Contains("missing") && itm.pkg.ToLower().Contains("http://"))
                             {
-                                if (addDlc)
+                                if (dbType == DatabaseType.AddDlc)
                                     itm.CalculateDlCs(dlcsDbs.ToArray());
                                 dbs.Add(itm);
                                 regions.Add(itm.Region.Replace(" ", ""));
@@ -211,7 +245,13 @@ namespace NPS
 
             lstTitles.EndUpdate();
 
-            lblCount.Text = $"{list.Count}/{currentDatabase.Count} {(rbnGames.Checked ? "Games" : rbnDLC.Checked ? "DLCs" : "PSM Games")}";
+            string type = "";
+            if (rbnGames.Checked) type = "Games";
+            else if (rbnDLC.Checked) type = "DLCs";
+            else if (rbnPSM.Checked) type = "PSM Games";
+            else if (rbnPSX.Checked) type = "PSX Games";
+
+            lblCount.Text = $"{list.Count}/{currentDatabase.Count} {type}";
         }
 
         // Menu
@@ -276,6 +316,15 @@ namespace NPS
             if (rbnPSM.Checked)
             {
                 currentDatabase = psmDbs;
+                txtSearch_TextChanged(null, null);
+            }
+        }
+
+        private void rbnPSX_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rbnPSX.Checked)
+            {
+                currentDatabase = psxDbs;
                 txtSearch_TextChanged(null, null);
             }
         }
@@ -569,6 +618,8 @@ namespace NPS
                 (itm.Tag as DownloadWorker).Resume();
             }
         }
+
+
     }
 
     class Release
@@ -581,4 +632,6 @@ namespace NPS
     {
         public string browser_download_url = "";
     }
+
+    enum DatabaseType { AddDlc, ItsDlc, ItsPsn, ItsPSX }
 }
