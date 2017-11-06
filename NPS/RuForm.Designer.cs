@@ -76,12 +76,12 @@ namespace NPS
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.rbnPSX = new System.Windows.Forms.RadioButton();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pauseResumeLayoutPnl = new System.Windows.Forms.TableLayoutPanel();
             this.ResumeAll = new System.Windows.Forms.Button();
             this.PauseAll = new System.Windows.Forms.Button();
-            this.rbnPSX = new System.Windows.Forms.RadioButton();
             this.mnuMain.SuspendLayout();
             this.lstTitlesMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCover)).BeginInit();
@@ -561,6 +561,18 @@ namespace NPS
             this.flowLayoutPanel1.Size = new System.Drawing.Size(686, 23);
             this.flowLayoutPanel1.TabIndex = 17;
             // 
+            // rbnPSX
+            // 
+            this.rbnPSX.AutoSize = true;
+            this.rbnPSX.Enabled = false;
+            this.rbnPSX.Location = new System.Drawing.Point(322, 3);
+            this.rbnPSX.Name = "rbnPSX";
+            this.rbnPSX.Size = new System.Drawing.Size(82, 17);
+            this.rbnPSX.TabIndex = 17;
+            this.rbnPSX.Text = "PSX Games";
+            this.rbnPSX.UseVisualStyleBackColor = true;
+            this.rbnPSX.CheckedChanged += new System.EventHandler(this.rbnPSX_CheckedChanged);
+            // 
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.btnDownload);
@@ -634,22 +646,9 @@ namespace NPS
             this.PauseAll.UseVisualStyleBackColor = true;
             this.PauseAll.Click += new System.EventHandler(this.PauseAllBtnClick);
             // 
-            // rbnPSX
-            // 
-            this.rbnPSX.AutoSize = true;
-            this.rbnPSX.Enabled = false;
-            this.rbnPSX.Location = new System.Drawing.Point(322, 3);
-            this.rbnPSX.Name = "rbnPSX";
-            this.rbnPSX.Size = new System.Drawing.Size(82, 17);
-            this.rbnPSX.TabIndex = 17;
-            this.rbnPSX.Text = "PSX Games";
-            this.rbnPSX.UseVisualStyleBackColor = true;
-            this.rbnPSX.CheckedChanged += new System.EventHandler(this.rbnPSX_CheckedChanged);
-            // 
             // NPSBrowser
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1084, 720);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.mnuMain);
