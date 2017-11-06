@@ -12,6 +12,7 @@ namespace NPS
         public bool IsDLC = false, ItsPsx = false;
         public string ParentGameTitle = string.Empty;
         public string ContentId = null;
+        public string contentType = "";
         public string DownloadFileName
         {
             get
@@ -23,26 +24,15 @@ namespace NPS
 
         public Item() { }
 
-        public Item(string TitleId, string Region, string TitleName, string pkg, string zRif, string ContentId)
-        {
-            this.TitleId = TitleId;
-            this.Region = Region;
-            this.TitleName = TitleName;
-            this.pkg = pkg;
-            this.zRif = zRif;
-            this.ContentId = ContentId;
-        }
+
 
         public void CalculateDlCs(Item[] dlcDbs)
         {
-            //this.DLCs = 0;
-
             foreach (Item i in dlcDbs)
             {
                 if (i.Region == this.Region && i.TitleId.Contains(this.TitleId))
                 {
                     this.DlcItm.Add(i);
-                    //this.DLCs++;
                 }
             }
         }

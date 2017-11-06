@@ -12,7 +12,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.73";
+        public const string version = "0.74";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -62,61 +62,60 @@ namespace NPS
                     else rbnDLC.Enabled = false;
                 }));
 
-                LoadDatabase(Settings.Instance.GamesUri, (db2) =>
+                LoadDatabase(Settings.Instance.GamesUri, (vita) =>
                 {
-                    gamesDbs = db2;
+                    gamesDbs = vita;
 
-                    Invoke(new Action(() =>
+                    LoadDatabase(Settings.Instance.PSMUri, (psm) =>
                     {
-                        if (gamesDbs.Count > 0)
-                            rbnGames.Enabled = true;
-                        else rbnGames.Enabled = false;
+                        gamesDbs.AddRange(psm);
 
-                        rbnGames.Checked = true;
-                        currentDatabase = gamesDbs;
-
-                        cmbRegion.Items.Clear();
-
-                        cmbRegion.Items.Add("ALL");
-                        cmbRegion.Text = "ALL";
-
-
-
-                        foreach (string s in regions)
-                            cmbRegion.Items.Add(s);
-
-                        // Populate DLC Parent Titles
-                        foreach (var item in dlcsDbs)
+                        LoadDatabase(Settings.Instance.PSXUri, (psx) =>
                         {
-                            var result = gamesDbs.FirstOrDefault(i => i.TitleId.StartsWith(item.TitleId.Substring(0, 9)))?.TitleName;
-                            item.ParentGameTitle = result ?? string.Empty;
-                        }
-                    }));
+                            gamesDbs.AddRange(psx);
+
+                            Invoke(new Action(() =>
+                            {
+                                if (gamesDbs.Count > 0)
+                                    rbnGames.Enabled = true;
+                                else rbnGames.Enabled = false;
+
+                                rbnGames.Checked = true;
+                                currentDatabase = gamesDbs;
+
+                                cmbRegion.Items.Clear();
+
+
+                                foreach (string s in regions)
+                                    cmbRegion.Items.Add(s);
+
+                                foreach (var a in cmbRegion.CheckBoxItems)
+                                    a.Checked = true;
+
+                                foreach (var a in cmbType.CheckBoxItems)
+                                    a.Checked = true;
+
+                                // Populate DLC Parent Titles
+                                foreach (var item in dlcsDbs)
+                                {
+                                    var result = gamesDbs.FirstOrDefault(i => i.TitleId.StartsWith(item.TitleId.Substring(0, 9)))?.TitleName;
+                                    item.ParentGameTitle = result ?? string.Empty;
+                                }
+
+                                cmbRegion.CheckBoxCheckedChanged += txtSearch_TextChanged;
+                                cmbType.CheckBoxCheckedChanged += txtSearch_TextChanged;
+                                txtSearch_TextChanged(null, null);
+                            }));
+
+                        }, DatabaseType.ItsPSX);
+                    }, DatabaseType.ItsPsm);
                 }, DatabaseType.AddDlc);
             }, DatabaseType.ItsDlc);
+        }
 
-            LoadDatabase(Settings.Instance.PSMUri, (db) =>
-            {
-                psmDbs = db;
-                Invoke(new Action(() =>
-                {
-                    if (psmDbs.Count > 0)
-                        rbnPSM.Enabled = true;
-                    else rbnPSM.Enabled = false;
-                }));
-            }, DatabaseType.ItsPsn);
-
-
-            LoadDatabase(Settings.Instance.PSXUri, (db) =>
-            {
-                psxDbs = db;
-                Invoke(new Action(() =>
-                {
-                    if (psxDbs.Count > 0)
-                        rbnPSX.Enabled = true;
-                    else rbnPSX.Enabled = false;
-                }));
-            }, DatabaseType.ItsPSX);
+        private void CmbRegion_CheckBoxCheckedChanged(object sender, EventArgs e)
+        {
+            txtSearch_TextChanged(null, null);
         }
 
         private void NewVersionCheck()
@@ -171,18 +170,42 @@ namespace NPS
                         for (int i = 1; i < lines.Length; i++)
                         {
                             var a = lines[i].Split('\t');
-                            if (dbType == DatabaseType.ItsPsn) a[5] = null;
+
 
                             var itm = new Item();
+
+
                             itm.TitleId = a[0];
                             itm.Region = a[1];
                             itm.TitleName = a[2];
                             itm.pkg = a[3];
+                            itm.zRif = a[4];
+                            itm.ContentId = a[5];
 
-                            if (dbType == DatabaseType.ItsPSX)
+                            if (dbType == DatabaseType.ItsPsm)
+                            {
+                                itm.ContentId = null;
+                                //a[5] = null;
+                                itm.contentType = "PSM";
+                                if (a.Length >= 6)
+                                {
+                                    DateTime.TryParse(a[5], out itm.lastModifyDate);
+                                }
+                            }
+                            else if (dbType == DatabaseType.ItsDlc)
+                            {
+                                itm.IsDLC = true;
+                                itm.contentType = "VITA";
+                                if (a.Length >= 7)
+                                {
+                                    DateTime.TryParse(a[6], out itm.lastModifyDate);
+                                }
+                            }
+                            else if (dbType == DatabaseType.ItsPSX)
                             {
                                 itm.zRif = "";
                                 itm.ContentId = a[4];
+                                itm.contentType = "PSX";
                                 itm.ItsPsx = true;
                                 if (a.Length >= 6)
                                 {
@@ -191,16 +214,15 @@ namespace NPS
                             }
                             else
                             {
-                                itm.zRif = a[4];
-                                itm.ContentId = a[5];
+                                itm.contentType = "VITA";
                                 if (a.Length >= 7)
                                 {
                                     DateTime.TryParse(a[6], out itm.lastModifyDate);
                                 }
                             }
 
-                            itm.IsDLC = dbType == DatabaseType.ItsDlc;
-                            if (!itm.zRif.ToLower().Contains("missing") && itm.pkg.ToLower().Contains("http://"))
+
+                            if ((!itm.zRif.ToLower().Contains("missing")) && itm.pkg.ToLower().Contains("http://"))
                             {
                                 if (dbType == DatabaseType.AddDlc)
                                     itm.CalculateDlCs(dlcsDbs.ToArray());
@@ -224,9 +246,11 @@ namespace NPS
 
             foreach (var item in items)
             {
+
                 var a = new ListViewItem(item.TitleId);
                 a.SubItems.Add(item.Region);
                 a.SubItems.Add(item.TitleName);
+                a.SubItems.Add(item.contentType);
                 if (item.DLCs > 0)
                     a.SubItems.Add(item.DLCs.ToString());
                 else a.SubItems.Add("");
@@ -238,6 +262,8 @@ namespace NPS
             }
 
             lstTitles.BeginUpdate();
+            if (rbnDLC.Checked) lstTitles.Columns[4].Width = 0;
+            else lstTitles.Columns[4].Width = 60;
             lstTitles.Items.Clear();
             lstTitles.Items.AddRange(list.ToArray());
 
@@ -249,8 +275,8 @@ namespace NPS
             string type = "";
             if (rbnGames.Checked) type = "Games";
             else if (rbnDLC.Checked) type = "DLCs";
-            else if (rbnPSM.Checked) type = "PSM Games";
-            else if (rbnPSX.Checked) type = "PSX Games";
+            //else if (rbnPSM.Checked) type = "PSM Games";
+            //else if (rbnPSX.Checked) type = "PSX Games";
 
             lblCount.Text = $"{list.Count}/{currentDatabase.Count} {type}";
         }
@@ -281,16 +307,21 @@ namespace NPS
 
             foreach (var item in currentDatabase)
             {
-                if (item.CompareName(txtSearch.Text) && (cmbRegion.Text == "ALL" || item.Region.Contains(cmbRegion.Text)))
+                if (item.CompareName(txtSearch.Text) && ContainsCmbBox(cmbRegion, item.Region) && ContainsCmbBox(cmbType, item.contentType)) /*(cmbRegion.Text == "ALL" || item.Region.Contains(cmbRegion.Text)))*/
                     itms.Add(item);
             }
 
             RefreshList(itms);
         }
 
-        private void cmbRegion_SelectedIndexChanged(object sender, EventArgs e)
+        bool ContainsCmbBox(PresentationControls.CheckBoxComboBox chkbcmb, string item)
         {
-            txtSearch_TextChanged(null, null);
+            foreach (var itm in chkbcmb.CheckBoxItems)
+            {
+                if (itm.Checked && item.Contains(itm.Text))
+                    return true;
+            }
+            return false;
         }
 
         // Browse
@@ -312,23 +343,23 @@ namespace NPS
             }
         }
 
-        private void rbnPSM_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbnPSM.Checked)
-            {
-                currentDatabase = psmDbs;
-                txtSearch_TextChanged(null, null);
-            }
-        }
+        //private void rbnPSM_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (rbnPSM.Checked)
+        //    {
+        //        currentDatabase = psmDbs;
+        //        txtSearch_TextChanged(null, null);
+        //    }
+        //}
 
-        private void rbnPSX_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbnPSX.Checked)
-            {
-                currentDatabase = psxDbs;
-                txtSearch_TextChanged(null, null);
-            }
-        }
+        //private void rbnPSX_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    if (rbnPSX.Checked)
+        //    {
+        //        currentDatabase = psxDbs;
+        //        txtSearch_TextChanged(null, null);
+        //    }
+        //}
 
         // Download
         private void btnDownload_Click(object sender, EventArgs e)
@@ -620,7 +651,27 @@ namespace NPS
             }
         }
 
-
+        private void lstTitles_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var a = (sender as ListView);
+                if (a.SelectedItems.Count > 0)
+                {
+                    var itm = (a.SelectedItems[0].Tag as Item);
+                    if (itm.DLCs == 0)
+                    {
+                        showTitleDlcToolStripMenuItem.Enabled = false;
+                        downloadAllDlcsToolStripMenuItem.Enabled = false;
+                    }
+                    else
+                    {
+                        showTitleDlcToolStripMenuItem.Enabled = true;
+                        downloadAllDlcsToolStripMenuItem.Enabled = true;
+                    }
+                }
+            }
+        }
     }
 
     class Release
@@ -634,5 +685,5 @@ namespace NPS
         public string browser_download_url = "";
     }
 
-    enum DatabaseType { AddDlc, ItsDlc, ItsPsn, ItsPSX }
+    enum DatabaseType { AddDlc, ItsDlc, ItsPsm, ItsPSX }
 }

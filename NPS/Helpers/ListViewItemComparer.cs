@@ -25,7 +25,7 @@ namespace NPS
             string sx = ((ListViewItem)x).SubItems[col].Text;
             string sy = ((ListViewItem)y).SubItems[col].Text;
 
-            if (col == 3)
+            if (col == 4)
             {
                 float.TryParse(sx, out float fx);
 
@@ -35,7 +35,7 @@ namespace NPS
                     returnVal = fx.CompareTo(fy);
                 else returnVal = fy.CompareTo(fx);
             }
-            else if (col == 4)
+            else if (col == 5)
             {
                 DateTime dtx = DateTime.MinValue;
                 DateTime.TryParse(sx, out dtx);

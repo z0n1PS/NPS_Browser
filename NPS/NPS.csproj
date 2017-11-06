@@ -74,12 +74,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\CustomComponents\CheckBoxComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Helpers\CustomComponents\CheckBoxComboBox.designer.cs">
+      <DependentUpon>CheckBoxComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\CustomComponents\GripBounds.cs" />
+    <Compile Include="Helpers\CustomComponents\NativeMethods.cs" />
+    <Compile Include="Helpers\CustomComponents\Popup.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Helpers\CustomComponents\Popup.designer.cs">
+      <DependentUpon>Popup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\CustomComponents\PopupComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Helpers\CustomComponents\PopupComboBox.Designer.cs">
+      <DependentUpon>PopupComboBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\SimpleJson.cs" />
     <Compile Include="Helpers\DownloadWorker.cs" />
     <Compile Include="Helpers\Renascene.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\Item.cs" />
-    <Compile Include="Helpers\ListViewEx.cs">
+    <Compile Include="Helpers\CustomComponents\ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Helpers\ListViewItemComparer.cs" />
@@ -97,6 +117,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Helpers\CustomComponents\PopupComboBox.resx">
+      <DependentUpon>PopupComboBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Options.resx">
       <DependentUpon>Options.cs</DependentUpon>
     </EmbeddedResource>
