@@ -15,7 +15,9 @@ public class Settings
     public bool deleteAfterUnpack = false;
     public int simultaneousDl = 2;
 
-
+    // Splitters
+    public int splMainPosition = 405;
+    public int splListPosition = 851;
 
     int _records = 0;
 
@@ -43,8 +45,11 @@ public class Settings
             bool.TryParse(deleteAfterUnpackString, out deleteAfterUnpack);
         else deleteAfterUnpack = true;
 
-
         if (pkgParams == null) pkgParams = "--make-dirs=ux --license=\"{zRifKey}\" {pkgFile} \"{gameTitle} ({region}) [{titleID}]\"";
+
+        // Splitters
+        splMainPosition = (int)Registry.GetValue(keyName, "splMainPosition", 405);
+        splListPosition = (int)Registry.GetValue(keyName, "splListPosition", 851);
     }
 
     public void Store()
@@ -67,7 +72,10 @@ public class Settings
             Registry.SetValue(keyName, "PSMUri", PSMUri);
 
         Registry.SetValue(keyName, "deleteAfterUnpack", deleteAfterUnpack);
-
         Registry.SetValue(keyName, "simultaneousDl", simultaneousDl);
+
+        // Splitter positions
+        Registry.SetValue(keyName, "splMainPosition", splMainPosition);
+        Registry.SetValue(keyName, "splListPosition", splListPosition);
     }
 }

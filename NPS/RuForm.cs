@@ -95,6 +95,7 @@ namespace NPS
                                 foreach (var a in cmbType.CheckBoxItems)
                                     a.Checked = true;
 
+
                                 // Populate DLC Parent Titles
                                 foreach (var item in dlcsDbs)
                                 {
@@ -116,6 +117,7 @@ namespace NPS
         private void CmbRegion_CheckBoxCheckedChanged(object sender, EventArgs e)
         {
             txtSearch_TextChanged(null, null);
+
         }
 
         private void NewVersionCheck()
@@ -283,6 +285,12 @@ namespace NPS
             lblCount.Text = $"{list.Count}/{currentDatabase.Count} {type}";
         }
 
+        // Form
+        private void NPSBrowser_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Settings.Instance.Store();
+        }
+
         // Menu
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -300,6 +308,17 @@ namespace NPS
             string url = releases?[0]?.assets?[0]?.browser_download_url;
             if (!string.IsNullOrEmpty(url))
                 System.Diagnostics.Process.Start(url);
+        }
+
+        // Splitters
+        private void splMain_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            Settings.Instance.splMainPosition = splMain.SplitterDistance;
+        }
+
+        private void splList_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            Settings.Instance.splListPosition = splList.SplitterDistance;
         }
 
         // Search
@@ -530,8 +549,6 @@ namespace NPS
             }
         }
 
-
-
         private void retryUnpackToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lstDownloadStatus.SelectedItems.Count == 0) return;
@@ -653,6 +670,7 @@ namespace NPS
             }
         }
 
+
         private void lstTitles_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -674,6 +692,7 @@ namespace NPS
                 }
             }
         }
+
     }
 
     class Release
