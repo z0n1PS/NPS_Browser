@@ -29,8 +29,8 @@ namespace NPS
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            PresentationControls.CheckBoxProperties checkBoxProperties3 = new PresentationControls.CheckBoxProperties();
             PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
-            PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,16 +69,15 @@ namespace NPS
             this.splMain = new System.Windows.Forms.SplitContainer();
             this.splList = new System.Windows.Forms.SplitContainer();
             this.pnlSearch = new System.Windows.Forms.Panel();
+            this.cmbType = new PresentationControls.CheckBoxComboBox();
+            this.cmbRegion = new PresentationControls.CheckBoxComboBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pauseResumeLayoutPnl = new System.Windows.Forms.TableLayoutPanel();
             this.ResumeAll = new System.Windows.Forms.Button();
             this.PauseAll = new System.Windows.Forms.Button();
-            this.cmbType = new PresentationControls.CheckBoxComboBox();
-            this.cmbRegion = new PresentationControls.CheckBoxComboBox();
             this.lstDownloadStatus = new ListViewEmbeddedControls.ListViewEx();
             this.colDownloadTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDownloadSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -100,7 +99,6 @@ namespace NPS
             this.pnlSearch.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            this.flowLayoutPanel2.SuspendLayout();
             this.pauseResumeLayoutPnl.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -111,7 +109,7 @@ namespace NPS
             this.downloadUpdateToolStripMenuItem});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
-            this.mnuMain.Size = new System.Drawing.Size(1084, 24);
+            this.mnuMain.Size = new System.Drawing.Size(1085, 24);
             this.mnuMain.TabIndex = 0;
             this.mnuMain.Text = "menuStrip";
             // 
@@ -178,7 +176,7 @@ namespace NPS
             this.lstTitles.FullRowSelect = true;
             this.lstTitles.Location = new System.Drawing.Point(0, 52);
             this.lstTitles.Name = "lstTitles";
-            this.lstTitles.Size = new System.Drawing.Size(851, 353);
+            this.lstTitles.Size = new System.Drawing.Size(851, 354);
             this.lstTitles.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lstTitles.TabIndex = 1;
             this.lstTitles.UseCompatibleStateImageBehavior = false;
@@ -261,13 +259,12 @@ namespace NPS
             // 
             // btnDownload
             // 
-            this.btnDownload.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDownload.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnDownload.Image = global::NPS.Properties.Resources.menu_download;
-            this.btnDownload.Location = new System.Drawing.Point(0, 0);
+            this.btnDownload.Location = new System.Drawing.Point(0, 52);
             this.btnDownload.Margin = new System.Windows.Forms.Padding(0);
             this.btnDownload.Name = "btnDownload";
-            this.btnDownload.Size = new System.Drawing.Size(217, 23);
+            this.btnDownload.Size = new System.Drawing.Size(218, 23);
             this.btnDownload.TabIndex = 3;
             this.btnDownload.Text = "Download and Unpack";
             this.btnDownload.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -314,7 +311,7 @@ namespace NPS
             // ptbCover
             // 
             this.ptbCover.ImageLocation = "";
-            this.ptbCover.Location = new System.Drawing.Point(3, 26);
+            this.ptbCover.Location = new System.Drawing.Point(3, 76);
             this.ptbCover.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.ptbCover.Name = "ptbCover";
             this.ptbCover.Size = new System.Drawing.Size(211, 211);
@@ -326,10 +323,10 @@ namespace NPS
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.Location = new System.Drawing.Point(3, 240);
+            this.label5.Location = new System.Drawing.Point(3, 290);
             this.label5.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(211, 66);
+            this.label5.Size = new System.Drawing.Size(212, 66);
             this.label5.TabIndex = 12;
             // 
             // lstDownloadStatusMenuStrip
@@ -400,10 +397,10 @@ namespace NPS
             // 
             this.lnkOpenRenaScene.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lnkOpenRenaScene.Location = new System.Drawing.Point(3, 309);
+            this.lnkOpenRenaScene.Location = new System.Drawing.Point(3, 362);
             this.lnkOpenRenaScene.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.lnkOpenRenaScene.Name = "lnkOpenRenaScene";
-            this.lnkOpenRenaScene.Size = new System.Drawing.Size(211, 17);
+            this.lnkOpenRenaScene.Size = new System.Drawing.Size(212, 17);
             this.lnkOpenRenaScene.TabIndex = 17;
             this.lnkOpenRenaScene.TabStop = true;
             this.lnkOpenRenaScene.Text = "Open renascene.com (screens, video)";
@@ -417,14 +414,12 @@ namespace NPS
             this.pnlMain.Location = new System.Drawing.Point(0, 24);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Padding = new System.Windows.Forms.Padding(6);
-            this.pnlMain.Size = new System.Drawing.Size(1084, 696);
+            this.pnlMain.Size = new System.Drawing.Size(1085, 699);
             this.pnlMain.TabIndex = 18;
             // 
             // splMain
             // 
             this.splMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splMain.IsSplitterFixed = true;
             this.splMain.Location = new System.Drawing.Point(6, 6);
             this.splMain.Name = "splMain";
             this.splMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -436,15 +431,13 @@ namespace NPS
             // splMain.Panel2
             // 
             this.splMain.Panel2.Controls.Add(this.lstDownloadStatus);
-            this.splMain.Size = new System.Drawing.Size(1072, 684);
-            this.splMain.SplitterDistance = 405;
+            this.splMain.Size = new System.Drawing.Size(1073, 687);
+            this.splMain.SplitterDistance = 406;
             this.splMain.TabIndex = 18;
             // 
             // splList
             // 
             this.splList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splList.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splList.IsSplitterFixed = true;
             this.splList.Location = new System.Drawing.Point(0, 0);
             this.splList.Name = "splList";
             // 
@@ -455,10 +448,13 @@ namespace NPS
             // 
             // splList.Panel2
             // 
-            this.splList.Panel2.Controls.Add(this.flowLayoutPanel2);
+            this.splList.Panel2.Controls.Add(this.btnDownload);
+            this.splList.Panel2.Controls.Add(this.ptbCover);
             this.splList.Panel2.Controls.Add(this.panel1);
+            this.splList.Panel2.Controls.Add(this.lnkOpenRenaScene);
             this.splList.Panel2.Controls.Add(this.pauseResumeLayoutPnl);
-            this.splList.Size = new System.Drawing.Size(1072, 405);
+            this.splList.Panel2.Controls.Add(this.label5);
+            this.splList.Size = new System.Drawing.Size(1073, 406);
             this.splList.SplitterDistance = 851;
             this.splList.TabIndex = 18;
             // 
@@ -474,6 +470,39 @@ namespace NPS
             this.pnlSearch.Name = "pnlSearch";
             this.pnlSearch.Size = new System.Drawing.Size(851, 52);
             this.pnlSearch.TabIndex = 17;
+            // 
+            // cmbType
+            // 
+            checkBoxProperties3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbType.CheckBoxProperties = checkBoxProperties3;
+            this.cmbType.DisplayMemberSingleItem = "";
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Items.AddRange(new object[] {
+            "VITA",
+            "PSX",
+            "PSM"});
+            this.cmbType.Location = new System.Drawing.Point(549, 3);
+            this.cmbType.MaxDropDownItems = 5;
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(152, 21);
+            this.cmbType.TabIndex = 20;
+            // 
+            // cmbRegion
+            // 
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbRegion.CheckBoxProperties = checkBoxProperties1;
+            this.cmbRegion.DisplayMemberSingleItem = "";
+            this.cmbRegion.FormattingEnabled = true;
+            this.cmbRegion.Items.AddRange(new object[] {
+            "asd",
+            "w",
+            "e",
+            "asd"});
+            this.cmbRegion.Location = new System.Drawing.Point(707, 3);
+            this.cmbRegion.MaxDropDownItems = 5;
+            this.cmbRegion.Name = "cmbRegion";
+            this.cmbRegion.Size = new System.Drawing.Size(138, 21);
+            this.cmbRegion.TabIndex = 19;
             // 
             // flowLayoutPanel3
             // 
@@ -508,26 +537,12 @@ namespace NPS
             this.flowLayoutPanel1.Size = new System.Drawing.Size(686, 23);
             this.flowLayoutPanel1.TabIndex = 17;
             // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Controls.Add(this.btnDownload);
-            this.flowLayoutPanel2.Controls.Add(this.ptbCover);
-            this.flowLayoutPanel2.Controls.Add(this.label5);
-            this.flowLayoutPanel2.Controls.Add(this.lnkOpenRenaScene);
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 52);
-            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(217, 330);
-            this.flowLayoutPanel2.TabIndex = 19;
-            // 
             // panel1
             // 
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(217, 52);
+            this.panel1.Size = new System.Drawing.Size(218, 52);
             this.panel1.TabIndex = 18;
             // 
             // pauseResumeLayoutPnl
@@ -539,12 +554,12 @@ namespace NPS
             this.pauseResumeLayoutPnl.Controls.Add(this.PauseAll, 0, 0);
             this.pauseResumeLayoutPnl.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pauseResumeLayoutPnl.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.pauseResumeLayoutPnl.Location = new System.Drawing.Point(0, 382);
+            this.pauseResumeLayoutPnl.Location = new System.Drawing.Point(0, 383);
             this.pauseResumeLayoutPnl.Margin = new System.Windows.Forms.Padding(0);
             this.pauseResumeLayoutPnl.Name = "pauseResumeLayoutPnl";
             this.pauseResumeLayoutPnl.RowCount = 1;
             this.pauseResumeLayoutPnl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.pauseResumeLayoutPnl.Size = new System.Drawing.Size(217, 23);
+            this.pauseResumeLayoutPnl.Size = new System.Drawing.Size(218, 23);
             this.pauseResumeLayoutPnl.TabIndex = 18;
             // 
             // ResumeAll
@@ -553,7 +568,7 @@ namespace NPS
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ResumeAll.Image = global::NPS.Properties.Resources.menu_resume;
-            this.ResumeAll.Location = new System.Drawing.Point(108, 0);
+            this.ResumeAll.Location = new System.Drawing.Point(109, 0);
             this.ResumeAll.Margin = new System.Windows.Forms.Padding(0);
             this.ResumeAll.Name = "ResumeAll";
             this.ResumeAll.Size = new System.Drawing.Size(109, 23);
@@ -573,46 +588,13 @@ namespace NPS
             this.PauseAll.Location = new System.Drawing.Point(0, 0);
             this.PauseAll.Margin = new System.Windows.Forms.Padding(0);
             this.PauseAll.Name = "PauseAll";
-            this.PauseAll.Size = new System.Drawing.Size(108, 23);
+            this.PauseAll.Size = new System.Drawing.Size(109, 23);
             this.PauseAll.TabIndex = 0;
             this.PauseAll.Text = "Pause All";
             this.PauseAll.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.PauseAll.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.PauseAll.UseVisualStyleBackColor = true;
             this.PauseAll.Click += new System.EventHandler(this.PauseAllBtnClick);
-            // 
-            // cmbType
-            // 
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbType.CheckBoxProperties = checkBoxProperties1;
-            this.cmbType.DisplayMemberSingleItem = "";
-            this.cmbType.FormattingEnabled = true;
-            this.cmbType.Items.AddRange(new object[] {
-            "VITA",
-            "PSX",
-            "PSM"});
-            this.cmbType.Location = new System.Drawing.Point(549, 3);
-            this.cmbType.MaxDropDownItems = 5;
-            this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(152, 21);
-            this.cmbType.TabIndex = 20;
-            // 
-            // cmbRegion
-            // 
-            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
-            this.cmbRegion.DisplayMemberSingleItem = "";
-            this.cmbRegion.FormattingEnabled = true;
-            this.cmbRegion.Items.AddRange(new object[] {
-            "asd",
-            "w",
-            "e",
-            "asd"});
-            this.cmbRegion.Location = new System.Drawing.Point(707, 3);
-            this.cmbRegion.MaxDropDownItems = 5;
-            this.cmbRegion.Name = "cmbRegion";
-            this.cmbRegion.Size = new System.Drawing.Size(138, 21);
-            this.cmbRegion.TabIndex = 19;
             // 
             // lstDownloadStatus
             // 
@@ -626,7 +608,7 @@ namespace NPS
             this.lstDownloadStatus.FullRowSelect = true;
             this.lstDownloadStatus.Location = new System.Drawing.Point(0, 0);
             this.lstDownloadStatus.Name = "lstDownloadStatus";
-            this.lstDownloadStatus.Size = new System.Drawing.Size(1072, 275);
+            this.lstDownloadStatus.Size = new System.Drawing.Size(1073, 277);
             this.lstDownloadStatus.TabIndex = 14;
             this.lstDownloadStatus.UseCompatibleStateImageBehavior = false;
             this.lstDownloadStatus.View = System.Windows.Forms.View.Details;
@@ -655,12 +637,13 @@ namespace NPS
             // NPSBrowser
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1084, 720);
+            this.ClientSize = new System.Drawing.Size(1085, 723);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.mnuMain);
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "NPSBrowser";
             this.Text = "NPS Browser";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NPSBrowser_FormClosing);
             this.Load += new System.EventHandler(this.NoPayStationBrowser_Load);
             this.mnuMain.ResumeLayout(false);
             this.mnuMain.PerformLayout();
@@ -681,7 +664,6 @@ namespace NPS
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
-            this.flowLayoutPanel2.ResumeLayout(false);
             this.pauseResumeLayoutPnl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -735,7 +717,6 @@ namespace NPS
         private System.Windows.Forms.Panel pnlSearch;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Label lblCount;

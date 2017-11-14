@@ -130,6 +130,7 @@ namespace NPS
         private void CmbRegion_CheckBoxCheckedChanged(object sender, EventArgs e)
         {
             txtSearch_TextChanged(null, null);
+
         }
 
         private void NewVersionCheck()
@@ -297,6 +298,12 @@ namespace NPS
             lblCount.Text = $"{list.Count}/{currentDatabase.Count} {type}";
         }
 
+        // Form
+        private void NPSBrowser_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Settings.Instance.Store();
+        }
+
         // Menu
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -315,6 +322,8 @@ namespace NPS
             if (!string.IsNullOrEmpty(url))
                 System.Diagnostics.Process.Start(url);
         }
+
+
 
         // Search
         private void txtSearch_TextChanged(object sender, EventArgs e)
@@ -544,8 +553,6 @@ namespace NPS
             }
         }
 
-
-
         private void retryUnpackToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lstDownloadStatus.SelectedItems.Count == 0) return;
@@ -667,6 +674,7 @@ namespace NPS
             }
         }
 
+
         private void lstTitles_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -688,6 +696,7 @@ namespace NPS
                 }
             }
         }
+
     }
 
     class Release
