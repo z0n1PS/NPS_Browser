@@ -221,10 +221,11 @@ namespace NPS
                                 }
                             }
 
-
                             if ((!itm.zRif.ToLower().Contains("missing")) && (itm.pkg.ToLower().Contains("http://")
                             || itm.pkg.ToLower().Contains("https://")))
                             {
+                                if (itm.zRif.ToLower().Contains("not required")) itm.zRif = "";
+
                                 if (dbType == DatabaseType.AddDlc)
                                     itm.CalculateDlCs(dlcsDbs.ToArray());
                                 dbs.Add(itm);
