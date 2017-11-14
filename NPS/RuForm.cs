@@ -222,7 +222,8 @@ namespace NPS
                             }
 
 
-                            if ((!itm.zRif.ToLower().Contains("missing")) && itm.pkg.ToLower().Contains("http://"))
+                            if ((!itm.zRif.ToLower().Contains("missing")) && (itm.pkg.ToLower().Contains("http://")
+                            || itm.pkg.ToLower().Contains("https://")))
                             {
                                 if (dbType == DatabaseType.AddDlc)
                                     itm.CalculateDlCs(dlcsDbs.ToArray());
