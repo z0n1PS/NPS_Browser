@@ -40,7 +40,7 @@ namespace NPS
             }
             else if (!File.Exists(Settings.Instance.pkgPath))
             {
-                MessageBox.Show("You are missing your pkg_dec.exe", "Whops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You are missing your pkg decryptor exe", "Whops!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Options o = new Options();
                 o.ShowDialog();
             }
@@ -64,7 +64,7 @@ namespace NPS
 
                 LoadDatabase(Settings.Instance.GamesUri, (vita) =>
                 {
-                    gamesDbs = vita;
+                    gamesDbs.AddRange(vita);
 
                     LoadDatabase(Settings.Instance.PSMUri, (psm) =>
                     {
@@ -95,6 +95,7 @@ namespace NPS
                                 foreach (var a in cmbType.CheckBoxItems)
                                     a.Checked = true;
 
+
                                 // Populate DLC Parent Titles
                                 foreach (var item in dlcsDbs)
                                 {
@@ -113,6 +114,19 @@ namespace NPS
             }, DatabaseType.ItsDlc);
         }
 
+        void SetCheckboxState(List<Item> list, int id)
+        {
+            if (list.Count == 0)
+            {
+                cmbType.CheckBoxItems[id].Enabled = false;
+                cmbType.CheckBoxItems[id].Checked = false;
+            }
+            else
+            {
+                cmbType.CheckBoxItems[id].Enabled = true;
+                cmbType.CheckBoxItems[id].Checked = true;
+            }
+        }
         private void CmbRegion_CheckBoxCheckedChanged(object sender, EventArgs e)
         {
             txtSearch_TextChanged(null, null);

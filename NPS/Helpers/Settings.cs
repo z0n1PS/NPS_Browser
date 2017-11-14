@@ -44,7 +44,8 @@ public class Settings
         else deleteAfterUnpack = true;
 
 
-        if (pkgParams == null) pkgParams = "--make-dirs=ux --license=\"{zRifKey}\" {pkgFile} \"{gameTitle} ({region}) [{titleID}]\"";
+        // if (pkgParams == null) pkgParams = "--make-dirs=ux --license=\"{zRifKey}\" {pkgFile} \"{gameTitle} ({region}) [{titleID}]\"";
+        if (pkgParams == null) pkgParams = "-x {pkgFile} \"{zRifKey}\"";
     }
 
     public void Store()

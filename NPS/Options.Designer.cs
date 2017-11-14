@@ -114,7 +114,7 @@ namespace NPS
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(141, 35);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Your pkg dec params (default for pkg_dec)";
+            this.label3.Text = "Your pkg dec params (default for pkg2zip)";
             // 
             // textParams
             // 
