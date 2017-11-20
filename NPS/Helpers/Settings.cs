@@ -11,7 +11,7 @@ public class Settings
     public string downloadDir;
     public string pkgPath;
     public string pkgParams;
-    public string GamesUri, DLCUri, PSMUri, PSXUri;
+    public string GamesUri, DLCUri, PSMUri, PSXUri, PSPUri, PSPDLCUri;
     public bool deleteAfterUnpack = false;
     public int simultaneousDl = 2;
 
@@ -30,6 +30,8 @@ public class Settings
         DLCUri = Registry.GetValue(keyName, "DLCUri", "")?.ToString();
         PSXUri = Registry.GetValue(keyName, "PSXUri", "")?.ToString();
         PSMUri = Registry.GetValue(keyName, "PSMUri", "")?.ToString();
+        PSPUri = Registry.GetValue(keyName, "PSPUri", "")?.ToString();
+        PSPDLCUri = Registry.GetValue(keyName, "PSPDLCUri", "")?.ToString();
         pkgParams = Registry.GetValue(keyName, "pkgParams", null)?.ToString();
 
         string simultanesulString = Registry.GetValue(keyName, "simultaneousDl", 2)?.ToString();
@@ -67,8 +69,13 @@ public class Settings
         if (PSMUri != null)
             Registry.SetValue(keyName, "PSMUri", PSMUri);
 
+        if (PSPUri != null)
+            Registry.SetValue(keyName, "PSPUri", PSPUri);
+        if (PSPDLCUri != null)
+            Registry.SetValue(keyName, "PSPDLCUri", PSPDLCUri);
         Registry.SetValue(keyName, "deleteAfterUnpack", deleteAfterUnpack);
 
         Registry.SetValue(keyName, "simultaneousDl", simultaneousDl);
     }
 }
+

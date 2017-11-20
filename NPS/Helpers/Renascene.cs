@@ -21,11 +21,17 @@ namespace NPS.Helpers
                     content = wc.DownloadString(@"http://renascene.com/ps1/?target=search&srch=" + titleId + "&srchser=1");
                     url = ExtractString(content, "<td class=\"l\">&nbsp; <a href=\"", "\">");
                 }
+                else if (itm.ItsPsp)
+                {
+                    content = wc.DownloadString(@"http://renascene.com/?target=search1&srch=" + titleId + "&srchser=1");
+                    url = ExtractString(content, "<tr class=\"defRows \" onclick=\"window.location.href='", "';\" >");
+                }
                 else
                 {
                     content = wc.DownloadString(@"http://renascene.com/psv/?target=search&srch=" + titleId + "&srchser=1");
                     url = ExtractString(content, "<td class=\"l\"><a href=\"", "\">");
                 }
+
                 content = wc.DownloadString(url);
 
                 this.imgUrl = ExtractString(content, "<td width=\"300pt\" style=\"vertical-align: top; padding: 0 0 0 5px;\">", "</td>");
@@ -37,7 +43,7 @@ namespace NPS.Helpers
 
                 language = ExtractString(content, "<td class=\"infLeftTd\">Language</td>", "</tr>");
                 language = ExtractString(language, "<td class=\"infRightTd\">", "</td>");
-                if (!itm.ItsPsx)
+                if (!(itm.ItsPsx || itm.ItsPsp))
                 {
                     publish = ExtractString(content, "<td class=\"infLeftTd\">Publish Date</td>", "</tr>");
                     publish = ExtractString(publish, "<td class=\"infRightTd\">", "</td>");

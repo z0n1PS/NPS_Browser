@@ -12,7 +12,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.74";
+        public const string version = "0.75";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -54,7 +54,8 @@ namespace NPS
 
             LoadDatabase(Settings.Instance.DLCUri, (db) =>
             {
-                dlcsDbs = db;
+                dlcsDbs.AddRange(db);
+
                 Invoke(new Action(() =>
                 {
                     if (dlcsDbs.Count > 0)
@@ -62,55 +63,60 @@ namespace NPS
                     else rbnDLC.Enabled = false;
                 }));
 
-                LoadDatabase(Settings.Instance.GamesUri, (vita) =>
+                LoadDatabase(Settings.Instance.PSPUri, (psp) =>
                 {
-                    gamesDbs.AddRange(vita);
+                    gamesDbs.AddRange(psp);
 
-                    LoadDatabase(Settings.Instance.PSMUri, (psm) =>
+                    LoadDatabase(Settings.Instance.GamesUri, (vita) =>
                     {
-                        gamesDbs.AddRange(psm);
+                        gamesDbs.AddRange(vita);
 
-                        LoadDatabase(Settings.Instance.PSXUri, (psx) =>
+                        LoadDatabase(Settings.Instance.PSMUri, (psm) =>
                         {
-                            gamesDbs.AddRange(psx);
+                            gamesDbs.AddRange(psm);
 
-                            Invoke(new Action(() =>
+                            LoadDatabase(Settings.Instance.PSXUri, (psx) =>
                             {
-                                if (gamesDbs.Count > 0)
-                                    rbnGames.Enabled = true;
-                                else rbnGames.Enabled = false;
+                                gamesDbs.AddRange(psx);
 
-                                rbnGames.Checked = true;
-                                currentDatabase = gamesDbs;
-
-                                cmbRegion.Items.Clear();
-
-
-                                foreach (string s in regions)
-                                    cmbRegion.Items.Add(s);
-
-                                foreach (var a in cmbRegion.CheckBoxItems)
-                                    a.Checked = true;
-
-                                foreach (var a in cmbType.CheckBoxItems)
-                                    a.Checked = true;
-
-
-                                // Populate DLC Parent Titles
-                                foreach (var item in dlcsDbs)
+                                Invoke(new Action(() =>
                                 {
-                                    var result = gamesDbs.FirstOrDefault(i => i.TitleId.StartsWith(item.TitleId.Substring(0, 9)))?.TitleName;
-                                    item.ParentGameTitle = result ?? string.Empty;
-                                }
+                                    if (gamesDbs.Count > 0)
+                                        rbnGames.Enabled = true;
+                                    else rbnGames.Enabled = false;
 
-                                cmbRegion.CheckBoxCheckedChanged += txtSearch_TextChanged;
-                                cmbType.CheckBoxCheckedChanged += txtSearch_TextChanged;
-                                txtSearch_TextChanged(null, null);
-                            }));
+                                    rbnGames.Checked = true;
+                                    currentDatabase = gamesDbs;
 
-                        }, DatabaseType.ItsPSX);
-                    }, DatabaseType.ItsPsm);
-                }, DatabaseType.AddDlc);
+                                    cmbRegion.Items.Clear();
+
+
+                                    foreach (string s in regions)
+                                        cmbRegion.Items.Add(s);
+
+                                    foreach (var a in cmbRegion.CheckBoxItems)
+                                        a.Checked = true;
+
+                                    foreach (var a in cmbType.CheckBoxItems)
+                                        a.Checked = true;
+
+
+                                    // Populate DLC Parent Titles
+                                    foreach (var item in dlcsDbs)
+                                    {
+                                        var result = gamesDbs.FirstOrDefault(i => i.TitleId.StartsWith(item.TitleId.Substring(0, 9)))?.TitleName;
+                                        item.ParentGameTitle = result ?? string.Empty;
+                                    }
+
+                                    cmbRegion.CheckBoxCheckedChanged += txtSearch_TextChanged;
+                                    cmbType.CheckBoxCheckedChanged += txtSearch_TextChanged;
+                                    txtSearch_TextChanged(null, null);
+                                }));
+
+                            }, DatabaseType.ItsPSX);
+                        }, DatabaseType.ItsPsm);
+                    }, DatabaseType.Vita);
+                }, DatabaseType.PSP);
             }, DatabaseType.ItsDlc);
         }
 
@@ -227,9 +233,21 @@ namespace NPS
                                     DateTime.TryParse(a[5], out itm.lastModifyDate);
                                 }
                             }
-                            else
+                            else if (dbType == DatabaseType.Vita)
                             {
                                 itm.contentType = "VITA";
+                                if (a.Length >= 7)
+                                {
+                                    DateTime.TryParse(a[6], out itm.lastModifyDate);
+                                }
+                            }
+                            else if (dbType == DatabaseType.PSP)
+                            {
+                                itm.contentType = a[2];
+                                itm.TitleName = a[3];
+                                itm.pkg = a[4];
+                                itm.ContentId = a[5];
+                                itm.ItsPsp = true;
                                 if (a.Length >= 7)
                                 {
                                     DateTime.TryParse(a[6], out itm.lastModifyDate);
@@ -241,7 +259,7 @@ namespace NPS
                             {
                                 if (itm.zRif.ToLower().Contains("not required")) itm.zRif = "";
 
-                                if (dbType == DatabaseType.AddDlc)
+                                if (dbType == DatabaseType.Vita)
                                     itm.CalculateDlCs(dlcsDbs.ToArray());
                                 dbs.Add(itm);
                                 regions.Add(itm.Region.Replace(" ", ""));
@@ -710,5 +728,5 @@ namespace NPS
         public string browser_download_url = "";
     }
 
-    enum DatabaseType { AddDlc, ItsDlc, ItsPsm, ItsPSX }
+    enum DatabaseType { Vita, ItsDlc, ItsPsm, ItsPSX, PSPDLC, PSP }
 }

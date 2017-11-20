@@ -29,8 +29,8 @@ namespace NPS
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            PresentationControls.CheckBoxProperties checkBoxProperties3 = new PresentationControls.CheckBoxProperties();
             PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
+            PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -473,14 +473,19 @@ namespace NPS
             // 
             // cmbType
             // 
-            checkBoxProperties3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbType.CheckBoxProperties = checkBoxProperties3;
+            checkBoxProperties1.AutoSize = true;
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbType.CheckBoxProperties = checkBoxProperties1;
             this.cmbType.DisplayMemberSingleItem = "";
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Items.AddRange(new object[] {
             "VITA",
             "PSX",
-            "PSM"});
+            "PSM",
+            "PSP",
+            "PC Engine",
+            "NeoGeo",
+            "Minis"});
             this.cmbType.Location = new System.Drawing.Point(549, 3);
             this.cmbType.MaxDropDownItems = 5;
             this.cmbType.Name = "cmbType";
@@ -489,8 +494,9 @@ namespace NPS
             // 
             // cmbRegion
             // 
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbRegion.CheckBoxProperties = checkBoxProperties1;
+            checkBoxProperties2.AutoSize = true;
+            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
             this.cmbRegion.DisplayMemberSingleItem = "";
             this.cmbRegion.FormattingEnabled = true;
             this.cmbRegion.Items.AddRange(new object[] {

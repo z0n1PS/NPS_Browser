@@ -32,6 +32,8 @@ namespace NPS
             numericUpDown1.Value = Settings.Instance.simultaneousDl;
             textBox3.Text = Settings.Instance.PSMUri;
             textBox4.Text = Settings.Instance.PSXUri;
+            textBox5.Text = Settings.Instance.PSPUri;
+            textBox6.Text = Settings.Instance.PSPDLCUri;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -71,6 +73,8 @@ namespace NPS
             Settings.Instance.DLCUri = textBox2.Text;
             Settings.Instance.PSMUri = textBox3.Text;
             Settings.Instance.PSXUri = textBox4.Text;
+            Settings.Instance.PSPUri = textBox5.Text;
+            Settings.Instance.PSPDLCUri = textBox6.Text;
             Settings.Instance.Store();
         }
 
@@ -150,6 +154,36 @@ namespace NPS
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.FileName))
                 {
                     textBox4.Text = fbd.FileName;
+                }
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new OpenFileDialog())
+            {
+                fbd.Filter = "|*.tsv";
+
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.FileName))
+                {
+                    textBox5.Text = fbd.FileName;
+                }
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new OpenFileDialog())
+            {
+                fbd.Filter = "|*.tsv";
+
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.FileName))
+                {
+                    textBox6.Text = fbd.FileName;
                 }
             }
         }
