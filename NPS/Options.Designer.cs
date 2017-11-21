@@ -188,7 +188,7 @@ namespace NPS
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(156, 226);
+            this.checkBox1.Location = new System.Drawing.Point(155, 242);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(198, 17);
             this.checkBox1.TabIndex = 15;
@@ -198,7 +198,7 @@ namespace NPS
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(8, 251);
+            this.label6.Location = new System.Drawing.Point(7, 267);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(141, 20);
             this.label6.TabIndex = 16;
@@ -206,7 +206,7 @@ namespace NPS
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(155, 249);
+            this.numericUpDown1.Location = new System.Drawing.Point(154, 265);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             15,
             0,
@@ -344,7 +344,7 @@ namespace NPS
             // 
             // Options
             // 
-            this.ClientSize = new System.Drawing.Size(680, 277);
+            this.ClientSize = new System.Drawing.Size(680, 296);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.button8);

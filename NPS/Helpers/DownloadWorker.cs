@@ -46,6 +46,25 @@ namespace NPS
             formCaller = f;
             status = WorkerStatus.Queued;
         }
+        public DownloadWorker(HistoryItem history, Form f)
+        {
+            //currentDownload = history.item;
+            //lvi = new ListViewItem(history.item.TitleName);
+            lvi.SubItems.Add(history.status1);
+            lvi.SubItems.Add(history.status2);
+            lvi.SubItems.Add("");
+            lvi.Tag = this;
+            //isRunning = false;
+            //isCanceled = false;
+            //isCompleted = false;
+
+            timer.Interval = 1000;
+            timer.Tick += Timer_Tick;
+            formCaller = f;
+            //status = history.status;
+            progress.Value = history.procent;
+        }
+
 
         public void Start()
         {
@@ -193,6 +212,9 @@ namespace NPS
                 {
                     lvi.SubItems[1].Text = "";
                     lvi.SubItems[2].Text = "Completed";
+
+                    History.I.cd = (new HistoryItem(currentDownload, 100));
+
                     if (Settings.Instance.deleteAfterUnpack)
                         DeletePkg();
                 }));
@@ -216,6 +238,15 @@ namespace NPS
             }
         }
 
+
+        public HistoryItem Serialize()
+        {
+            HistoryItem r = new HistoryItem(currentDownload, progress.Value);
+            r.status1 = lvi.SubItems[1].Text;
+            r.status2 = lvi.SubItems[2].Text;
+            //r.status = this.status;
+            return r;
+        }
 
 
 

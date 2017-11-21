@@ -50,6 +50,16 @@ namespace NPS
 
         private void NoPayStationBrowser_Load(object sender, EventArgs e)
         {
+            History.Load();
+
+            //foreach (var hi in History.I.currentlyDownloading)
+            //{
+            //    DownloadWorker dw = new DownloadWorker(hi, this);
+            //    lstDownloadStatus.Items.Add(dw.lvi);
+            //    lstDownloadStatus.AddEmbeddedControl(dw.progress, 3, lstDownloadStatus.Items.Count - 1);
+            //    downloads.Add(dw);
+            //}
+
             ServicePointManager.DefaultConnectionLimit = 30;
 
             LoadDatabase(Settings.Instance.DLCUri, (db) =>
@@ -320,6 +330,18 @@ namespace NPS
         private void NPSBrowser_FormClosing(object sender, FormClosingEventArgs e)
         {
             Settings.Instance.Store();
+            //History.I.currentlyDownloading.Clear();
+
+            foreach (var lstItm in lstDownloadStatus.Items)
+            {
+                DownloadWorker dw = ((lstItm as ListViewItem).Tag as DownloadWorker);
+
+                History.I.cd = (dw.Serialize());
+            }
+
+            History.I.Save();
+
+
         }
 
         // Menu

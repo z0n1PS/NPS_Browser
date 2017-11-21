@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.Collections.Generic;
 
 public class Settings
 {
@@ -78,4 +79,52 @@ public class Settings
         Registry.SetValue(keyName, "simultaneousDl", simultaneousDl);
     }
 }
+
+
+public class History
+{
+
+    public static History I;
+    public string dupa = "";
+    public HistoryItem cd;
+    //public List<HistoryItem> currentlyDownloading = new List<HistoryItem>();
+    //public List<HistoryItem> completedDownloading = new List<HistoryItem>();
+
+    static string path = "history.json";
+
+    public static void Load()
+    {
+        if (System.IO.File.Exists(path))
+        {
+            string s = System.IO.File.ReadAllText(path);
+            I = SimpleJson.SimpleJson.DeserializeObject<History>(s);
+        }
+        else I = new History();
+    }
+
+    public void Save()
+    {
+        string s = SimpleJson.SimpleJson.SerializeObject(this);
+        System.IO.File.WriteAllText(path, s);
+    }
+
+
+}
+
+public class HistoryItem
+{
+    //public NPS.Item item;
+    public int procent;
+    public string status1, status2;
+    //public NPS.WorkerStatus status;
+
+    public HistoryItem(NPS.Item item, int procent)
+    {
+        //this.item = item;
+        this.procent = procent;
+
+    }
+}
+
+
 
