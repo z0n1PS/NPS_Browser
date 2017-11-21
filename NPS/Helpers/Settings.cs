@@ -1,7 +1,4 @@
 ﻿using Microsoft.Win32;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 public class Settings
 {
@@ -20,13 +17,11 @@ public class Settings
 
 
 
-    int _records = 0;
 
     public Settings()
     {
         Instance = this;
 
-        //defaultRegion = Registry.GetValue(keyName, "region", "ALL")?.ToString();
         downloadDir = Registry.GetValue(keyName, "downloadDir", "")?.ToString();
         pkgPath = Registry.GetValue(keyName, "pkgPath", "")?.ToString();
         GamesUri = Registry.GetValue(keyName, "GamesUri", "")?.ToString();
@@ -44,12 +39,11 @@ public class Settings
         else simultaneousDl = 2;
 
         string deleteAfterUnpackString = Registry.GetValue(keyName, "deleteAfterUnpack", false)?.ToString();
+
         if (!string.IsNullOrEmpty(deleteAfterUnpackString))
             bool.TryParse(deleteAfterUnpackString, out deleteAfterUnpack);
         else deleteAfterUnpack = true;
 
-
-        // if (pkgParams == null) pkgParams = "--make-dirs=ux --license=\"{zRifKey}\" {pkgFile} \"{gameTitle} ({region}) [{titleID}]\"";
         if (pkgParams == null) pkgParams = "-x {pkgFile} \"{zRifKey}\"";
     }
 
@@ -76,59 +70,14 @@ public class Settings
             Registry.SetValue(keyName, "PSPUri", PSPUri);
         if (PSPDLCUri != null)
             Registry.SetValue(keyName, "PSPDLCUri", PSPDLCUri);
+
         Registry.SetValue(keyName, "deleteAfterUnpack", deleteAfterUnpack);
+
 
         Registry.SetValue(keyName, "simultaneousDl", simultaneousDl);
     }
 }
 
-[System.Serializable]
-public class History
-{
-
-    public static History I;
-    public List<NPS.DownloadWorker> currentlyDownloading = new List<NPS.DownloadWorker>();
-    //public List<HistoryItem> completedDownloading = new List<HistoryItem>();
-
-    static string path = "history.dat";
-
-    public static void Load()
-    {
-        if (System.IO.File.Exists(path))
-        {
-            var stream = File.OpenRead(path);
-            var formatter = new BinaryFormatter();
-            I = (History)formatter.Deserialize(stream);
-            stream.Close();
-        }
-        else I = new History();
-    }
-
-    public void Save()
-    {
-        FileStream stream = File.Create(path);
-        var formatter = new BinaryFormatter();
-        formatter.Serialize(stream, this);
-        stream.Close();
-    }
-
-
-}
-
-public class HistoryItem
-{
-    //public NPS.Item item;
-    public int procent;
-    public string status1, status2;
-    //public NPS.WorkerStatus status;
-
-    public HistoryItem(NPS.Item item, int procent)
-    {
-        //this.item = item;
-        this.procent = procent;
-
-    }
-}
 
 
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -50,8 +51,6 @@ namespace NPS
 
         private void NoPayStationBrowser_Load(object sender, EventArgs e)
         {
-            History.Load();
-
             foreach (var hi in History.I.currentlyDownloading)
             {
                 DownloadWorker dw = hi;
@@ -208,6 +207,7 @@ namespace NPS
 
 
                             itm.TitleId = a[0];
+
                             itm.Region = a[1];
                             itm.TitleName = a[2];
                             itm.pkg = a[3];
@@ -272,12 +272,13 @@ namespace NPS
 
                                 if (dbType == DatabaseType.Vita)
                                     itm.CalculateDlCs(dlcsDbs.ToArray());
+
+
+
                                 dbs.Add(itm);
                                 regions.Add(itm.Region.Replace(" ", ""));
                             }
                         }
-
-                        //dbs = dbs.OrderBy(i => i.TitleName).ToList();
                     }
                     catch { }
                     result.Invoke(dbs);
@@ -294,6 +295,9 @@ namespace NPS
             {
 
                 var a = new ListViewItem(item.TitleId);
+                if (History.I.completedDownloading.Contains(item))
+                    a.BackColor = ColorTranslator.FromHtml("#B7FF7C");
+
                 a.SubItems.Add(item.Region);
                 a.SubItems.Add(item.TitleName);
                 a.SubItems.Add(item.contentType);
@@ -338,7 +342,7 @@ namespace NPS
                 DownloadWorker dw = ((lstItm as ListViewItem).Tag as DownloadWorker);
 
                 History.I.currentlyDownloading.Add(dw);
-              
+
             }
 
             History.I.Save();

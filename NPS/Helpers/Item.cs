@@ -1,16 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NPS
 {
     [System.Serializable]
-    public class Item
+    public class Item : IEquatable<Item>
     {
         public string TitleId, Region, TitleName, zRif, pkg;
         public System.DateTime lastModifyDate = System.DateTime.MinValue;
         public int DLCs { get { return DlcItm.Count; } }
         public List<Item> DlcItm = new List<Item>();
-        public bool IsDLC = false, ItsPsx = false, ItsPsp=false;
+        public bool IsDLC = false, ItsPsx = false, ItsPsp = false;
         public string ParentGameTitle = string.Empty;
         public string ContentId = null;
         public string contentType = "";
@@ -45,6 +46,13 @@ namespace NPS
             if (this.TitleId.ToLower().Contains(name)) return true;
             if (this.TitleName.ToLower().Contains(name)) return true;
             return false;
+        }
+
+        public bool Equals(Item other)
+        {
+            if (other == null) return false;
+
+            return this.TitleId == other.TitleId && this.Region == other.Region && this.TitleName == other.TitleName && this.zRif == other.zRif && this.pkg == other.pkg;
         }
     }
 

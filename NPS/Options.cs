@@ -118,6 +118,7 @@ namespace NPS
             Settings.Instance.simultaneousDl = (int)numericUpDown1.Value;
         }
 
+
         private void button5_Click(object sender, EventArgs e)
         {
             using (var fbd = new OpenFileDialog())
@@ -187,5 +188,7 @@ namespace NPS
                 }
             }
         }
+
+
     }
 }

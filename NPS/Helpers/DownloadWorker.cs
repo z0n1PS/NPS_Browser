@@ -72,7 +72,7 @@ namespace NPS
                 lvi.SubItems[2].Text = "Completed";
             }
         }
-      
+
 
         public void Start()
         {
@@ -225,7 +225,10 @@ namespace NPS
                     lvi.SubItems[1].Text = "";
                     lvi.SubItems[2].Text = "Completed";
 
-                                     if (Settings.Instance.deleteAfterUnpack)
+                    if (!History.I.completedDownloading.Contains(this.currentDownload))
+                        History.I.completedDownloading.Add(this.currentDownload);
+
+                    if (Settings.Instance.deleteAfterUnpack)
                         DeletePkg();
                 }));
             }
