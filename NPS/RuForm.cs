@@ -52,13 +52,14 @@ namespace NPS
         {
             History.Load();
 
-            //foreach (var hi in History.I.currentlyDownloading)
-            //{
-            //    DownloadWorker dw = new DownloadWorker(hi, this);
-            //    lstDownloadStatus.Items.Add(dw.lvi);
-            //    lstDownloadStatus.AddEmbeddedControl(dw.progress, 3, lstDownloadStatus.Items.Count - 1);
-            //    downloads.Add(dw);
-            //}
+            foreach (var hi in History.I.currentlyDownloading)
+            {
+                DownloadWorker dw = hi;
+                dw.Recreate(this);
+                lstDownloadStatus.Items.Add(dw.lvi);
+                lstDownloadStatus.AddEmbeddedControl(dw.progress, 3, lstDownloadStatus.Items.Count - 1);
+                downloads.Add(dw);
+            }
 
             ServicePointManager.DefaultConnectionLimit = 30;
 
@@ -330,13 +331,14 @@ namespace NPS
         private void NPSBrowser_FormClosing(object sender, FormClosingEventArgs e)
         {
             Settings.Instance.Store();
-            //History.I.currentlyDownloading.Clear();
+            History.I.currentlyDownloading.Clear();
 
             foreach (var lstItm in lstDownloadStatus.Items)
             {
                 DownloadWorker dw = ((lstItm as ListViewItem).Tag as DownloadWorker);
 
-                History.I.cd = (dw.Serialize());
+                History.I.currentlyDownloading.Add(dw);
+              
             }
 
             History.I.Save();

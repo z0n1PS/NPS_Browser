@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace NPS
 {
+    [System.Serializable]
     public class Item
     {
         public string TitleId, Region, TitleName, zRif, pkg;

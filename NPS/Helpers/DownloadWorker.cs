@@ -11,22 +11,25 @@ using System.Windows.Forms;
 
 namespace NPS
 {
+    [System.Serializable]
     public class DownloadWorker
     {
         public Item currentDownload;
         //private WebClient webClient;
         private DateTime lastUpdate;
         private long lastBytes;
+        [System.NonSerialized]
         public ProgressBar progress = new ProgressBar();
         public ListViewItem lvi;
-
+        public int progressValue = 0;
         //public bool isRunning { get; private set; }
         //public bool isCompleted { get; private set; }
         //public bool isCanceled { get; private set; }
 
         public WorkerStatus status { get; private set; }
+        [System.NonSerialized]
         Timer timer = new Timer();
-
+        [System.NonSerialized]
         Form formCaller;
 
         public DownloadWorker(Item itm, Form f)
@@ -46,25 +49,30 @@ namespace NPS
             formCaller = f;
             status = WorkerStatus.Queued;
         }
-        public DownloadWorker(HistoryItem history, Form f)
-        {
-            //currentDownload = history.item;
-            //lvi = new ListViewItem(history.item.TitleName);
-            lvi.SubItems.Add(history.status1);
-            lvi.SubItems.Add(history.status2);
-            lvi.SubItems.Add("");
-            lvi.Tag = this;
-            //isRunning = false;
-            //isCanceled = false;
-            //isCompleted = false;
 
+        public void Recreate(Form formCaller)
+        {
+            this.formCaller = formCaller;
+            progress = new ProgressBar();
+            progress.Value = progressValue;
+            timer = new Timer();
             timer.Interval = 1000;
             timer.Tick += Timer_Tick;
-            formCaller = f;
-            //status = history.status;
-            progress.Value = history.procent;
-        }
+            lvi.Tag = this;
 
+            if (status == WorkerStatus.Running)
+                Start();
+            else if (this.status == WorkerStatus.Downloaded)
+            {
+                Unpack();
+            }
+            else if (this.status == WorkerStatus.Completed)
+            {
+                lvi.SubItems[1].Text = "";
+                lvi.SubItems[2].Text = "Completed";
+            }
+        }
+      
 
         public void Start()
         {
@@ -97,7 +105,8 @@ namespace NPS
 
             lvi.SubItems[1].Text = "";
             lvi.SubItems[2].Text = "Canceled";
-            progress.Value = 0;
+            progressValue = 0;
+            progress.Value = progressValue;
             DeletePkg();
         }
 
@@ -155,13 +164,15 @@ namespace NPS
             }
         }
 
+        [System.NonSerialized]
         Process unpackProcess = null;
         public void Unpack()
         {
-            if (this.status == WorkerStatus.Downloaded)
+            if (this.status == WorkerStatus.Downloaded || this.status == WorkerStatus.Completed)
             {
 
                 lvi.SubItems[2].Text = "Unpacking";
+
 
                 var replacements = new Dictionary<string, string>
                 {
@@ -194,6 +205,7 @@ namespace NPS
             }
         }
 
+
         List<string> errors = new List<string>();
 
         private void UnpackProcess_ErrorDataReceived(object sender, DataReceivedEventArgs e)
@@ -213,9 +225,7 @@ namespace NPS
                     lvi.SubItems[1].Text = "";
                     lvi.SubItems[2].Text = "Completed";
 
-                    History.I.cd = (new HistoryItem(currentDownload, 100));
-
-                    if (Settings.Instance.deleteAfterUnpack)
+                                     if (Settings.Instance.deleteAfterUnpack)
                         DeletePkg();
                 }));
             }
@@ -239,20 +249,11 @@ namespace NPS
         }
 
 
-        public HistoryItem Serialize()
-        {
-            HistoryItem r = new HistoryItem(currentDownload, progress.Value);
-            r.status1 = lvi.SubItems[1].Text;
-            r.status2 = lvi.SubItems[2].Text;
-            //r.status = this.status;
-            return r;
-        }
-
-
-
         long totalSize = 0;
         long completedSize = 0;
+        [System.NonSerialized]
         System.IO.Stream smRespStream;
+        [System.NonSerialized]
         System.IO.FileStream saveFileStream;
         void DownloadFile(string sSourceURL, string sDestinationPath)
         {
@@ -282,53 +283,65 @@ namespace NPS
                 HttpWebRequest hwRq;
                 System.Net.HttpWebResponse hwRes;
                 hwRq = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(sSourceURL);
-                hwRq.AddRange((int)iExistLen);
-
                 hwRes = (System.Net.HttpWebResponse)hwRq.GetResponse();
-                smRespStream = hwRes.GetResponseStream();
 
-                iFileSize = hwRes.ContentLength;
-                totalSize += hwRes.ContentLength;
-
-                byte[] downBuffer = new byte[iBufferSize];
-                int iByteSize;
-                while ((iByteSize = smRespStream.Read(downBuffer, 0, downBuffer.Length)) > 0)
+                long totalLength = hwRes.ContentLength;
+                if (totalLength != totalSize)
                 {
-                    if (status == WorkerStatus.Paused) return;
+                    hwRq.AddRange(iExistLen);
 
-                    saveFileStream.Write(downBuffer, 0, iByteSize);
+                    hwRes = (System.Net.HttpWebResponse)hwRq.GetResponse();
+                    smRespStream = hwRes.GetResponseStream();
 
-                    completedSize = saveFileStream.Position;
+                    iFileSize = hwRes.ContentLength;
+                    totalSize += hwRes.ContentLength;
 
-                    if (lastBytes == 0)
+                    byte[] downBuffer = new byte[iBufferSize];
+                    int iByteSize;
+                    while ((iByteSize = smRespStream.Read(downBuffer, 0, downBuffer.Length)) > 0)
                     {
-                        lastUpdate = DateTime.Now;
-                        lastBytes = completedSize;
+                        if (status == WorkerStatus.Paused) return;
 
-                    }
-                    else
-                    {
-                        var now = DateTime.Now;
-                        var timeSpan = now - lastUpdate;
-                        var bytesChange = completedSize - lastBytes;
-                        if (timeSpan.Seconds != 0)
+                        saveFileStream.Write(downBuffer, 0, iByteSize);
+
+                        completedSize = saveFileStream.Position;
+
+                        if (lastBytes == 0)
                         {
-                            bytesPerSecond = bytesChange / timeSpan.Seconds;
+                            lastUpdate = DateTime.Now;
                             lastBytes = completedSize;
-                            lastUpdate = now;
-
 
                         }
+                        else
+                        {
+                            var now = DateTime.Now;
+                            var timeSpan = now - lastUpdate;
+                            var bytesChange = completedSize - lastBytes;
+                            if (timeSpan.Seconds != 0)
+                            {
+                                bytesPerSecond = bytesChange / timeSpan.Seconds;
+                                lastBytes = completedSize;
+                                lastUpdate = now;
+
+
+                            }
+                        }
                     }
+                    smRespStream.Close();
                 }
 
-                smRespStream.Close();
+
                 saveFileStream.Close();
                 formCaller.Invoke(new Action(() => { DownloadCompleted(); }));
             }
             catch (Exception err)
             {
-                formCaller.Invoke(new Action(() => { this.Pause(); }));
+
+                formCaller.Invoke(new Action(() =>
+                {
+                    this.Pause();
+                    MessageBox.Show("Unable to download \"" + currentDownload.TitleName + "\"." + Environment.NewLine + err.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
 
             }
 
@@ -362,7 +375,8 @@ namespace NPS
             lvi.SubItems[1].Text = "";
             Unpack();
 
-            progress.Value = 100;
+            progressValue = 100;
+            progress.Value = progressValue;
 
         }
 
@@ -383,7 +397,10 @@ namespace NPS
             try
             {
                 if (prgs != float.NaN)
-                    progress.Value = Convert.ToInt32(prgs * 100);
+                {
+                    progressValue = Convert.ToInt32(prgs * 100);
+                    progress.Value = progressValue;
+                }
             }
             catch { }
 

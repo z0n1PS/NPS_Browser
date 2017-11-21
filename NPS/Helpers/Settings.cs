@@ -1,5 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class Settings
 {
@@ -80,32 +82,34 @@ public class Settings
     }
 }
 
-
+[System.Serializable]
 public class History
 {
 
     public static History I;
-    public string dupa = "";
-    public HistoryItem cd;
-    //public List<HistoryItem> currentlyDownloading = new List<HistoryItem>();
+    public List<NPS.DownloadWorker> currentlyDownloading = new List<NPS.DownloadWorker>();
     //public List<HistoryItem> completedDownloading = new List<HistoryItem>();
 
-    static string path = "history.json";
+    static string path = "history.dat";
 
     public static void Load()
     {
         if (System.IO.File.Exists(path))
         {
-            string s = System.IO.File.ReadAllText(path);
-            I = SimpleJson.SimpleJson.DeserializeObject<History>(s);
+            var stream = File.OpenRead(path);
+            var formatter = new BinaryFormatter();
+            I = (History)formatter.Deserialize(stream);
+            stream.Close();
         }
         else I = new History();
     }
 
     public void Save()
     {
-        string s = SimpleJson.SimpleJson.SerializeObject(this);
-        System.IO.File.WriteAllText(path, s);
+        FileStream stream = File.Create(path);
+        var formatter = new BinaryFormatter();
+        formatter.Serialize(stream, this);
+        stream.Close();
     }
 
 
