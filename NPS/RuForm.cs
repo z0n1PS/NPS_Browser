@@ -13,7 +13,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.75";
+        public const string version = "0.76";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
