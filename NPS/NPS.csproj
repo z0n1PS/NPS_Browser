@@ -74,6 +74,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Desc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Desc.Designer.cs">
+      <DependentUpon>Desc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\CustomComponents\CheckBoxComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -118,6 +124,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Desc.resx">
+      <DependentUpon>Desc.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Helpers\CustomComponents\PopupComboBox.resx">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
     </EmbeddedResource>

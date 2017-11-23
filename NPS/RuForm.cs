@@ -13,7 +13,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.76a";
+        public const string version = "0.77_beta";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -46,7 +46,7 @@ namespace NPS
                 o.ShowDialog();
             }
 
-            NewVersionCheck();
+         //   NewVersionCheck();
         }
 
         private void NoPayStationBrowser_Load(object sender, EventArgs e)
@@ -743,6 +743,11 @@ namespace NPS
             }
         }
 
+        private void ShowDescriptionPanel(object sender, EventArgs e)
+        {
+            Desc d = new Desc(lstTitles);
+            d.Show();
+        }
     }
 
     class Release

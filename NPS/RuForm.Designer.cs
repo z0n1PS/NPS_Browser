@@ -38,6 +38,7 @@ namespace NPS
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showDescriptionPanelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstTitles = new System.Windows.Forms.ListView();
             this.colTitleID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colRegion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -106,7 +107,8 @@ namespace NPS
             // 
             this.mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.downloadUpdateToolStripMenuItem});
+            this.downloadUpdateToolStripMenuItem,
+            this.showDescriptionPanelToolStripMenuItem});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
             this.mnuMain.Size = new System.Drawing.Size(1085, 24);
@@ -128,7 +130,7 @@ namespace NPS
             // 
             this.reloadToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_reload;
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.NoPayStationBrowser_Load);
             // 
@@ -136,20 +138,20 @@ namespace NPS
             // 
             this.optionsToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_options;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_exit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Tag = "Exit";
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
@@ -161,6 +163,13 @@ namespace NPS
             this.downloadUpdateToolStripMenuItem.Text = "Download update";
             this.downloadUpdateToolStripMenuItem.Visible = false;
             this.downloadUpdateToolStripMenuItem.Click += new System.EventHandler(this.downloadUpdateToolStripMenuItem_Click);
+            // 
+            // showDescriptionPanelToolStripMenuItem
+            // 
+            this.showDescriptionPanelToolStripMenuItem.Name = "showDescriptionPanelToolStripMenuItem";
+            this.showDescriptionPanelToolStripMenuItem.Size = new System.Drawing.Size(143, 20);
+            this.showDescriptionPanelToolStripMenuItem.Text = "Show Description panel";
+            this.showDescriptionPanelToolStripMenuItem.Click += new System.EventHandler(this.ShowDescriptionPanel);
             // 
             // lstTitles
             // 
@@ -735,6 +744,7 @@ namespace NPS
         private PresentationControls.CheckBoxComboBox cmbRegion;
         private PresentationControls.CheckBoxComboBox cmbType;
         private System.Windows.Forms.ColumnHeader colType;
+        private System.Windows.Forms.ToolStripMenuItem showDescriptionPanelToolStripMenuItem;
     }
 }
 
