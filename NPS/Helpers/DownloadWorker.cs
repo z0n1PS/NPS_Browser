@@ -54,6 +54,7 @@ namespace NPS
         {
             this.formCaller = formCaller;
             progress = new ProgressBar();
+            if (progressValue > 100) progressValue = 100;
             progress.Value = progressValue;
             timer = new Timer();
             timer.Interval = 1000;
@@ -121,7 +122,6 @@ namespace NPS
 
                 if (smRespStream != null)
                 {
-                    smRespStream.Flush();
                     smRespStream.Close();
                 }
                 if (saveFileStream != null)
@@ -273,7 +273,7 @@ namespace NPS
                        new System.IO.FileInfo(sDestinationPath);
                     iExistLen = fINfo.Length;
                 }
-                totalSize = iExistLen;
+                ;
                 if (iExistLen > 0)
                     saveFileStream = new System.IO.FileStream(sDestinationPath,
                       System.IO.FileMode.Append, System.IO.FileAccess.Write,
@@ -287,23 +287,26 @@ namespace NPS
                 System.Net.HttpWebResponse hwRes;
                 hwRq = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(sSourceURL);
                 hwRes = (System.Net.HttpWebResponse)hwRq.GetResponse();
+                hwRes.Close();
 
                 long totalLength = hwRes.ContentLength;
-                if (totalLength != totalSize)
+                totalSize = totalLength;
+                if (totalLength != iExistLen)
                 {
+                    hwRq = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(sSourceURL);
                     hwRq.AddRange(iExistLen);
 
                     hwRes = (System.Net.HttpWebResponse)hwRq.GetResponse();
                     smRespStream = hwRes.GetResponseStream();
 
                     iFileSize = hwRes.ContentLength;
-                    totalSize += hwRes.ContentLength;
+                    //   totalSize += hwRes.ContentLength;
 
                     byte[] downBuffer = new byte[iBufferSize];
                     int iByteSize;
                     while ((iByteSize = smRespStream.Read(downBuffer, 0, downBuffer.Length)) > 0)
                     {
-                        if (status == WorkerStatus.Paused) return;
+                        if (status == WorkerStatus.Paused || status == WorkerStatus.Canceled) return;
 
                         saveFileStream.Write(downBuffer, 0, iByteSize);
 
