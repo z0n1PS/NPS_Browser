@@ -70,6 +70,8 @@ namespace NPS
             this.splMain = new System.Windows.Forms.SplitContainer();
             this.splList = new System.Windows.Forms.SplitContainer();
             this.pnlSearch = new System.Windows.Forms.Panel();
+            this.cmbType = new PresentationControls.CheckBoxComboBox();
+            this.cmbRegion = new PresentationControls.CheckBoxComboBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -77,8 +79,6 @@ namespace NPS
             this.pauseResumeLayoutPnl = new System.Windows.Forms.TableLayoutPanel();
             this.ResumeAll = new System.Windows.Forms.Button();
             this.PauseAll = new System.Windows.Forms.Button();
-            this.cmbType = new PresentationControls.CheckBoxComboBox();
-            this.cmbRegion = new PresentationControls.CheckBoxComboBox();
             this.lstDownloadStatus = new ListViewEmbeddedControls.ListViewEx();
             this.colDownloadTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDownloadSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -130,28 +130,28 @@ namespace NPS
             // 
             this.reloadToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_reload;
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
-            this.reloadToolStripMenuItem.Click += new System.EventHandler(this.NoPayStationBrowser_Load);
+            this.reloadToolStripMenuItem.Click += new System.EventHandler(this.LoadAllDatabaes);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_options;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_exit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Tag = "Exit";
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
@@ -480,6 +480,46 @@ namespace NPS
             this.pnlSearch.Size = new System.Drawing.Size(851, 52);
             this.pnlSearch.TabIndex = 17;
             // 
+            // cmbType
+            // 
+            checkBoxProperties1.AutoSize = true;
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbType.CheckBoxProperties = checkBoxProperties1;
+            this.cmbType.DisplayMemberSingleItem = "";
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Items.AddRange(new object[] {
+            "VITA",
+            "PS3",
+            "PSX",
+            "PSM",
+            "PSP",
+            "PC Engine",
+            "NeoGeo",
+            "Minis"});
+            this.cmbType.Location = new System.Drawing.Point(549, 3);
+            this.cmbType.MaxDropDownItems = 5;
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(152, 21);
+            this.cmbType.TabIndex = 20;
+            // 
+            // cmbRegion
+            // 
+            checkBoxProperties2.AutoSize = true;
+            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
+            this.cmbRegion.DisplayMemberSingleItem = "";
+            this.cmbRegion.FormattingEnabled = true;
+            this.cmbRegion.Items.AddRange(new object[] {
+            "asd",
+            "w",
+            "e",
+            "asd"});
+            this.cmbRegion.Location = new System.Drawing.Point(707, 3);
+            this.cmbRegion.MaxDropDownItems = 5;
+            this.cmbRegion.Name = "cmbRegion";
+            this.cmbRegion.Size = new System.Drawing.Size(138, 21);
+            this.cmbRegion.TabIndex = 19;
+            // 
             // flowLayoutPanel3
             // 
             this.flowLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -571,45 +611,6 @@ namespace NPS
             this.PauseAll.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.PauseAll.UseVisualStyleBackColor = true;
             this.PauseAll.Click += new System.EventHandler(this.PauseAllBtnClick);
-            // 
-            // cmbType
-            // 
-            checkBoxProperties1.AutoSize = true;
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbType.CheckBoxProperties = checkBoxProperties1;
-            this.cmbType.DisplayMemberSingleItem = "";
-            this.cmbType.FormattingEnabled = true;
-            this.cmbType.Items.AddRange(new object[] {
-            "VITA",
-            "PSX",
-            "PSM",
-            "PSP",
-            "PC Engine",
-            "NeoGeo",
-            "Minis"});
-            this.cmbType.Location = new System.Drawing.Point(549, 3);
-            this.cmbType.MaxDropDownItems = 5;
-            this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(152, 21);
-            this.cmbType.TabIndex = 20;
-            // 
-            // cmbRegion
-            // 
-            checkBoxProperties2.AutoSize = true;
-            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
-            this.cmbRegion.DisplayMemberSingleItem = "";
-            this.cmbRegion.FormattingEnabled = true;
-            this.cmbRegion.Items.AddRange(new object[] {
-            "asd",
-            "w",
-            "e",
-            "asd"});
-            this.cmbRegion.Location = new System.Drawing.Point(707, 3);
-            this.cmbRegion.MaxDropDownItems = 5;
-            this.cmbRegion.Name = "cmbRegion";
-            this.cmbRegion.Size = new System.Drawing.Size(138, 21);
-            this.cmbRegion.TabIndex = 19;
             // 
             // lstDownloadStatus
             // 

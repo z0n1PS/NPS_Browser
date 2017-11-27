@@ -59,12 +59,20 @@ namespace NPS
             this.label10 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.button8 = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tb_ps3uri = new System.Windows.Forms.TextBox();
+            this.button9 = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.tb_ps3dlcuri = new System.Windows.Forms.TextBox();
+            this.button10 = new System.Windows.Forms.Button();
+            this.buttonExport = new System.Windows.Forms.Button();
+            this.buttonImport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(575, 147);
+            this.button1.Location = new System.Drawing.Point(579, 228);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -74,7 +82,7 @@ namespace NPS
             // 
             // textDownload
             // 
-            this.textDownload.Location = new System.Drawing.Point(155, 147);
+            this.textDownload.Location = new System.Drawing.Point(159, 228);
             this.textDownload.Name = "textDownload";
             this.textDownload.Size = new System.Drawing.Size(414, 20);
             this.textDownload.TabIndex = 1;
@@ -82,7 +90,7 @@ namespace NPS
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 150);
+            this.label1.Location = new System.Drawing.Point(12, 231);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(129, 13);
             this.label1.TabIndex = 2;
@@ -91,7 +99,7 @@ namespace NPS
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 176);
+            this.label2.Location = new System.Drawing.Point(12, 257);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(87, 13);
             this.label2.TabIndex = 5;
@@ -99,14 +107,14 @@ namespace NPS
             // 
             // textPKGPath
             // 
-            this.textPKGPath.Location = new System.Drawing.Point(155, 173);
+            this.textPKGPath.Location = new System.Drawing.Point(159, 254);
             this.textPKGPath.Name = "textPKGPath";
             this.textPKGPath.Size = new System.Drawing.Size(414, 20);
             this.textPKGPath.TabIndex = 4;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(575, 173);
+            this.button2.Location = new System.Drawing.Point(579, 254);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
@@ -116,7 +124,7 @@ namespace NPS
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(8, 199);
+            this.label3.Location = new System.Drawing.Point(12, 280);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(141, 35);
             this.label3.TabIndex = 8;
@@ -124,7 +132,7 @@ namespace NPS
             // 
             // textParams
             // 
-            this.textParams.Location = new System.Drawing.Point(155, 199);
+            this.textParams.Location = new System.Drawing.Point(159, 280);
             this.textParams.Name = "textParams";
             this.textParams.Size = new System.Drawing.Size(414, 20);
             this.textParams.TabIndex = 7;
@@ -136,7 +144,7 @@ namespace NPS
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 15);
+            this.label4.Location = new System.Drawing.Point(12, 45);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(102, 13);
             this.label4.TabIndex = 11;
@@ -144,14 +152,14 @@ namespace NPS
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(155, 12);
+            this.textBox1.Location = new System.Drawing.Point(159, 42);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(414, 20);
             this.textBox1.TabIndex = 10;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(575, 12);
+            this.button3.Location = new System.Drawing.Point(579, 42);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 9;
@@ -162,7 +170,7 @@ namespace NPS
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 44);
+            this.label5.Location = new System.Drawing.Point(12, 74);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(95, 13);
             this.label5.TabIndex = 14;
@@ -170,14 +178,14 @@ namespace NPS
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(155, 41);
+            this.textBox2.Location = new System.Drawing.Point(159, 71);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(414, 20);
             this.textBox2.TabIndex = 13;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(575, 41);
+            this.button4.Location = new System.Drawing.Point(579, 71);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 12;
@@ -188,7 +196,7 @@ namespace NPS
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(155, 225);
+            this.checkBox1.Location = new System.Drawing.Point(159, 306);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(198, 17);
             this.checkBox1.TabIndex = 15;
@@ -198,7 +206,7 @@ namespace NPS
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(8, 249);
+            this.label6.Location = new System.Drawing.Point(12, 330);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(141, 20);
             this.label6.TabIndex = 16;
@@ -206,7 +214,7 @@ namespace NPS
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(155, 247);
+            this.numericUpDown1.Location = new System.Drawing.Point(159, 328);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             15,
             0,
@@ -230,7 +238,7 @@ namespace NPS
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(8, 70);
+            this.label7.Location = new System.Drawing.Point(12, 100);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(97, 13);
             this.label7.TabIndex = 20;
@@ -238,14 +246,14 @@ namespace NPS
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(155, 67);
+            this.textBox3.Location = new System.Drawing.Point(159, 97);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(414, 20);
             this.textBox3.TabIndex = 19;
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(575, 67);
+            this.button5.Location = new System.Drawing.Point(579, 97);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 18;
@@ -256,7 +264,7 @@ namespace NPS
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(576, 203);
+            this.linkLabel1.Location = new System.Drawing.Point(580, 284);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(13, 13);
             this.linkLabel1.TabIndex = 21;
@@ -267,7 +275,7 @@ namespace NPS
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 96);
+            this.label8.Location = new System.Drawing.Point(12, 126);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(95, 13);
             this.label8.TabIndex = 24;
@@ -275,14 +283,14 @@ namespace NPS
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(155, 93);
+            this.textBox4.Location = new System.Drawing.Point(159, 123);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(414, 20);
             this.textBox4.TabIndex = 23;
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(575, 93);
+            this.button6.Location = new System.Drawing.Point(579, 123);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 22;
@@ -293,7 +301,7 @@ namespace NPS
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 122);
+            this.label9.Location = new System.Drawing.Point(12, 203);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(95, 13);
             this.label9.TabIndex = 27;
@@ -301,14 +309,14 @@ namespace NPS
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(155, 119);
+            this.textBox5.Location = new System.Drawing.Point(159, 200);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(414, 20);
             this.textBox5.TabIndex = 26;
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(575, 119);
+            this.button7.Location = new System.Drawing.Point(579, 200);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 23);
             this.button7.TabIndex = 25;
@@ -319,7 +327,7 @@ namespace NPS
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(8, 336);
+            this.label10.Location = new System.Drawing.Point(18, 397);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(119, 13);
             this.label10.TabIndex = 30;
@@ -327,14 +335,14 @@ namespace NPS
             // 
             // textBox6
             // 
-            this.textBox6.Location = new System.Drawing.Point(155, 333);
+            this.textBox6.Location = new System.Drawing.Point(165, 394);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(414, 20);
             this.textBox6.TabIndex = 29;
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(575, 333);
+            this.button8.Location = new System.Drawing.Point(585, 394);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(75, 23);
             this.button8.TabIndex = 28;
@@ -342,9 +350,89 @@ namespace NPS
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(12, 152);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(94, 13);
+            this.label11.TabIndex = 33;
+            this.label11.Text = "PS3 links tsv or url";
+            // 
+            // tb_ps3uri
+            // 
+            this.tb_ps3uri.Location = new System.Drawing.Point(159, 149);
+            this.tb_ps3uri.Name = "tb_ps3uri";
+            this.tb_ps3uri.Size = new System.Drawing.Size(414, 20);
+            this.tb_ps3uri.TabIndex = 32;
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(579, 149);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(75, 23);
+            this.button9.TabIndex = 31;
+            this.button9.Text = "Browse";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(12, 178);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(118, 13);
+            this.label12.TabIndex = 36;
+            this.label12.Text = "PS3 DLC links tsv or url";
+            // 
+            // tb_ps3dlcuri
+            // 
+            this.tb_ps3dlcuri.Location = new System.Drawing.Point(159, 175);
+            this.tb_ps3dlcuri.Name = "tb_ps3dlcuri";
+            this.tb_ps3dlcuri.Size = new System.Drawing.Size(414, 20);
+            this.tb_ps3dlcuri.TabIndex = 35;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(579, 175);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(75, 23);
+            this.button10.TabIndex = 34;
+            this.button10.Text = "Browse";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // buttonExport
+            // 
+            this.buttonExport.Location = new System.Drawing.Point(119, 12);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(101, 23);
+            this.buttonExport.TabIndex = 37;
+            this.buttonExport.Text = "Export settings";
+            this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.button_export);
+            // 
+            // buttonImport
+            // 
+            this.buttonImport.Location = new System.Drawing.Point(12, 12);
+            this.buttonImport.Name = "buttonImport";
+            this.buttonImport.Size = new System.Drawing.Size(101, 23);
+            this.buttonImport.TabIndex = 38;
+            this.buttonImport.Text = "Import settings";
+            this.buttonImport.UseVisualStyleBackColor = true;
+            this.buttonImport.Click += new System.EventHandler(this.button_import);
+            // 
             // Options
             // 
-            this.ClientSize = new System.Drawing.Size(680, 277);
+            this.ClientSize = new System.Drawing.Size(666, 357);
+            this.Controls.Add(this.buttonImport);
+            this.Controls.Add(this.buttonExport);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.tb_ps3dlcuri);
+            this.Controls.Add(this.button10);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.tb_ps3uri);
+            this.Controls.Add(this.button9);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.button8);
@@ -424,6 +512,14 @@ namespace NPS
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox tb_ps3uri;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox tb_ps3dlcuri;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button buttonExport;
+        private System.Windows.Forms.Button buttonImport;
     }
 }
 

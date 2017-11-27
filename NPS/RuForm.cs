@@ -46,7 +46,7 @@ namespace NPS
                 o.ShowDialog();
             }
 
-         //   NewVersionCheck();
+            //   NewVersionCheck();
         }
 
         private void NoPayStationBrowser_Load(object sender, EventArgs e)
@@ -61,6 +61,14 @@ namespace NPS
             }
 
             ServicePointManager.DefaultConnectionLimit = 30;
+            LoadAllDatabaes(null, null);
+
+        }
+
+        private void LoadAllDatabaes(object sender, EventArgs e)
+        {
+            dlcsDbs.Clear();
+            gamesDbs.Clear();
 
             LoadDatabase(Settings.Instance.DLCUri, (db) =>
             {
@@ -128,6 +136,7 @@ namespace NPS
                     }, DatabaseType.Vita);
                 }, DatabaseType.PSP);
             }, DatabaseType.ItsDlc);
+
         }
 
         void SetCheckboxState(List<Item> list, int id)
@@ -748,6 +757,8 @@ namespace NPS
             Desc d = new Desc(lstTitles);
             d.Show();
         }
+
+
     }
 
     class Release
