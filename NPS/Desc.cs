@@ -33,7 +33,10 @@ namespace NPS
 
             switch (region)
             {
-                case "EU": region = "GB"; break;
+                case "EU": region = "GB/en"; break;
+                case "US": region = "CA/en"; break;
+                case "JP": region = "JP/jp"; break;
+                case "ASIA": region = "JP/jp"; break;
             }
 
             Task.Run(() =>
@@ -51,7 +54,7 @@ namespace NPS
         }));
 
         WebClient wc = new WebClient();
-        string content = wc.DownloadString(new Uri("https://store.playstation.com/chihiro-api/viewfinder/" + region + "/en/19/" + contentId));
+        string content = wc.DownloadString(new Uri("https://store.playstation.com/chihiro-api/viewfinder/" + region + "/19/" + contentId));
         wc.Dispose();
         content = Encoding.UTF8.GetString(Encoding.Default.GetBytes(content));
 

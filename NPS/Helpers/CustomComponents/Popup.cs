@@ -311,14 +311,14 @@ namespace PresentationControls
         /// Raises the <see cref="E:System.Windows.Forms.Control.SizeChanged" /> event.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
-        protected override void OnSizeChanged(EventArgs e)
-        {
-            content.MinimumSize = Size;
-            content.MaximumSize = Size;
-            content.Size = Size;
-            content.Location = Point.Empty;
-            base.OnSizeChanged(e);
-        }
+        //protected override void OnSizeChanged(EventArgs e)
+        //{
+        //    content.MinimumSize = Size;
+        //    content.MaximumSize = Size;
+        //    content.Size = Size;
+        //    content.Location = Point.Empty;
+        //    base.OnSizeChanged(e);
+        //}
 
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Forms.ToolStripDropDown.Opening" /> event.
