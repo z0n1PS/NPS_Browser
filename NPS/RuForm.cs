@@ -13,7 +13,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.77_beta";
+        public const string version = "0.77_beta2";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -46,7 +46,7 @@ namespace NPS
                 o.ShowDialog();
             }
 
-            //   NewVersionCheck();
+            NewVersionCheck();
         }
 
         private void NoPayStationBrowser_Load(object sender, EventArgs e)
@@ -73,71 +73,81 @@ namespace NPS
             LoadDatabase(Settings.Instance.DLCUri, (db) =>
             {
                 dlcsDbs.AddRange(db);
+                LoadDatabase(Settings.Instance.PS3DLCUri, (ps3dlc) =>
+                {
+                    dlcsDbs.AddRange(ps3dlc);
 
-                Invoke(new Action(() =>
+                    Invoke(new Action(() =>
                 {
                     if (dlcsDbs.Count > 0)
                         rbnDLC.Enabled = true;
                     else rbnDLC.Enabled = false;
                 }));
 
-                LoadDatabase(Settings.Instance.PSPUri, (psp) =>
-                {
-                    gamesDbs.AddRange(psp);
-
-                    LoadDatabase(Settings.Instance.GamesUri, (vita) =>
+                    LoadDatabase(Settings.Instance.PSPUri, (psp) =>
                     {
-                        gamesDbs.AddRange(vita);
+                        gamesDbs.AddRange(psp);
 
-                        LoadDatabase(Settings.Instance.PSMUri, (psm) =>
+                        LoadDatabase(Settings.Instance.GamesUri, (vita) =>
                         {
-                            gamesDbs.AddRange(psm);
+                            gamesDbs.AddRange(vita);
 
-                            LoadDatabase(Settings.Instance.PSXUri, (psx) =>
+                            LoadDatabase(Settings.Instance.PSMUri, (psm) =>
                             {
-                                gamesDbs.AddRange(psx);
+                                gamesDbs.AddRange(psm);
 
-                                Invoke(new Action(() =>
+                                LoadDatabase(Settings.Instance.PS3Uri, (ps3) =>
                                 {
-                                    if (gamesDbs.Count > 0)
-                                        rbnGames.Enabled = true;
-                                    else rbnGames.Enabled = false;
+                                    gamesDbs.AddRange(ps3);
 
-                                    rbnGames.Checked = true;
-                                    currentDatabase = gamesDbs;
-
-                                    cmbRegion.Items.Clear();
-
-
-                                    foreach (string s in regions)
-                                        cmbRegion.Items.Add(s);
-
-                                    foreach (var a in cmbRegion.CheckBoxItems)
-                                        a.Checked = true;
-
-                                    foreach (var a in cmbType.CheckBoxItems)
-                                        a.Checked = true;
-
-
-                                    // Populate DLC Parent Titles
-                                    foreach (var item in dlcsDbs)
+                                    LoadDatabase(Settings.Instance.PSXUri, (psx) =>
                                     {
-                                        var result = gamesDbs.FirstOrDefault(i => i.TitleId.StartsWith(item.TitleId.Substring(0, 9)))?.TitleName;
-                                        item.ParentGameTitle = result ?? string.Empty;
-                                    }
+                                        gamesDbs.AddRange(psx);
 
-                                    cmbRegion.CheckBoxCheckedChanged += txtSearch_TextChanged;
-                                    cmbType.CheckBoxCheckedChanged += txtSearch_TextChanged;
-                                    txtSearch_TextChanged(null, null);
-                                }));
+                                        Invoke(new Action(() =>
+                                        {
+                                            if (gamesDbs.Count > 0)
+                                                rbnGames.Enabled = true;
+                                            else rbnGames.Enabled = false;
 
-                            }, DatabaseType.ItsPSX);
-                        }, DatabaseType.ItsPsm);
-                    }, DatabaseType.Vita);
-                }, DatabaseType.PSP);
+                                            rbnGames.Checked = true;
+                                            currentDatabase = gamesDbs;
+
+                                            cmbRegion.Items.Clear();
+
+
+                                            foreach (string s in regions)
+                                                cmbRegion.Items.Add(s);
+
+                                            foreach (var a in cmbRegion.CheckBoxItems)
+                                                a.Checked = true;
+
+                                            foreach (var a in cmbType.CheckBoxItems)
+                                                a.Checked = true;
+
+
+                                            // Populate DLC Parent Titles
+                                            foreach (var item in dlcsDbs)
+                                            {
+                                                var result = gamesDbs.FirstOrDefault(i => i.TitleId.StartsWith(item.TitleId.Substring(0, 9)))?.TitleName;
+                                                item.ParentGameTitle = result ?? string.Empty;
+                                            }
+
+                                            cmbRegion.CheckBoxCheckedChanged += txtSearch_TextChanged;
+                                            cmbType.CheckBoxCheckedChanged += txtSearch_TextChanged;
+                                            txtSearch_TextChanged(null, null);
+                                        }));
+
+                                    }, DatabaseType.ItsPSX);
+                                }, DatabaseType.PS3);
+                            }, DatabaseType.ItsPsm);
+                        }, DatabaseType.Vita);
+                    }, DatabaseType.PSP);
+                }, DatabaseType.PS3DLC);
             }, DatabaseType.ItsDlc);
 
         }
+
 
         void SetCheckboxState(List<Item> list, int id)
         {
@@ -160,6 +170,8 @@ namespace NPS
 
         private void NewVersionCheck()
         {
+            if (version.Contains("beta")) return;
+
             Task.Run(() =>
             {
                 try
@@ -189,6 +201,7 @@ namespace NPS
 
         private void LoadDatabase(string path, Action<List<Item>> result, DatabaseType dbType)// bool addDlc = false, bool isDLC = false, bool isPsm = false)
         {
+            bool psndldb = false;
             List<Item> dbs = new List<Item>();
             if (string.IsNullOrEmpty(path))
                 result.Invoke(dbs);
@@ -211,19 +224,54 @@ namespace NPS
                         {
                             var a = lines[i].Split('\t');
 
+                            if (a.Length < 2)
+                            {
+                                if (dbType != DatabaseType.PS3) continue;
+
+                                a = lines[i].Split(';');
+                                if (a.Length < 2) continue;
+                                else psndldb = true;
+                            }
 
                             var itm = new Item();
 
-
                             itm.TitleId = a[0];
-
                             itm.Region = a[1];
                             itm.TitleName = a[2];
                             itm.pkg = a[3];
                             itm.zRif = a[4];
                             itm.ContentId = a[5];
 
-                            if (dbType == DatabaseType.ItsPsm)
+                            if (dbType == DatabaseType.PS3 || dbType == DatabaseType.PS3DLC)
+                            {
+                                if (psndldb)
+                                {
+                                    if (a[2] != "PSN" && a[2] != "PS3" && a[2] != "C00") continue;
+
+                                    itm.TitleId = a[0];
+                                    itm.TitleName = a[1];
+                                    itm.Region = a[3];
+                                    itm.pkg = a[4];
+                                    itm.contentType = "PS3";
+
+                                    itm.ContentId = a[5].Replace(".rap", "");
+                                    if (string.IsNullOrEmpty(a[6])) itm.zRif = "NOT REQUIRED";
+                                    else itm.zRif = a[6];
+
+                                }
+                                else
+                                {
+                                    if (dbType == DatabaseType.PS3DLC)
+                                        itm.IsDLC = true;
+                                    itm.contentType = "PS3";
+                                    itm.ItsPS3 = true;
+                                    if (a.Length >= 6)
+                                    {
+                                        DateTime.TryParse(a[5], out itm.lastModifyDate);
+                                    }
+                                }
+                            }
+                            else if (dbType == DatabaseType.ItsPsm)
                             {
                                 itm.ContentId = null;
                                 //a[5] = null;
@@ -279,7 +327,7 @@ namespace NPS
                             {
                                 if (itm.zRif.ToLower().Contains("not required")) itm.zRif = "";
 
-                                if (dbType == DatabaseType.Vita)
+                                if (dbType == DatabaseType.Vita || dbType == DatabaseType.PS3)
                                     itm.CalculateDlCs(dlcsDbs.ToArray());
 
 
@@ -772,5 +820,5 @@ namespace NPS
         public string browser_download_url = "";
     }
 
-    enum DatabaseType { Vita, ItsDlc, ItsPsm, ItsPSX, PSPDLC, PSP }
+    enum DatabaseType { Vita, ItsDlc, ItsPsm, ItsPSX, PSPDLC, PSP, PS3, PS3DLC }
 }

@@ -21,6 +21,11 @@ namespace NPS.Helpers
                     content = wc.DownloadString(@"http://renascene.com/ps1/?target=search&srch=" + titleId + "&srchser=1");
                     url = ExtractString(content, "<td class=\"l\">&nbsp; <a href=\"", "\">");
                 }
+                else if (itm.ItsPS3)
+                {
+                    content = wc.DownloadString(@"http://renascene.com/ps3/?target=search&srch=" + titleId + "&srchname=1&srchser=1&srchfold=1&srchfname=1");
+                    url = ExtractString(content, "<td></td><td><a href=\"", "\">");
+                }
                 else if (itm.ItsPsp)
                 {
                     content = wc.DownloadString(@"http://renascene.com/?target=search1&srch=" + titleId + "&srchser=1");
@@ -37,13 +42,17 @@ namespace NPS.Helpers
                 this.imgUrl = ExtractString(content, "<td width=\"300pt\" style=\"vertical-align: top; padding: 0 0 0 5px;\">", "</td>");
                 this.imgUrl = ExtractString(imgUrl, "<img src=", ">");
 
-                genre = ExtractString(content, "<td class=\"infLeftTd\">Genre</td>", "</tr>");
-                genre = ExtractString(genre, "<td class=\"infRightTd\">", "</td>");
-                genre = genre.Replace("Â»", "/");
+                if (!itm.ItsPS3)
+                {
+                    genre = ExtractString(content, "<td class=\"infLeftTd\">Genre</td>", "</tr>");
+                    genre = ExtractString(genre, "<td class=\"infRightTd\">", "</td>");
+                    genre = genre.Replace("Â»", "/");
+                
 
                 language = ExtractString(content, "<td class=\"infLeftTd\">Language</td>", "</tr>");
                 language = ExtractString(language, "<td class=\"infRightTd\">", "</td>");
-                if (!(itm.ItsPsx || itm.ItsPsp))
+                }
+                if (!(itm.ItsPsx || itm.ItsPsp || itm.ItsPS3))
                 {
                     publish = ExtractString(content, "<td class=\"infLeftTd\">Publish Date</td>", "</tr>");
                     publish = ExtractString(publish, "<td class=\"infRightTd\">", "</td>");

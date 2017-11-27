@@ -168,6 +168,12 @@ namespace NPS
         Process unpackProcess = null;
         public void Unpack()
         {
+            if (currentDownload.ItsPS3)
+            {
+                UnpackPS3();
+                return;
+            }
+
             if (this.status == WorkerStatus.Downloaded || this.status == WorkerStatus.Completed)
             {
 
@@ -205,6 +211,55 @@ namespace NPS
             }
         }
 
+
+        void UnpackPS3()
+        {
+            if (this.status == WorkerStatus.Downloaded || this.status == WorkerStatus.Completed)
+            {
+                this.status = WorkerStatus.Completed;
+                try
+                {
+                    lvi.SubItems[2].Text = "Processing";
+                    string path = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "packages";
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    File.Move(Settings.Instance.downloadDir + Path.DirectorySeparatorChar + currentDownload.DownloadFileName + ".pkg", path + Path.DirectorySeparatorChar + currentDownload.DownloadFileName + ".pkg");
+
+                    path = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "exdata";
+
+                    if (!string.IsNullOrEmpty(currentDownload.ContentId) && currentDownload.ContentId.ToLower() != "missing" && currentDownload.zRif.ToLower() != "NOT REQUIRED".ToLower() && currentDownload.zRif.Length % 2 == 0)
+                    {
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+
+                        byte[] array = new byte[currentDownload.zRif.Length / 2];
+                        for (int i = 0; i < currentDownload.zRif.Length / 2; i++)
+                        {
+                            array[i] = Convert.ToByte(currentDownload.zRif.Substring(i * 2, 2), 16);
+                        }
+
+                        File.WriteAllBytes(path + Path.DirectorySeparatorChar + currentDownload.ContentId + ".rap", array);
+                    }
+
+                    lvi.SubItems[1].Text = "";
+                    lvi.SubItems[2].Text = "Completed";
+
+                    if (!History.I.completedDownloading.Contains(this.currentDownload))
+                        History.I.completedDownloading.Add(this.currentDownload);
+
+                }
+                catch (Exception err)
+                {
+                    lvi.SubItems[1].Text = "Error!";
+                    lvi.SubItems[2].Text = err.Message;
+                }
+
+            }
+        }
 
         List<string> errors = new List<string>();
 
@@ -379,12 +434,16 @@ namespace NPS
             this.status = WorkerStatus.Downloaded;
 
             lvi.SubItems[1].Text = "";
+
+
             Unpack();
 
             progressValue = 100;
             progress.Value = progressValue;
 
         }
+
+
 
         private void Timer_Tick(object sender, EventArgs e)
         {

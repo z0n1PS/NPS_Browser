@@ -30,6 +30,8 @@ namespace NPS
 
         private void ShowDescription(string contentId, string region)
         {
+            pb_status.Visible = true;
+            pb_status.Image = new Bitmap(Properties.Resources.menu_reload);
 
             switch (region)
             {
@@ -51,6 +53,13 @@ namespace NPS
         {
             label1.Text = "";
             richTextBox1.Text = "";
+
+            if (contentId.ToLower().Equals("missing"))
+            {
+                isLoading = false;
+                pb_status.Image = new Bitmap(Properties.Resources.menu_cancel);
+                return;
+            }
         }));
 
         WebClient wc = new WebClient();
@@ -64,6 +73,7 @@ namespace NPS
         pictureBox3.ImageLocation = contentJson.picture2;
         this.Invoke(new Action(() =>
         {
+            pb_status.Visible = false;
             richTextBox1.Text = contentJson.desc;
             label1.Text = contentJson.title_name + " (rating: " + contentJson.Stars + "/5.00)";
         }));
@@ -72,7 +82,11 @@ namespace NPS
     catch (Exception err)
     {
         isLoading = false;
-        //MessageBox.Show(err.Message);
+        this.Invoke(new Action(() =>
+        {
+            pb_status.Visible = true;
+            pb_status.Image = new Bitmap(Properties.Resources.menu_cancel);
+        }));
     }
 });
         }

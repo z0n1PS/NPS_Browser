@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace NPS
 {
@@ -11,7 +13,7 @@ namespace NPS
         public System.DateTime lastModifyDate = System.DateTime.MinValue;
         public int DLCs { get { return DlcItm.Count; } }
         public List<Item> DlcItm = new List<Item>();
-        public bool IsDLC = false, ItsPsx = false, ItsPsp = false;
+        public bool IsDLC = false, ItsPsx = false, ItsPsp = false, ItsPS3;
         public string ParentGameTitle = string.Empty;
         public string ContentId = null;
         public string contentType = "";
@@ -19,8 +21,15 @@ namespace NPS
         {
             get
             {
-                if (string.IsNullOrEmpty(ContentId)) return TitleId;
-                else return ContentId;
+                string res = "";
+
+                if (this.ItsPS3) res = TitleName;
+                else if (string.IsNullOrEmpty(ContentId)) res = TitleId;
+                else res = ContentId;
+
+                string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+                Regex r = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
+                return r.Replace(res, "");
             }
         }
 

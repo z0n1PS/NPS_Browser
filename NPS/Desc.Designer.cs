@@ -35,9 +35,11 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.pb_status = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_status)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -92,11 +94,23 @@
             this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 4;
             // 
+            // pb_status
+            // 
+            this.pb_status.Image = global::NPS.Properties.Resources.menu_reload;
+            this.pb_status.Location = new System.Drawing.Point(317, 236);
+            this.pb_status.Name = "pb_status";
+            this.pb_status.Size = new System.Drawing.Size(42, 40);
+            this.pb_status.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pb_status.TabIndex = 5;
+            this.pb_status.TabStop = false;
+            this.pb_status.Visible = false;
+            // 
             // Desc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 434);
+            this.Controls.Add(this.pb_status);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.pictureBox3);
@@ -107,6 +121,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_status)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -120,5 +135,6 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pb_status;
     }
 }
