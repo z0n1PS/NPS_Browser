@@ -29,8 +29,8 @@ namespace NPS
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            PresentationControls.CheckBoxProperties checkBoxProperties3 = new PresentationControls.CheckBoxProperties();
             PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
-            PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,6 +84,7 @@ namespace NPS
             this.colDownloadSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDownloadStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDownloadProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.lb_ps3licenseType = new System.Windows.Forms.Label();
             this.mnuMain.SuspendLayout();
             this.lstTitlesMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCover)).BeginInit();
@@ -130,7 +131,7 @@ namespace NPS
             // 
             this.reloadToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_reload;
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.LoadAllDatabaes);
             // 
@@ -138,20 +139,20 @@ namespace NPS
             // 
             this.optionsToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_options;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_exit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.exitToolStripMenuItem.Tag = "Exit";
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
@@ -185,7 +186,7 @@ namespace NPS
             this.lstTitles.FullRowSelect = true;
             this.lstTitles.Location = new System.Drawing.Point(0, 52);
             this.lstTitles.Name = "lstTitles";
-            this.lstTitles.Size = new System.Drawing.Size(851, 354);
+            this.lstTitles.Size = new System.Drawing.Size(851, 368);
             this.lstTitles.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lstTitles.TabIndex = 1;
             this.lstTitles.UseCompatibleStateImageBehavior = false;
@@ -441,7 +442,7 @@ namespace NPS
             // 
             this.splMain.Panel2.Controls.Add(this.lstDownloadStatus);
             this.splMain.Size = new System.Drawing.Size(1073, 687);
-            this.splMain.SplitterDistance = 406;
+            this.splMain.SplitterDistance = 420;
             this.splMain.TabIndex = 18;
             // 
             // splList
@@ -457,13 +458,14 @@ namespace NPS
             // 
             // splList.Panel2
             // 
+            this.splList.Panel2.Controls.Add(this.lb_ps3licenseType);
             this.splList.Panel2.Controls.Add(this.btnDownload);
             this.splList.Panel2.Controls.Add(this.ptbCover);
             this.splList.Panel2.Controls.Add(this.panel1);
             this.splList.Panel2.Controls.Add(this.lnkOpenRenaScene);
             this.splList.Panel2.Controls.Add(this.pauseResumeLayoutPnl);
             this.splList.Panel2.Controls.Add(this.label5);
-            this.splList.Size = new System.Drawing.Size(1073, 406);
+            this.splList.Size = new System.Drawing.Size(1073, 420);
             this.splList.SplitterDistance = 851;
             this.splList.TabIndex = 18;
             // 
@@ -482,9 +484,9 @@ namespace NPS
             // 
             // cmbType
             // 
-            checkBoxProperties1.AutoSize = true;
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbType.CheckBoxProperties = checkBoxProperties1;
+            checkBoxProperties3.AutoSize = true;
+            checkBoxProperties3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbType.CheckBoxProperties = checkBoxProperties3;
             this.cmbType.DisplayMemberSingleItem = "";
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Items.AddRange(new object[] {
@@ -504,16 +506,11 @@ namespace NPS
             // 
             // cmbRegion
             // 
-            checkBoxProperties2.AutoSize = true;
-            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
+            checkBoxProperties1.AutoSize = true;
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbRegion.CheckBoxProperties = checkBoxProperties1;
             this.cmbRegion.DisplayMemberSingleItem = "";
             this.cmbRegion.FormattingEnabled = true;
-            this.cmbRegion.Items.AddRange(new object[] {
-            "asd",
-            "w",
-            "e",
-            "asd"});
             this.cmbRegion.Location = new System.Drawing.Point(707, 3);
             this.cmbRegion.MaxDropDownItems = 5;
             this.cmbRegion.Name = "cmbRegion";
@@ -570,7 +567,7 @@ namespace NPS
             this.pauseResumeLayoutPnl.Controls.Add(this.PauseAll, 0, 0);
             this.pauseResumeLayoutPnl.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pauseResumeLayoutPnl.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.pauseResumeLayoutPnl.Location = new System.Drawing.Point(0, 383);
+            this.pauseResumeLayoutPnl.Location = new System.Drawing.Point(0, 397);
             this.pauseResumeLayoutPnl.Margin = new System.Windows.Forms.Padding(0);
             this.pauseResumeLayoutPnl.Name = "pauseResumeLayoutPnl";
             this.pauseResumeLayoutPnl.RowCount = 1;
@@ -624,7 +621,7 @@ namespace NPS
             this.lstDownloadStatus.FullRowSelect = true;
             this.lstDownloadStatus.Location = new System.Drawing.Point(0, 0);
             this.lstDownloadStatus.Name = "lstDownloadStatus";
-            this.lstDownloadStatus.Size = new System.Drawing.Size(1073, 277);
+            this.lstDownloadStatus.Size = new System.Drawing.Size(1073, 263);
             this.lstDownloadStatus.TabIndex = 14;
             this.lstDownloadStatus.UseCompatibleStateImageBehavior = false;
             this.lstDownloadStatus.View = System.Windows.Forms.View.Details;
@@ -650,6 +647,14 @@ namespace NPS
             this.colDownloadProgress.Text = "Progress";
             this.colDownloadProgress.Width = 366;
             // 
+            // lb_ps3licenseType
+            // 
+            this.lb_ps3licenseType.AutoSize = true;
+            this.lb_ps3licenseType.Location = new System.Drawing.Point(3, 379);
+            this.lb_ps3licenseType.Name = "lb_ps3licenseType";
+            this.lb_ps3licenseType.Size = new System.Drawing.Size(0, 13);
+            this.lb_ps3licenseType.TabIndex = 19;
+            // 
             // NPSBrowser
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -673,6 +678,7 @@ namespace NPS
             this.splMain.ResumeLayout(false);
             this.splList.Panel1.ResumeLayout(false);
             this.splList.Panel2.ResumeLayout(false);
+            this.splList.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splList)).EndInit();
             this.splList.ResumeLayout(false);
             this.pnlSearch.ResumeLayout(false);
@@ -746,6 +752,7 @@ namespace NPS
         private PresentationControls.CheckBoxComboBox cmbType;
         private System.Windows.Forms.ColumnHeader colType;
         private System.Windows.Forms.ToolStripMenuItem showDescriptionPanelToolStripMenuItem;
+        private System.Windows.Forms.Label lb_ps3licenseType;
     }
 }
 

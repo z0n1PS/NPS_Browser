@@ -54,7 +54,7 @@ namespace NPS
             label1.Text = "";
             richTextBox1.Text = "";
 
-            if (contentId.ToLower().Equals("missing"))
+            if (contentId == null || contentId.ToLower().Equals("missing"))
             {
                 isLoading = false;
                 pb_status.Image = new Bitmap(Properties.Resources.menu_cancel);

@@ -13,7 +13,7 @@ namespace NPS
 {
     public partial class NPSBrowser : Form
     {
-        public const string version = "0.77_beta2";
+        public const string version = "0.77_beta3";
         List<Item> currentDatabase = new List<Item>();
         List<Item> gamesDbs = new List<Item>();
         List<Item> dlcsDbs = new List<Item>();
@@ -201,7 +201,6 @@ namespace NPS
 
         private void LoadDatabase(string path, Action<List<Item>> result, DatabaseType dbType)// bool addDlc = false, bool isDLC = false, bool isPsm = false)
         {
-            bool psndldb = false;
             List<Item> dbs = new List<Item>();
             if (string.IsNullOrEmpty(path))
                 result.Invoke(dbs);
@@ -226,11 +225,8 @@ namespace NPS
 
                             if (a.Length < 2)
                             {
-                                if (dbType != DatabaseType.PS3) continue;
+                                continue;
 
-                                a = lines[i].Split(';');
-                                if (a.Length < 2) continue;
-                                else psndldb = true;
                             }
 
                             var itm = new Item();
@@ -244,31 +240,14 @@ namespace NPS
 
                             if (dbType == DatabaseType.PS3 || dbType == DatabaseType.PS3DLC)
                             {
-                                if (psndldb)
+
+                                if (dbType == DatabaseType.PS3DLC)
+                                    itm.IsDLC = true;
+                                itm.contentType = "PS3";
+                                itm.ItsPS3 = true;
+                                if (a.Length >= 7)
                                 {
-                                    if (a[2] != "PSN" && a[2] != "PS3" && a[2] != "C00") continue;
-
-                                    itm.TitleId = a[0];
-                                    itm.TitleName = a[1];
-                                    itm.Region = a[3];
-                                    itm.pkg = a[4];
-                                    itm.contentType = "PS3";
-
-                                    itm.ContentId = a[5].Replace(".rap", "");
-                                    if (string.IsNullOrEmpty(a[6])) itm.zRif = "NOT REQUIRED";
-                                    else itm.zRif = a[6];
-
-                                }
-                                else
-                                {
-                                    if (dbType == DatabaseType.PS3DLC)
-                                        itm.IsDLC = true;
-                                    itm.contentType = "PS3";
-                                    itm.ItsPS3 = true;
-                                    if (a.Length >= 6)
-                                    {
-                                        DateTime.TryParse(a[5], out itm.lastModifyDate);
-                                    }
+                                    DateTime.TryParse(a[6], out itm.lastModifyDate);
                                 }
                             }
                             else if (dbType == DatabaseType.ItsPsm)
@@ -541,7 +520,24 @@ namespace NPS
         // lstTitles
         private void lstTitles_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (lstTitles.SelectedItems.Count > 0)
+            {
+                var itm = (lstTitles.SelectedItems[0].Tag as Item);
+                if (itm.ItsPS3)
+                {
+                    if (string.IsNullOrEmpty(itm.zRif))
+                    {
+                        lb_ps3licenseType.BackColor = Color.LawnGreen;
+                        lb_ps3licenseType.Text = "RAP NOT REQUIRED, use ReActPSN/PSNPatch";
+                    }
+                    else if (itm.zRif.ToLower().Contains("UNLOCK/LICENSE BY DLC".ToLower())) lb_ps3licenseType.Text = "UNLOCK BY DLC";
+                    else lb_ps3licenseType.Text = "";
+                }
+                else
+                {
+                    lb_ps3licenseType.Text = "";
+                }
+            }
         }
 
         private void lstTitles_ColumnClick(object sender, ColumnClickEventArgs e)
