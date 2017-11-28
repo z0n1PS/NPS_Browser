@@ -337,7 +337,7 @@ namespace NPS
                             }
                         }
                     }
-                    catch { }
+                    catch (Exception err) { }
                     result.Invoke(dbs);
                 });
             }

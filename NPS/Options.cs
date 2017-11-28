@@ -62,7 +62,14 @@ namespace NPS
         {
             using (var fbd = new OpenFileDialog())
             {
-                fbd.Filter = "|*.exe";
+                if (Type.GetType("Mono.Runtime") != null)
+                {
+                    fbd.Filter = "|*";
+                }
+                else
+                {
+                    fbd.Filter = "|*.exe";
+                }
 
                 DialogResult result = fbd.ShowDialog();
 

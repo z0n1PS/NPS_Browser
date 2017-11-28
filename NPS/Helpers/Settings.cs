@@ -1,14 +1,11 @@
 ﻿using Microsoft.Win32;
+using System.IO;
 
 [System.Serializable]
 public class Settings
 {
     [System.NonSerialized]
-    const string userRoot = "HKEY_CURRENT_USER\\SOFTWARE";
-    [System.NonSerialized]
-    const string subkey = "NoPayStationBrowser";
-    [System.NonSerialized]
-    const string keyName = userRoot + "\\" + subkey;
+    static string keyName = Path.Combine("HKEY_CURRENT_USER", "SOFTWARE", "NoPayStationBrowser");
 
     [System.NonSerialized]
     public static Settings Instance;

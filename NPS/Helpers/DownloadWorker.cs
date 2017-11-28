@@ -84,7 +84,7 @@ namespace NPS
 
             Task.Run(() =>
             {
-                DownloadFile(currentDownload.pkg, Settings.Instance.downloadDir + "\\" + currentDownload.DownloadFileName + ".pkg");
+                DownloadFile(currentDownload.pkg, Path.Combine(Settings.Instance.downloadDir, currentDownload.DownloadFileName + ".pkg"));
             });
         }
 
@@ -153,10 +153,10 @@ namespace NPS
                 {
                     try
                     {
-                        if (File.Exists(Settings.Instance.downloadDir + "\\" + currentDownload.DownloadFileName + ".pkg"))
+                        if (File.Exists(Path.Combine(Settings.Instance.downloadDir, currentDownload.DownloadFileName + ".pkg")))
                         {
                             System.Threading.Thread.Sleep(400);
-                            File.Delete(Settings.Instance.downloadDir + "\\" + currentDownload.DownloadFileName + ".pkg");
+                            File.Delete(Path.Combine(Settings.Instance.downloadDir, currentDownload.DownloadFileName + ".pkg"));
                         }
                     }
                     catch { i = 5; }
@@ -182,7 +182,7 @@ namespace NPS
 
                 var replacements = new Dictionary<string, string>
                 {
-                    ["{pkgfile}"] = $"\"{Settings.Instance.downloadDir}\\{currentDownload.DownloadFileName}.pkg\"",
+                    ["{pkgfile}"] = "\"" + Path.Combine(Settings.Instance.downloadDir, currentDownload.DownloadFileName + ".pkg") + "\"",
                     ["{titleid}"] = currentDownload.TitleId.Substring(0, 9),
                     ["{gametitle}"] = Regex.Replace(currentDownload.IsDLC ? currentDownload.ParentGameTitle : currentDownload.TitleName, "[/:\" *?<>|\\r\\n]+", string.Empty),
                     ["{region}"] = currentDownload.Region,
@@ -190,7 +190,7 @@ namespace NPS
                 };
 
                 ProcessStartInfo a = new ProcessStartInfo();
-                a.WorkingDirectory = Settings.Instance.downloadDir + "\\";
+                a.WorkingDirectory = Settings.Instance.downloadDir + Path.DirectorySeparatorChar;
                 a.FileName = string.Format("\"{0}\"", Settings.Instance.pkgPath);
                 a.WindowStyle = ProcessWindowStyle.Hidden;
                 a.CreateNoWindow = true;
@@ -410,21 +410,6 @@ namespace NPS
 
 
         long bytesPerSecond = 0;
-
-        //void FetchFileName()
-        //{
-        //    int count = 1;
-        //    string orgTitle = currentDownload.TitleId;
-
-        //    while (File.Exists(Settings.Instance.downloadDir + "\\" + currentDownload.TitleId + ".pkg"))
-        //    {
-        //        currentDownload.TitleId = orgTitle + "_" + count;
-        //        count++;
-        //    }
-        //}
-
-
-
 
 
         private void DownloadCompleted()

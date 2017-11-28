@@ -68,17 +68,17 @@ namespace NPS
             this.buttonExport = new System.Windows.Forms.Button();
             this.buttonImport = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(513, 293);
+            this.button1.Location = new System.Drawing.Point(513, 299);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -88,7 +88,7 @@ namespace NPS
             // 
             // textDownload
             // 
-            this.textDownload.Location = new System.Drawing.Point(159, 296);
+            this.textDownload.Location = new System.Drawing.Point(159, 302);
             this.textDownload.Name = "textDownload";
             this.textDownload.Size = new System.Drawing.Size(351, 20);
             this.textDownload.TabIndex = 1;
@@ -96,7 +96,7 @@ namespace NPS
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 299);
+            this.label1.Location = new System.Drawing.Point(12, 305);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(129, 13);
             this.label1.TabIndex = 2;
@@ -105,7 +105,7 @@ namespace NPS
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 325);
+            this.label2.Location = new System.Drawing.Point(12, 331);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(87, 13);
             this.label2.TabIndex = 5;
@@ -113,14 +113,14 @@ namespace NPS
             // 
             // textPKGPath
             // 
-            this.textPKGPath.Location = new System.Drawing.Point(159, 322);
+            this.textPKGPath.Location = new System.Drawing.Point(159, 328);
             this.textPKGPath.Name = "textPKGPath";
             this.textPKGPath.Size = new System.Drawing.Size(351, 20);
             this.textPKGPath.TabIndex = 4;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(513, 320);
+            this.button2.Location = new System.Drawing.Point(513, 326);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
@@ -130,7 +130,7 @@ namespace NPS
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(12, 348);
+            this.label3.Location = new System.Drawing.Point(12, 354);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(141, 35);
             this.label3.TabIndex = 8;
@@ -138,7 +138,7 @@ namespace NPS
             // 
             // textParams
             // 
-            this.textParams.Location = new System.Drawing.Point(159, 348);
+            this.textParams.Location = new System.Drawing.Point(159, 354);
             this.textParams.Name = "textParams";
             this.textParams.Size = new System.Drawing.Size(351, 20);
             this.textParams.TabIndex = 7;
@@ -202,7 +202,7 @@ namespace NPS
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(159, 374);
+            this.checkBox1.Location = new System.Drawing.Point(159, 380);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(198, 17);
             this.checkBox1.TabIndex = 15;
@@ -212,7 +212,7 @@ namespace NPS
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(12, 398);
+            this.label6.Location = new System.Drawing.Point(12, 404);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(141, 20);
             this.label6.TabIndex = 16;
@@ -220,7 +220,7 @@ namespace NPS
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(159, 396);
+            this.numericUpDown1.Location = new System.Drawing.Point(159, 402);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             15,
             0,
@@ -270,7 +270,7 @@ namespace NPS
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(516, 351);
+            this.linkLabel1.Location = new System.Drawing.Point(516, 357);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(13, 13);
             this.linkLabel1.TabIndex = 21;
@@ -434,10 +434,25 @@ namespace NPS
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Location = new System.Drawing.Point(12, 41);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(598, 255);
+            this.groupBox1.Size = new System.Drawing.Size(585, 255);
             this.groupBox1.TabIndex = 39;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "TSV files or URL links";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.button10);
+            this.groupBox3.Controls.Add(this.label12);
+            this.groupBox3.Controls.Add(this.textBox2);
+            this.groupBox3.Controls.Add(this.button4);
+            this.groupBox3.Controls.Add(this.tb_ps3dlcuri);
+            this.groupBox3.Location = new System.Drawing.Point(7, 169);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(575, 81);
+            this.groupBox3.TabIndex = 38;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "DLCs";
             // 
             // groupBox2
             // 
@@ -458,29 +473,14 @@ namespace NPS
             this.groupBox2.Controls.Add(this.button6);
             this.groupBox2.Location = new System.Drawing.Point(7, 20);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(585, 148);
+            this.groupBox2.Size = new System.Drawing.Size(575, 148);
             this.groupBox2.TabIndex = 37;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Games";
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.button10);
-            this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Controls.Add(this.textBox2);
-            this.groupBox3.Controls.Add(this.button4);
-            this.groupBox3.Controls.Add(this.tb_ps3dlcuri);
-            this.groupBox3.Location = new System.Drawing.Point(7, 169);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(585, 81);
-            this.groupBox3.TabIndex = 38;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "DLCs";
-            // 
             // Options
             // 
-            this.ClientSize = new System.Drawing.Size(610, 427);
+            this.ClientSize = new System.Drawing.Size(600, 427);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonImport);
             this.Controls.Add(this.buttonExport);
@@ -506,10 +506,10 @@ namespace NPS
             this.Load += new System.EventHandler(this.Options_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
