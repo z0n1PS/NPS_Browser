@@ -27,9 +27,10 @@ namespace NPS
 
             if (col == 4)
             {
-                float.TryParse(sx, out float fx);
+                float fx, fy;
 
-                float.TryParse(sy, out float fy);
+                float.TryParse(sx, out fx);
+                float.TryParse(sy, out fy);
 
                 if (!invertOrder)
                     returnVal = fx.CompareTo(fy);
