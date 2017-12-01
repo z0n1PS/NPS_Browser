@@ -29,8 +29,8 @@ namespace NPS
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            PresentationControls.CheckBoxProperties checkBoxProperties3 = new PresentationControls.CheckBoxProperties();
             PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
+            PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,21 +70,21 @@ namespace NPS
             this.splMain = new System.Windows.Forms.SplitContainer();
             this.splList = new System.Windows.Forms.SplitContainer();
             this.pnlSearch = new System.Windows.Forms.Panel();
-            this.cmbType = new PresentationControls.CheckBoxComboBox();
-            this.cmbRegion = new PresentationControls.CheckBoxComboBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.lb_ps3licenseType = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pauseResumeLayoutPnl = new System.Windows.Forms.TableLayoutPanel();
             this.ResumeAll = new System.Windows.Forms.Button();
             this.PauseAll = new System.Windows.Forms.Button();
+            this.cmbType = new PresentationControls.CheckBoxComboBox();
+            this.cmbRegion = new PresentationControls.CheckBoxComboBox();
             this.lstDownloadStatus = new ListViewEmbeddedControls.ListViewEx();
             this.colDownloadTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDownloadSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDownloadStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDownloadProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lb_ps3licenseType = new System.Windows.Forms.Label();
             this.mnuMain.SuspendLayout();
             this.lstTitlesMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCover)).BeginInit();
@@ -482,41 +482,6 @@ namespace NPS
             this.pnlSearch.Size = new System.Drawing.Size(851, 52);
             this.pnlSearch.TabIndex = 17;
             // 
-            // cmbType
-            // 
-            checkBoxProperties3.AutoSize = true;
-            checkBoxProperties3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbType.CheckBoxProperties = checkBoxProperties3;
-            this.cmbType.DisplayMemberSingleItem = "";
-            this.cmbType.FormattingEnabled = true;
-            this.cmbType.Items.AddRange(new object[] {
-            "VITA",
-            "PS3",
-            "PSX",
-            "PSM",
-            "PSP",
-            "PC Engine",
-            "NeoGeo",
-            "Minis"});
-            this.cmbType.Location = new System.Drawing.Point(549, 3);
-            this.cmbType.MaxDropDownItems = 5;
-            this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(152, 21);
-            this.cmbType.TabIndex = 20;
-            // 
-            // cmbRegion
-            // 
-            checkBoxProperties1.AutoSize = true;
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbRegion.CheckBoxProperties = checkBoxProperties1;
-            this.cmbRegion.DisplayMemberSingleItem = "";
-            this.cmbRegion.FormattingEnabled = true;
-            this.cmbRegion.Location = new System.Drawing.Point(707, 3);
-            this.cmbRegion.MaxDropDownItems = 5;
-            this.cmbRegion.Name = "cmbRegion";
-            this.cmbRegion.Size = new System.Drawing.Size(138, 21);
-            this.cmbRegion.TabIndex = 19;
-            // 
             // flowLayoutPanel3
             // 
             this.flowLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -549,6 +514,14 @@ namespace NPS
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(686, 23);
             this.flowLayoutPanel1.TabIndex = 17;
+            // 
+            // lb_ps3licenseType
+            // 
+            this.lb_ps3licenseType.AutoSize = true;
+            this.lb_ps3licenseType.Location = new System.Drawing.Point(3, 379);
+            this.lb_ps3licenseType.Name = "lb_ps3licenseType";
+            this.lb_ps3licenseType.Size = new System.Drawing.Size(0, 13);
+            this.lb_ps3licenseType.TabIndex = 19;
             // 
             // panel1
             // 
@@ -609,6 +582,42 @@ namespace NPS
             this.PauseAll.UseVisualStyleBackColor = true;
             this.PauseAll.Click += new System.EventHandler(this.PauseAllBtnClick);
             // 
+            // cmbType
+            // 
+            this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            checkBoxProperties1.AutoSize = true;
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbType.CheckBoxProperties = checkBoxProperties1;
+            this.cmbType.DisplayMemberSingleItem = "";
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Items.AddRange(new object[] {
+            "VITA",
+            "PS3",
+            "PSX",
+            "PSM",
+            "PSP",
+            "PC Engine",
+            "NeoGeo",
+            "Minis"});
+            this.cmbType.Location = new System.Drawing.Point(549, 3);
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(152, 21);
+            this.cmbType.TabIndex = 20;
+            // 
+            // cmbRegion
+            // 
+            this.cmbRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            checkBoxProperties2.AutoSize = true;
+            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
+            this.cmbRegion.DisplayMemberSingleItem = "";
+            this.cmbRegion.FormattingEnabled = true;
+            this.cmbRegion.Location = new System.Drawing.Point(707, 3);
+            this.cmbRegion.MaxDropDownItems = 5;
+            this.cmbRegion.Name = "cmbRegion";
+            this.cmbRegion.Size = new System.Drawing.Size(138, 21);
+            this.cmbRegion.TabIndex = 19;
+            // 
             // lstDownloadStatus
             // 
             this.lstDownloadStatus.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -646,14 +655,6 @@ namespace NPS
             // 
             this.colDownloadProgress.Text = "Progress";
             this.colDownloadProgress.Width = 366;
-            // 
-            // lb_ps3licenseType
-            // 
-            this.lb_ps3licenseType.AutoSize = true;
-            this.lb_ps3licenseType.Location = new System.Drawing.Point(3, 379);
-            this.lb_ps3licenseType.Name = "lb_ps3licenseType";
-            this.lb_ps3licenseType.Size = new System.Drawing.Size(0, 13);
-            this.lb_ps3licenseType.TabIndex = 19;
             // 
             // NPSBrowser
             // 
