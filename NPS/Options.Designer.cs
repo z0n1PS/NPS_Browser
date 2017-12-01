@@ -81,7 +81,7 @@ namespace NPS
             this.button1.Location = new System.Drawing.Point(513, 299);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
+            this.button1.TabIndex = 4;
             this.button1.Text = "Browse";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -91,7 +91,7 @@ namespace NPS
             this.textDownload.Location = new System.Drawing.Point(159, 302);
             this.textDownload.Name = "textDownload";
             this.textDownload.Size = new System.Drawing.Size(351, 20);
-            this.textDownload.TabIndex = 1;
+            this.textDownload.TabIndex = 3;
             // 
             // label1
             // 
@@ -116,14 +116,14 @@ namespace NPS
             this.textPKGPath.Location = new System.Drawing.Point(159, 328);
             this.textPKGPath.Name = "textPKGPath";
             this.textPKGPath.Size = new System.Drawing.Size(351, 20);
-            this.textPKGPath.TabIndex = 4;
+            this.textPKGPath.TabIndex = 5;
             // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(513, 326);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
+            this.button2.TabIndex = 6;
             this.button2.Text = "Browse";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -161,14 +161,14 @@ namespace NPS
             this.textBox1.Location = new System.Drawing.Point(77, 19);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(414, 20);
-            this.textBox1.TabIndex = 10;
+            this.textBox1.TabIndex = 0;
             // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(494, 17);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 9;
+            this.button3.TabIndex = 1;
             this.button3.Text = "Browse";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
@@ -187,14 +187,14 @@ namespace NPS
             this.textBox2.Location = new System.Drawing.Point(77, 24);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(414, 20);
-            this.textBox2.TabIndex = 13;
+            this.textBox2.TabIndex = 0;
             // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(494, 22);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 12;
+            this.button4.TabIndex = 1;
             this.button4.Text = "Browse";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
@@ -205,7 +205,7 @@ namespace NPS
             this.checkBox1.Location = new System.Drawing.Point(159, 380);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(198, 17);
-            this.checkBox1.TabIndex = 15;
+            this.checkBox1.TabIndex = 9;
             this.checkBox1.Text = "Delete PKG after successful unpack";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
@@ -233,7 +233,7 @@ namespace NPS
             0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(59, 20);
-            this.numericUpDown1.TabIndex = 17;
+            this.numericUpDown1.TabIndex = 10;
             this.numericUpDown1.Value = new decimal(new int[] {
             1,
             0,
@@ -255,14 +255,14 @@ namespace NPS
             this.textBox3.Location = new System.Drawing.Point(77, 45);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(414, 20);
-            this.textBox3.TabIndex = 19;
+            this.textBox3.TabIndex = 2;
             // 
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(494, 43);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 18;
+            this.button5.TabIndex = 3;
             this.button5.Text = "Browse";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
@@ -273,7 +273,7 @@ namespace NPS
             this.linkLabel1.Location = new System.Drawing.Point(516, 357);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(13, 13);
-            this.linkLabel1.TabIndex = 21;
+            this.linkLabel1.TabIndex = 8;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "?";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
@@ -292,14 +292,14 @@ namespace NPS
             this.textBox4.Location = new System.Drawing.Point(77, 69);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(414, 20);
-            this.textBox4.TabIndex = 23;
+            this.textBox4.TabIndex = 4;
             // 
             // button6
             // 
             this.button6.Location = new System.Drawing.Point(494, 67);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 22;
+            this.button6.TabIndex = 5;
             this.button6.Text = "Browse";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
@@ -318,14 +318,14 @@ namespace NPS
             this.textBox5.Location = new System.Drawing.Point(77, 118);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(414, 20);
-            this.textBox5.TabIndex = 26;
+            this.textBox5.TabIndex = 8;
             // 
             // button7
             // 
             this.button7.Location = new System.Drawing.Point(494, 116);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 25;
+            this.button7.TabIndex = 9;
             this.button7.Text = "Browse";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
@@ -341,6 +341,7 @@ namespace NPS
             // 
             // textBox6
             // 
+            this.textBox6.Enabled = false;
             this.textBox6.Location = new System.Drawing.Point(222, 510);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(414, 20);
@@ -348,6 +349,7 @@ namespace NPS
             // 
             // button8
             // 
+            this.button8.Enabled = false;
             this.button8.Location = new System.Drawing.Point(642, 510);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(75, 23);
@@ -370,14 +372,14 @@ namespace NPS
             this.tb_ps3uri.Location = new System.Drawing.Point(77, 93);
             this.tb_ps3uri.Name = "tb_ps3uri";
             this.tb_ps3uri.Size = new System.Drawing.Size(414, 20);
-            this.tb_ps3uri.TabIndex = 32;
+            this.tb_ps3uri.TabIndex = 6;
             // 
             // button9
             // 
             this.button9.Location = new System.Drawing.Point(494, 91);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(75, 23);
-            this.button9.TabIndex = 31;
+            this.button9.TabIndex = 7;
             this.button9.Text = "Browse";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
@@ -396,14 +398,14 @@ namespace NPS
             this.tb_ps3dlcuri.Location = new System.Drawing.Point(77, 47);
             this.tb_ps3dlcuri.Name = "tb_ps3dlcuri";
             this.tb_ps3dlcuri.Size = new System.Drawing.Size(414, 20);
-            this.tb_ps3dlcuri.TabIndex = 35;
+            this.tb_ps3dlcuri.TabIndex = 2;
             // 
             // button10
             // 
             this.button10.Location = new System.Drawing.Point(494, 47);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(75, 23);
-            this.button10.TabIndex = 34;
+            this.button10.TabIndex = 3;
             this.button10.Text = "Browse";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
@@ -413,7 +415,7 @@ namespace NPS
             this.buttonExport.Location = new System.Drawing.Point(119, 12);
             this.buttonExport.Name = "buttonExport";
             this.buttonExport.Size = new System.Drawing.Size(101, 23);
-            this.buttonExport.TabIndex = 37;
+            this.buttonExport.TabIndex = 1;
             this.buttonExport.Text = "Export settings";
             this.buttonExport.UseVisualStyleBackColor = true;
             this.buttonExport.Click += new System.EventHandler(this.button_export);
@@ -423,7 +425,7 @@ namespace NPS
             this.buttonImport.Location = new System.Drawing.Point(12, 12);
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(101, 23);
-            this.buttonImport.TabIndex = 38;
+            this.buttonImport.TabIndex = 0;
             this.buttonImport.Text = "Import settings";
             this.buttonImport.UseVisualStyleBackColor = true;
             this.buttonImport.Click += new System.EventHandler(this.button_import);
@@ -435,7 +437,7 @@ namespace NPS
             this.groupBox1.Location = new System.Drawing.Point(12, 41);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(585, 255);
-            this.groupBox1.TabIndex = 39;
+            this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "TSV files or URL links";
             // 
@@ -450,7 +452,7 @@ namespace NPS
             this.groupBox3.Location = new System.Drawing.Point(7, 169);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(575, 81);
-            this.groupBox3.TabIndex = 38;
+            this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "DLCs";
             // 
@@ -474,7 +476,7 @@ namespace NPS
             this.groupBox2.Location = new System.Drawing.Point(7, 20);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(575, 148);
-            this.groupBox2.TabIndex = 37;
+            this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Games";
             // 
