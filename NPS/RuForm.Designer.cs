@@ -29,8 +29,8 @@ namespace NPS
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            PresentationControls.CheckBoxProperties checkBoxProperties3 = new PresentationControls.CheckBoxProperties();
             PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
-            PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,6 +78,10 @@ namespace NPS
             this.pauseResumeLayoutPnl = new System.Windows.Forms.TableLayoutPanel();
             this.ResumeAll = new System.Windows.Forms.Button();
             this.PauseAll = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.cmbType = new PresentationControls.CheckBoxComboBox();
             this.cmbRegion = new PresentationControls.CheckBoxComboBox();
             this.lstDownloadStatus = new ListViewEmbeddedControls.ListViewEx();
@@ -102,6 +106,9 @@ namespace NPS
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.pauseResumeLayoutPnl.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -131,7 +138,7 @@ namespace NPS
             // 
             this.reloadToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_reload;
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reloadToolStripMenuItem.Text = "Reload";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.LoadAllDatabaes);
             // 
@@ -139,20 +146,20 @@ namespace NPS
             // 
             this.optionsToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_options;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_exit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Tag = "Exit";
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
@@ -160,7 +167,7 @@ namespace NPS
             // downloadUpdateToolStripMenuItem
             // 
             this.downloadUpdateToolStripMenuItem.Name = "downloadUpdateToolStripMenuItem";
-            this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(113, 20);
+            this.downloadUpdateToolStripMenuItem.Size = new System.Drawing.Size(114, 20);
             this.downloadUpdateToolStripMenuItem.Text = "Download update";
             this.downloadUpdateToolStripMenuItem.Visible = false;
             this.downloadUpdateToolStripMenuItem.Click += new System.EventHandler(this.downloadUpdateToolStripMenuItem_Click);
@@ -186,7 +193,7 @@ namespace NPS
             this.lstTitles.FullRowSelect = true;
             this.lstTitles.Location = new System.Drawing.Point(0, 52);
             this.lstTitles.Name = "lstTitles";
-            this.lstTitles.Size = new System.Drawing.Size(851, 368);
+            this.lstTitles.Size = new System.Drawing.Size(851, 298);
             this.lstTitles.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lstTitles.TabIndex = 1;
             this.lstTitles.UseCompatibleStateImageBehavior = false;
@@ -231,13 +238,13 @@ namespace NPS
             this.showTitleDlcToolStripMenuItem,
             this.downloadAllDlcsToolStripMenuItem});
             this.lstTitlesMenuStrip.Name = "contextMenuStrip2";
-            this.lstTitlesMenuStrip.Size = new System.Drawing.Size(195, 70);
+            this.lstTitlesMenuStrip.Size = new System.Drawing.Size(196, 70);
             // 
             // downloadAndUnpackToolStripMenuItem
             // 
             this.downloadAndUnpackToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_unpack;
             this.downloadAndUnpackToolStripMenuItem.Name = "downloadAndUnpackToolStripMenuItem";
-            this.downloadAndUnpackToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.downloadAndUnpackToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.downloadAndUnpackToolStripMenuItem.Text = "Download and Unpack";
             this.downloadAndUnpackToolStripMenuItem.Click += new System.EventHandler(this.btnDownload_Click);
             // 
@@ -245,7 +252,7 @@ namespace NPS
             // 
             this.showTitleDlcToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_show_dlc;
             this.showTitleDlcToolStripMenuItem.Name = "showTitleDlcToolStripMenuItem";
-            this.showTitleDlcToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.showTitleDlcToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.showTitleDlcToolStripMenuItem.Text = "Show Title DLCs";
             this.showTitleDlcToolStripMenuItem.Click += new System.EventHandler(this.showTitleDlcToolStripMenuItem_Click);
             // 
@@ -253,7 +260,7 @@ namespace NPS
             // 
             this.downloadAllDlcsToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_download_dlc;
             this.downloadAllDlcsToolStripMenuItem.Name = "downloadAllDlcsToolStripMenuItem";
-            this.downloadAllDlcsToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.downloadAllDlcsToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
             this.downloadAllDlcsToolStripMenuItem.Text = "Download All DLCs";
             this.downloadAllDlcsToolStripMenuItem.Click += new System.EventHandler(this.downloadAllDlcsToolStripMenuItem_Click);
             // 
@@ -348,13 +355,13 @@ namespace NPS
             this.retryUnpackToolStripMenuItem,
             this.clearCompletedToolStripMenuItem});
             this.lstDownloadStatusMenuStrip.Name = "contextMenuStrip1";
-            this.lstDownloadStatusMenuStrip.Size = new System.Drawing.Size(164, 116);
+            this.lstDownloadStatusMenuStrip.Size = new System.Drawing.Size(163, 116);
             // 
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_pause;
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.pauseToolStripMenuItem.Text = "Pause";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
@@ -363,7 +370,7 @@ namespace NPS
             this.resumeToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_resume;
             this.resumeToolStripMenuItem.Margin = new System.Windows.Forms.Padding(1);
             this.resumeToolStripMenuItem.Name = "resumeToolStripMenuItem";
-            this.resumeToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.resumeToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.resumeToolStripMenuItem.Text = "Resume";
             this.resumeToolStripMenuItem.Click += new System.EventHandler(this.resumeToolStripMenuItem_Click);
             // 
@@ -371,7 +378,7 @@ namespace NPS
             // 
             this.cancelToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_cancel;
             this.cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
-            this.cancelToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.cancelToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.cancelToolStripMenuItem.Text = "Cancel";
             this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
             // 
@@ -379,7 +386,7 @@ namespace NPS
             // 
             this.retryUnpackToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_retry;
             this.retryUnpackToolStripMenuItem.Name = "retryUnpackToolStripMenuItem";
-            this.retryUnpackToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.retryUnpackToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.retryUnpackToolStripMenuItem.Text = "Retry Unpack";
             this.retryUnpackToolStripMenuItem.Click += new System.EventHandler(this.retryUnpackToolStripMenuItem_Click);
             // 
@@ -387,7 +394,7 @@ namespace NPS
             // 
             this.clearCompletedToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_clear;
             this.clearCompletedToolStripMenuItem.Name = "clearCompletedToolStripMenuItem";
-            this.clearCompletedToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.clearCompletedToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.clearCompletedToolStripMenuItem.Text = "Clear Completed";
             this.clearCompletedToolStripMenuItem.Click += new System.EventHandler(this.clearCompletedToolStripMenuItem_Click);
             // 
@@ -440,9 +447,10 @@ namespace NPS
             // 
             // splMain.Panel2
             // 
-            this.splMain.Panel2.Controls.Add(this.lstDownloadStatus);
+            this.splMain.Panel2.Controls.Add(this.tabControl1);
+            this.splMain.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splMain_Panel2_Paint);
             this.splMain.Size = new System.Drawing.Size(1073, 687);
-            this.splMain.SplitterDistance = 420;
+            this.splMain.SplitterDistance = 350;
             this.splMain.TabIndex = 18;
             // 
             // splList
@@ -465,7 +473,7 @@ namespace NPS
             this.splList.Panel2.Controls.Add(this.lnkOpenRenaScene);
             this.splList.Panel2.Controls.Add(this.pauseResumeLayoutPnl);
             this.splList.Panel2.Controls.Add(this.label5);
-            this.splList.Size = new System.Drawing.Size(1073, 420);
+            this.splList.Size = new System.Drawing.Size(1073, 350);
             this.splList.SplitterDistance = 851;
             this.splList.TabIndex = 18;
             // 
@@ -540,7 +548,7 @@ namespace NPS
             this.pauseResumeLayoutPnl.Controls.Add(this.PauseAll, 0, 0);
             this.pauseResumeLayoutPnl.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pauseResumeLayoutPnl.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
-            this.pauseResumeLayoutPnl.Location = new System.Drawing.Point(0, 397);
+            this.pauseResumeLayoutPnl.Location = new System.Drawing.Point(0, 327);
             this.pauseResumeLayoutPnl.Margin = new System.Windows.Forms.Padding(0);
             this.pauseResumeLayoutPnl.Name = "pauseResumeLayoutPnl";
             this.pauseResumeLayoutPnl.RowCount = 1;
@@ -582,12 +590,54 @@ namespace NPS
             this.PauseAll.UseVisualStyleBackColor = true;
             this.PauseAll.Click += new System.EventHandler(this.PauseAllBtnClick);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1073, 333);
+            this.tabControl1.TabIndex = 17;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.webBrowser1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1065, 237);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Youtube";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.lstDownloadStatus);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1065, 307);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Download List";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // webBrowser1
+            // 
+            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser1.Location = new System.Drawing.Point(3, 3);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.Size = new System.Drawing.Size(1059, 231);
+            this.webBrowser1.TabIndex = 17;
+            // 
             // cmbType
             // 
             this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            checkBoxProperties1.AutoSize = true;
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbType.CheckBoxProperties = checkBoxProperties1;
+            checkBoxProperties3.AutoSize = true;
+            checkBoxProperties3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbType.CheckBoxProperties = checkBoxProperties3;
             this.cmbType.DisplayMemberSingleItem = "";
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Items.AddRange(new object[] {
@@ -607,9 +657,9 @@ namespace NPS
             // cmbRegion
             // 
             this.cmbRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            checkBoxProperties2.AutoSize = true;
-            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
+            checkBoxProperties1.AutoSize = true;
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbRegion.CheckBoxProperties = checkBoxProperties1;
             this.cmbRegion.DisplayMemberSingleItem = "";
             this.cmbRegion.FormattingEnabled = true;
             this.cmbRegion.Location = new System.Drawing.Point(707, 3);
@@ -628,18 +678,17 @@ namespace NPS
             this.lstDownloadStatus.ContextMenuStrip = this.lstDownloadStatusMenuStrip;
             this.lstDownloadStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstDownloadStatus.FullRowSelect = true;
-            this.lstDownloadStatus.Location = new System.Drawing.Point(0, 0);
+            this.lstDownloadStatus.Location = new System.Drawing.Point(3, 3);
             this.lstDownloadStatus.Name = "lstDownloadStatus";
-            this.lstDownloadStatus.Size = new System.Drawing.Size(1073, 263);
-            this.lstDownloadStatus.TabIndex = 14;
+            this.lstDownloadStatus.Size = new System.Drawing.Size(1059, 301);
+            this.lstDownloadStatus.TabIndex = 15;
             this.lstDownloadStatus.UseCompatibleStateImageBehavior = false;
             this.lstDownloadStatus.View = System.Windows.Forms.View.Details;
-            this.lstDownloadStatus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstDownloadStatus_KeyDown);
             // 
             // colDownloadTitle
             // 
             this.colDownloadTitle.Text = "Title";
-            this.colDownloadTitle.Width = 457;
+            this.colDownloadTitle.Width = 196;
             // 
             // colDownloadSpeed
             // 
@@ -688,6 +737,9 @@ namespace NPS
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.pauseResumeLayoutPnl.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -719,10 +771,6 @@ namespace NPS
         private System.Windows.Forms.ToolStripMenuItem cancelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem retryUnpackToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
-        private ListViewEmbeddedControls.ListViewEx lstDownloadStatus;
-        private System.Windows.Forms.ColumnHeader colDownloadTitle;
-        private System.Windows.Forms.ColumnHeader colDownloadSpeed;
-        private System.Windows.Forms.ColumnHeader colDownloadStatus;
         private System.Windows.Forms.ToolStripMenuItem clearCompletedToolStripMenuItem;
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.ToolStripMenuItem reloadToolStripMenuItem;
@@ -748,12 +796,20 @@ namespace NPS
         private System.Windows.Forms.TableLayoutPanel pauseResumeLayoutPnl;
         private System.Windows.Forms.Button ResumeAll;
         private System.Windows.Forms.Button PauseAll;
-        private System.Windows.Forms.ColumnHeader colDownloadProgress;
         private PresentationControls.CheckBoxComboBox cmbRegion;
         private PresentationControls.CheckBoxComboBox cmbType;
         private System.Windows.Forms.ColumnHeader colType;
         private System.Windows.Forms.ToolStripMenuItem showDescriptionPanelToolStripMenuItem;
         private System.Windows.Forms.Label lb_ps3licenseType;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private ListViewEmbeddedControls.ListViewEx lstDownloadStatus;
+        private System.Windows.Forms.ColumnHeader colDownloadTitle;
+        private System.Windows.Forms.ColumnHeader colDownloadSpeed;
+        private System.Windows.Forms.ColumnHeader colDownloadStatus;
+        private System.Windows.Forms.ColumnHeader colDownloadProgress;
     }
 }
 

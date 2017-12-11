@@ -519,10 +519,15 @@ namespace NPS
 
         // lstTitles
         private void lstTitles_SelectedIndexChanged(object sender, EventArgs e)
+     
         {
+            
+            
             if (lstTitles.SelectedItems.Count > 0)
             {
+             
                 var itm = (lstTitles.SelectedItems[0].Tag as Item);
+                this.webBrowser1.Navigate("https://www.youtube.com/results?search_query=" + itm.TitleName + " " + itm.contentType + " gameplay");
                 if (itm.ItsPS3)
                 {
                     if (string.IsNullOrEmpty(itm.zRif))
@@ -802,7 +807,15 @@ namespace NPS
             d.Show();
         }
 
+        private void lstDownloadStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
+
+        private void splMain_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 
     class Release
