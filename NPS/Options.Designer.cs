@@ -504,6 +504,7 @@ namespace NPS
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Options";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Options";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Options_FormClosing);
             this.Load += new System.EventHandler(this.Options_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
